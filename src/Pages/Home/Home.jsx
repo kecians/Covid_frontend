@@ -13,14 +13,14 @@ import Covid from '../../Components/CovidAdvisory/Covid'
 import './Home.scss'
 
 export default function Home() {
-    document.title = "Petrol Pump | Home"
+    document.title = "Frontline | Home"
     return (
         <>
             {/* <NavBar/> */}
             <Covid />
-            {/* <div className="container-fluid p-0 m-0">
+            <div className="container-fluid p-0 m-0">
                 <Footer />  
-            </div> */}
+            </div>
             
         </>
     )
