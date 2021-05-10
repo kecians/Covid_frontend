@@ -1,0 +1,39 @@
+.serachicon{
+    background: #fff;
+    border-radius: 30px;
+    color: #222;
+    text-align: center;
+    
+}
+.serachicon:hover{
+    color: #000!important;
+}
+.searchbar{
+    width: 60%; 
+    padding: 12px;
+    border: none;
+    // height: 50px;
+    
+}
+
+.searchbar:focus-within, .searchbar:focus{
+    // transition: all .5s;
+   border: none!important;
+}
+input:focus, textarea:focus, select:focus{
+    outline: none;
+}
+.searchbarcontainer{
+    position: relative;
+    z-index: 12;
+    height: 48px;
+    background : #fff;
+    align-content: 'center';
+    border-radius: 30px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);    
+}
+.log{
+    background: #007bff;
+    font-style: bold;
+}
+

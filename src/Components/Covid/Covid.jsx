@@ -2,8 +2,8 @@ import React from 'react';
 import './Covid.scss'
 import cosvg from './CovidAnimate.svg'
 // import Animate5  from '../../Components/PetrolAnimations/animation5';
-import Heading from '../../Components/Heading/Heading' 
-import Login from '../../Components/Login/Login'
+import Heading from '../Heading/Heading' 
+import Login from '../Login/Login'
 
 export default function Covid(){
 

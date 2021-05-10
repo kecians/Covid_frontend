@@ -4,10 +4,10 @@ import React from 'react'
 
 // import components
 
-import NavBar from '../../Components/NavBar/NavBar'
+// import NavBar from '../../Components/NavBar/NavBar'
 import Footer from '../../Components/Footer/Footer'
 import { Container } from 'react-bootstrap'
-import Covid from '../../Components/CovidAdvisory/Covid'
+import Covid from '../../Components/Covid/Covid'
 // import styles
 
 import './Home.scss'
