@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Form, Button, Col} from 'react-bootstrap' 
-export default function Addpatient() {
+import { Form, Col} from 'react-bootstrap' 
+export default function Hform() {
     return (
         <Form className="loginform">
             <Form.Row>

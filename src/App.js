@@ -10,6 +10,7 @@ import Home from './Pages/Home/Home'
 import Plist from './Pages/Plist/Plist'
 import Searchbar  from './Pages/Info/Info'
 import Admitpatient from './Pages/Admitpatient/Admitpatient'
+import Patientprofile from './Pages/Patientprofile/Patientprofile'
 function App() {
   return (
     <BrowserRouter>
@@ -17,7 +18,8 @@ function App() {
           <Route exact path="/" component={Home} />  
           <Route exact path="/list" component={Plist} />
           <Route exaact path="/nurse/home" component={Searchbar} />
-          <Route exact path="/nurse/admit" component={Admitpatient} />
+          <Route exact path="/nurse/patient/admit" component={Admitpatient} />
+          <Route exact path="/nurse/patient/profile" component={Patientprofile} />
         </Switch>
       </BrowserRouter>
   );
