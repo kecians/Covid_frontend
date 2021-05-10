@@ -9,6 +9,10 @@
 
 .loginform .form-group .form-control{
     border-radius: 30px!important;
-    padding: 20px;
+    padding-inline: 20px;
+    height: calc(2.5em + .75rem + 2px);
     
+}
+.loginform textarea.form-control {
+    height: auto!important;
 }
