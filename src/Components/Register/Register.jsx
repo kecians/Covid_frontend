@@ -1,13 +1,67 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { Form, Button
- } from 'react-bootstrap' 
-export default function Register() {
+import { Form, Button } from 'react-bootstrap' 
+
+import { login, register, loading } from "../../Redux/auth/auth.actions";
+import { Redirect } from 'react-router-dom'
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { useToasts } from 'react-toast-notifications'
+import cookie from 'react-cookies'
+
+export function Register(props) {
+
+    const { addToast } = useToasts();
+    const initialState = {
+        username: '',
+        password: '',
+        password2: '',
+        staff_categ: ''
+
+    }
+
+    const [registerdata, setRegisterdata] = useState(initialState);
+
+    const handleChange = event => {
+        setRegisterdata({
+          ...registerdata,
+          [event.target.name]: event.target.value
+        });
+      };
+    
+    const handleSubmit = (event)=>{
+        event.preventDefault();
+        props.loading()
+        if(!registerdata){
+            console.log(registerdata)
+            addToast("Please add proper data!", { appearance: 'info' }) 
+          }
+          else{
+            setTimeout(() => {
+            props.register(
+              registerdata.username,
+              registerdata.password,
+              registerdata.password2,
+              registerdata.staff_categ
+            );
+          }, 1000);
+          }
+    }
+    if (cookie.load("token")) { 
+      return <Redirect to='/nurse/home' />;
+    }
+
     return (
         <>
-        <Form className="loginform">
+        <Form className="loginform" onSubmit = { handleSubmit }>
             <Form.Group controlId="formBasicEmail">
-                <Form.Control type="email" placeholder="Enter Userid" />
+                <Form.Control 
+                    type="texxt" 
+                    placeholder="Enter Userid" 
+                    name="username"
+                    required
+                    onChange= { handleChange }
+                />
                 <Form.Text className="text-muted ml-4">
                     This should be your phone number or some unique id.
                 </Form.Text>
@@ -19,22 +73,25 @@ export default function Register() {
                     placeholder="Password" 
                     name="password"
                     required
+                    onChange= { handleChange }
                 />
             </Form.Group>
 
-            <Form.Group controlId="formBasicPassword">
+            <Form.Group controlId="formBasicPassword2">
                 <Form.Control 
                     type="password" 
                     placeholder="Confirm Password" 
                     name="password2"
                     required
+                    onChange= { handleChange }
                 />
             </Form.Group>
-            <Form.Group controlId='staff'>
+            <Form.Group controlId='staff_categ'>
                 <Form.Control
                     as='select'
-                    name='Select Staff'
+                    name='staff_categ'
                     required
+                    onChange= { handleChange }
                 >
                     <option>Select</option>
                     <option>Nurse</option>
@@ -52,3 +109,15 @@ export default function Register() {
         </>
     )
 }
+
+Register.propTypes = {
+    register: PropTypes.func.isRequired,
+    token: PropTypes.string,
+    isLoading: PropTypes.bool,
+  };
+const mapStateToProps = (state) => ({
+  token: state.authReducer.token,
+  isLoading: state.authReducer.isLoading,
+});
+    
+export default connect(mapStateToProps, { login, register, loading })(Register);

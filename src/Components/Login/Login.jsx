@@ -1,6 +1,6 @@
 // import dependencies
 import React from 'react'
-
+import {Link } from 'react-router-dom'
 // import components
 import { Form, Button} from 'react-bootstrap'
 import './Login.scss'
@@ -20,9 +20,9 @@ export default function Login() {
                     Submit
                 </Button>
                 <div className="text-center">or</div>
-                <Button variant="light" type="submit" className="searchbarcontainer button my-2 p-2">
-                    Register
-                </Button>
+                <Link to='/signup' variant="light" type="submit" className="searchbarcontainer button my-2 p-2 text-center">
+                   Register
+                </Link>
             </Form>
         </>
     )

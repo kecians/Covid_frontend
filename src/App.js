@@ -13,17 +13,30 @@ import Admitpatient from './Pages/Admitpatient/Admitpatient'
 import Patientprofile from './Pages/Patientprofile/Patientprofile'
 import Healthform from './Pages/Healthform/Healthform'
 import Signup from './Pages/Signup/Signup'
+import Loader from './Components/Loader/Loader'
+import Toastify from './Components/Toastify/Toastify'
+import { ToastProvider } from 'react-toast-notifications';
+import LockRoute from './LockRoute'
+import PrivateRoute from './PrivateRoute'
 function App() {
   return (
     <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={Home} />  
+        <ToastProvider
+          autoDismiss
+          autoDismissTimeout={6000}
+          placement="bottom-center"
+          >
+          <Loader />
+          <Toastify />
+          <LockRoute exact path="/" component={Home} />  
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/list" component={Plist} />
-          <Route exaact path="/nurse/home" component={Searchbar} />
-          <Route exact path="/nurse/patient/admit" component={Admitpatient} />
-          <Route exact path="/nurse/patient/profile" component={Patientprofile} />
-          <Route exact path="/nurse/patient/healthcheck" component={Healthform} />
+          <PrivateRoute exact path="/list" component={Plist} />
+          <PrivateRoute exaact path="/nurse/home" component={Searchbar} />
+          <PrivateRoute exact path="/nurse/patient/admit" component={Admitpatient} />
+          <PrivateRoute exact path="/nurse/patient/profile" component={Patientprofile} />
+          <PrivateRoute exact path="/nurse/patient/healthcheck" component={Healthform} />
+          </ToastProvider>  
         </Switch>
       </BrowserRouter>
   );
