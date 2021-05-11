@@ -26,7 +26,7 @@ export default function NavBar() {
         <>
         {/* Main Navbar containing menu baar and login and logout */}
 
-        <Navbar   expand="lg" sticky="top" className="navbar-parent">
+        <Navbar  expand="lg" sticky="top" className="navbar-parent">
         <Navbar.Brand href="/" className="text-light ">Frontline</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav "  >
@@ -34,7 +34,7 @@ export default function NavBar() {
             <Link to ="/login"className= "nav-link text-light  waves-effect waves-light right-nav  ">Login</Link>
             <Link to ="/register"className=  "nav-link text-light right-nav ">Signup</Link>
             
-            
+        
             <Nav className="mr-auto " >
 
             {/* {cookie.load("token")?
