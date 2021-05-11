@@ -1,10 +1,18 @@
 import React from 'react'
-
+import { Link, Redirect } from 'react-router-dom'
 import Searchbar from '../Searchbar/Searchbar'
 import { Button } from 'react-bootstrap' 
 import Profile from '../Profile/Profile'
 import Infocard from '../Infocard/Infocard'
-export default function Nursehome() {
+import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
+import { store } from "../../Redux/store";
+import { logout, loading } from "../../Redux/auth/auth.actions";
+import cookie from 'react-cookies'
+export function Nursehome() {
+    if (!cookie.load("token")) { 
+        return <Redirect to='/' />;
+      }
     return (
         <div className="container pt-3">
 
@@ -13,8 +21,16 @@ export default function Nursehome() {
                     <Searchbar />
                 </div>
                 <div className="col-md-1 col-3 col-sm-12"> 
-                    <Button variant="primary" type="submit" className="searchbarcontainer log">
+                    <Button variant="primary" type="submit" className="searchbarcontainer log" onClick={()=>{
+                        store.dispatch(loading());
+                        setTimeout(() => {
+                        store.dispatch(logout());
+                        }, 1000);           
+                        }}>
                         Logout
+                    </Button>
+                    <Button variant="primary" type="submit" className="searchbarcontainer mt-3 log" >
+                       <Link to='/list'> All Patients </Link>
                     </Button>
                 </div>
             </div>
@@ -56,4 +72,17 @@ export default function Nursehome() {
 
         </div>
     )
+
+    
 }
+
+Nursehome.propTypes = {
+    logout: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
+  };
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.authReducer.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { logout, loading })(Nursehome);

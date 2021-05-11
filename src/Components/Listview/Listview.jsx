@@ -1,10 +1,19 @@
 import React from 'react'
+import {Redirect, Link} from 'react-router-dom'
 import { Button } from 'react-bootstrap'
 import './Listview.scss'
 import Profile from '../Profile/Profile'
 import Infocard from '../Infocard/Infocard'
 import Searchbar from '../Searchbar/Searchbar'
-export default function Listview() {
+import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
+import { store } from "../../Redux/store";
+import { logout, loading } from "../../Redux/auth/auth.actions";
+import cookie from 'react-cookies'
+export function Listview() {
+    if (!cookie.load("token")) { 
+        return <Redirect to='/' />;
+      }
     return (
         <div className="container pt-3">
             <div className="row">
@@ -12,7 +21,12 @@ export default function Listview() {
                     <Searchbar />
                 </div>
                 <div className="col-md-1 col-3 col-sm-12"> 
-                    <Button variant="primary" type="submit" className="searchbarcontainer log">
+                    <Button variant="primary" type="submit" className="searchbarcontainer log" onClick={()=>{
+                        store.dispatch(loading());
+                        setTimeout(() => {
+                        store.dispatch(logout());
+                        }, 1000);           
+                        }}>
                         Logout
                     </Button>
                 </div>
@@ -20,10 +34,10 @@ export default function Listview() {
             <hr className="mt-4"/>
             {/* Cards for Status for patient check */}
             <div className="row check">
-                <div className="col-md-4 col-sm-4 col-4 col-lg-4">
+                <div className="col-md-4 col-sm-4 col-6 col-lg-4">
                     <Infocard name="Checked" data="30"/>
                 </div>
-                <div className="col-md-4 col-sm-4 col-4 col-lg-4">
+                <div className="col-md-4 col-sm-4 col-6 col-lg-4">
                     <Infocard name="Not Checked" data="30"/>
                 </div>
             </div>
@@ -41,7 +55,7 @@ export default function Listview() {
                             <p class=" col-md-4 col-sm-4 col-4 col-lg-4 text-center">Patient Name</p>
                             <p class=" col-md-4 col-sm-4 col-4 col-lg-4 text-center">
                                 <Button variant="primary" type="submit" className="searchbarcontainer log">
-                                    Health Checkup
+                                    <Link to="/nurse/patient/healthcheck">Health Checkup</Link>
                                 </Button>
                             </p>
                         </div>
@@ -57,3 +71,14 @@ export default function Listview() {
         </div>
     )
 }
+
+Listview.propTypes = {
+    logout: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
+  };
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.authReducer.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { logout, loading })(Listview);
