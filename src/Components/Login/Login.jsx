@@ -19,16 +19,11 @@ export default function Login() {
                 <Button variant="primary" type="submit" className="button my-2 p-2">
                     Submit
                 </Button>
+                <div className="text-center">or</div>
+                <Button variant="light" type="submit" className="searchbarcontainer button my-2 p-2">
+                    Register
+                </Button>
             </Form>
-            {/* <Button variant="primary" type="submit" className="button my-2 p-2">
-                Submit
-            </Button>
-            <Button variant="primary" type="submit" className="button my-2 p-2">
-                Submit
-            </Button>
-            <Button variant="primary" type="submit" className="button my-2 p-2">
-                Submit
-            </Button> */}
         </>
     )
 }

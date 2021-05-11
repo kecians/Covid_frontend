@@ -1,100 +1,64 @@
 import React from 'react'
 
-import { Form, Col} from 'react-bootstrap' 
+import { Form, Col, Button} from 'react-bootstrap' 
 export default function Hform() {
     return (
-        <Form className="loginform">
-            <Form.Row>
+        <div className="container">
+            <Form className="loginform">
+                <Form.Row>
 
-                <Form.Group as={Col} controlId="Name">
-                    <Form.Control type="text" placeholder="Name" required/>
+                    <Form.Group as={Col} controlId="Name">
+                        <Form.Control type="text" placeholder="Name" required/>
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="Patientid">
+                        <Form.Control type="text" placeholder="Patient id" required/>
+                    </Form.Group>
+
+                </Form.Row>
+
+                <Form.Group controlId=''>
+                        <Form.Control
+                            type='number'				                        
+                            placeholder='SPO2 Level'                             
+                            name='oxy_level'
+                            required
+                        />
                 </Form.Group>
 
-                <Form.Group as={Col} controlId="Patientid">
-                    <Form.Control type="text" placeholder="Patient id" required/>
+                <Form.Row>
+                    <Form.Group as={Col} controlId="blood_pres_systolic">
+                    <Form.Control
+                            type='number'
+                            name='blood_pres_systolic'
+                            placeholder='BP-Systolic'
+                            required
+                        >
+                            
+                    </Form.Control>
+                    </Form.Group>
+                    <Form.Group as={Col} controlId='blood_pres_diastolic'>
+                        <Form.Control
+                                type='number'
+                                name='blood_pres_diastolic'
+                                placeholder='BP-Diastolic'
+                                required
+                            />
+                    </Form.Group>
+
+                </Form.Row>
+                <Form.Group controlId='temp'>
+                    <Form.Control
+                            type='number'
+                            name='temp'
+                            placeholder='Temperature'
+                            required
+                        />
                 </Form.Group>
-
-            </Form.Row>
-
-            <Form.Group controlId='adhar_number'>
-                    <Form.Control
-                        type='number'				                        
-                        placeholder='Adhar Number'                             
-                        name='adhar_no'
-                        required
-                        
-                    />
-            </Form.Group>
-
-            <Form.Group controlId='contact_number'>
-                    <Form.Control
-                        type='number'				                        
-                        placeholder='Contact Number'                             
-                        name='contact_number1'
-                        required
-                        
-                    />
-            </Form.Group>
-
-            <Form.Group controlId='contact_number'>
-                    <Form.Control
-                        type='number'				                        
-                        placeholder='Family Contact Number'                             
-                        name='contact_number1'
-                        required
-                        
-                    />
-            </Form.Group>
-
-            <Form.Row>
-                <Form.Group as={Col} controlId="Name">
-                <Form.Control
-                        as='select'
-                        name='gender'
-                        required
-                    >
-                        <option>Select Gender</option>
-                        <option>Female</option>
-                        <option>Male</option>
-                        <option>Other</option>
-                </Form.Control>
-                </Form.Group>
-                <Form.Group as={Col} controlId='contact_number'>
-                    <Form.Control
-                        type='number'				                        
-                        placeholder='Age'                             
-                        name='age'
-                        required
-                        
-                    />
-                </Form.Group>
-
-            </Form.Row>
-            <Form.Group controlId='Bed'>
-                <Form.Control
-                    as='select'
-                    name='bed'
-                    required
-                >
-                    <option>Select Bed</option>
-                    <option>Bed</option>
-                    <option>Oxygen</option>
-                    <option>Ventilator</option>
-                </Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId="exampleForm.ControlTextarea1" >
-                <Form.Control 
-                    as="textarea"  
-                    rows="6" 
-                    name="address" 
-                    placeholder="Address" 
-                    required
-                    />
-            </Form.Group>	
-            <Button variant="primary" type="submit" className="button my-2 p-2">
-                Submit
-            </Button>
-        </Form>
+                <Button variant="primary" type="submit" className="button my-2 p-2">
+                    Submit
+                </Button>
+            </Form>
+        </div>
     )
 }

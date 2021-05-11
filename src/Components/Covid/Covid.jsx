@@ -14,18 +14,18 @@ export default function Covid(){
                <Heading heading='Covid 19 Data Hub'/>   
               </div>
              
-            <div className="row">
+              <div className="row">
                 <div className="col-lg-6 col-md-6 col-sm-12 d-none d-sm-block d-md-block">
                     <img src={cosvg} alt="" />
                 </div>
                 <div className="col-lg-1 col-md-1"></div>
                 <div className="col-lg-4 col-md-4 col-sm-12">
                     <Heading heading='Login'/>     
-                   <Login />
+                <Login />
                 </div>
                 <div className="col-lg-1 col-md-1"></div>
-            </div>
-        </div>
+              </div>
+          </div>
         </>
     )
 }
