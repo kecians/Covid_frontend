@@ -105,7 +105,7 @@ export default function Hform(props) {
                     <Form.Control
                             type='text'
                             name='blood_pres_systolic'
-                            placeholder='Blood Pressure'
+                            placeholder='Blood Pressure (ex.120/80)'
                             onChange= { handleChange }
                             required
                         >

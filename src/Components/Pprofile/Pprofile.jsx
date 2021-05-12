@@ -49,10 +49,10 @@ export default function Pprofile(props) {
         });
     }, [props.id])
     return (
-        <div className="container">
+        <div className="container p-2">
             <Heading  heading="Patient Profile"/>
             <div className="row ">
-                <div className="col-md-3 col-sm-12 col-lg-3 col-12">
+                <div className="col-md-4 col-sm-12 col-lg-4 col-12">
                     <div class="card profile pt-4">
                         <div class="card-body row">
                             <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Name: <span className="font-weight-bold">{state.name} </span></h6>
@@ -73,7 +73,8 @@ export default function Pprofile(props) {
                         <div class="card-body row">
                             <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Address: <span className="font-weight-bold">{state.address}</span></h6>
                         </div>
-                        <div class="card-body row">
+                        {cookie.load("staff")==="DOCTOR"? 
+                            <div class="card-body row">
                             <div class=" col-md-4 col-sm-4 col-4 col-lg-4  pl-5">
                                 <Button variant="primary" type="submit" className="searchbarcontainer log">
                                     Change Bed
@@ -85,9 +86,12 @@ export default function Pprofile(props) {
                                 </Button>
                             </div>
                         </div>
+                        : null
+                        }
+                        
                     </div>
                 </div>
-                <div className="col-md-9 col-sm-12 col-lg-9 col-12 p-2">
+                <div className="col-md-8 col-sm-12 col-lg-8 col-12 p-2">
                     <div class="card profile pt-4">
                         <Heading  heading="Health Info"/>
                         <div class="card-body row">
