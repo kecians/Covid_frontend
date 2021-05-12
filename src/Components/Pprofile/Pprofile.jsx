@@ -58,7 +58,7 @@ export default function Pprofile(props) {
                             <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Name: <span className="font-weight-bold">{state.name} </span></h6>
                         </div>
                         <div class="card-body row">
-                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Name: <span className="font-weight-bold">{state.patient_status==="A"? "Active": state.patient_status==="R" ? "Recoverd" : state.patient_status==="M" ? "Migrated":null} </span></h6>
+                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Status: <span className="font-weight-bold">{state.patient_status==="A"? "Active": state.patient_status==="R" ? "Recoverd" : state.patient_status==="M" ? "Migrated":null} </span></h6>
                         </div>
                         <div class="card-body row">
                             <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Patient id: <span className="font-weight-bold">{state.patient_id}</span></h6>
