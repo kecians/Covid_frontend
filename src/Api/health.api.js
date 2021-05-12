@@ -6,4 +6,4 @@ export const patientHealth = `${server}/api/health/update/`
 
 // icmr is the patient id to get his full health detail in last 5 days or last 5 entries
 
-export const patientHealthProfile = `${server}/api/health/details/<str:icmr>/`
+export const patientHealthProfile = `${server}/api/health/details/`
