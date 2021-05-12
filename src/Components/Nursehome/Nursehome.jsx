@@ -1,51 +1,48 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Searchbar from '../Searchbar/Searchbar'
 import { Button } from 'react-bootstrap' 
 import Profile from '../Profile/Profile'
 import Infocard from '../Infocard/Infocard'
-import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
-import { store } from "../../Redux/store";
-import { logout, loading } from "../../Redux/auth/auth.actions";
-import cookie from 'react-cookies'
-export function Nursehome() {
-    if (!cookie.load("token")) { 
-        return <Redirect to='/' />;
-      }
+import Logout from '../Logout/Logout'
+export default function Nursehome() {
     return (
         <div className="container pt-3">
 
             <div className="row">
-                <div className="col-md-9 col-9 col-sm-12">
+                <div className="col-md-9 col-9 col-sm-9">
                     <Searchbar />
                 </div>
-                <div className="col-md-1 col-3 col-sm-12"> 
-                    <Button variant="primary" type="submit" className="searchbarcontainer log" onClick={()=>{
-                        store.dispatch(loading());
-                        setTimeout(() => {
-                        store.dispatch(logout());
-                        }, 1000);           
-                        }}>
-                        Logout
-                    </Button>
-                    <Button variant="primary" type="submit" className="searchbarcontainer mt-3 log" >
-                       <Link to='/list'> All Patients </Link>
-                    </Button>
+                <div className="col-md-3 col-3 col-sm-3"> 
+                    <Logout />
                 </div>
             </div>
-
+            <hr className="mt-4"/>
             <div className="row check">
-                <div className="col-md-4 col-sm-4 col-4 col-lg-4">
+                <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2">
                     <Infocard name="Total Patient" data="30"/>
                 </div>
-                <div className="col-md-4 col-sm-4 col-4 col-lg-4">
+                <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2">
                     <Infocard name="Total Beds" data="30"/>
                 </div>
+                <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2 text-center">
+                    <Link to='/list'> 
+                        <Button variant="primary" type="submit" className="searchbarcontainer log" >
+                            All Patients 
+                        </Button>
+                    </Link>
+                    <span className="p-1"></span>
+                    <Link to='/list'> 
+                        <Button variant="primary" type="submit" className="searchbarcontainer log " >
+                            Home
+                        </Button>
+                    </Link>
+                </div>
+                
             </div>
 
             <div className="row py-3">
-                <div className="col-md-9 col-sm-12 col-lg-9 col-12">
+                <div className="col-md-9 col-sm-12 col-lg-9 col-12 p-2">
                     <div class="card profile">
                         <div class="card-body row">
                             <h5 class=" col-md-4 col-sm-4 col-4 col-lg-4 text-center">Normal Beds</h5>
@@ -65,7 +62,7 @@ export function Nursehome() {
     
                     </div>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-3 col-sm-12 col-lg-3 col-12 p-2">
                     <Profile name="Prashant" category="WardBoy"/>
                 </div>
             </div>
@@ -75,14 +72,3 @@ export function Nursehome() {
 
     
 }
-
-Nursehome.propTypes = {
-    logout: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool,
-  };
-
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.authReducer.isAuthenticated,
-});
-
-export default connect(mapStateToProps, { logout, loading })(Nursehome);

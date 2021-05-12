@@ -9,7 +9,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
     {...rest}
     render={(props) => {
     if (cookie.load("token")) {
-        return <Redirect to="/nurse/home" />;
+        return <Redirect to="/home" />;
       } else {
         return <Component {...props} />;
       }
