@@ -112,7 +112,7 @@ export const register = (username, password, password2, staff_categ) => (
   } else if (staff_categ === 'Doctor') {
     staff_categ = 'D';
   } else {
-    staff_categ = '';
+    staff_categ = 'A';
   }
   // Body
   const body = JSON.stringify({

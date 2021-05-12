@@ -63,7 +63,7 @@ export default function Nursehome() {
                     </div>
                 </div>
                 <div className="col-md-3 col-sm-12 col-lg-3 col-12 p-2">
-                    <Profile name="Prashant" category="WardBoy"/>
+                    <Profile />
                 </div>
             </div>
 
