@@ -32,10 +32,10 @@ function App() {
           <LockRoute exact path="/" component={Home} />  
           <Route exact path="/signup" component={Signup} />
           <PrivateRoute exact path="/list" component={Plist} />
-          <PrivateRoute exaact path="/nurse/home" component={Searchbar} />
-          <PrivateRoute exact path="/nurse/patient/admit" component={Admitpatient} />
-          <PrivateRoute exact path="/nurse/patient/profile" component={Patientprofile} />
-          <PrivateRoute exact path="/nurse/patient/healthcheck" component={Healthform} />
+          <PrivateRoute exaact path="/home" component={Searchbar} />
+          <PrivateRoute exact path="/patient/admit" component={Admitpatient} />
+          <PrivateRoute exact path="/patient/profile" component={Patientprofile} />
+          <PrivateRoute exact path="/patient/healthcheck/:id/:name" component={Healthform} />
           </ToastProvider>  
         </Switch>
       </BrowserRouter>

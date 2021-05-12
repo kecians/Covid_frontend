@@ -49,7 +49,6 @@ const Load = ()=>{
     )
 }
 export function Loader(props) {
-    console.log(props)
     return (
         props.isLoading ? <Load />: null
     )

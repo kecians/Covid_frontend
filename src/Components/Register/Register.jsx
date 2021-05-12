@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { Form, Button } from 'react-bootstrap' 
-
+import { Link } from 'react-router-dom'
 import { login, register, loading } from "../../Redux/auth/auth.actions";
 import { Redirect } from 'react-router-dom'
 import PropTypes from "prop-types";
@@ -48,7 +48,7 @@ export function Register(props) {
           }
     }
     if (cookie.load("token")) { 
-      return <Redirect to='/nurse/home' />;
+      return <Redirect to='/home' />;
     }
 
     return (
@@ -102,9 +102,12 @@ export function Register(props) {
                 Submit
             </Button>
             <div className="text-center">or</div>
-            <Button variant="light" type="submit" className="searchbarcontainer button my-2 p-2">
-                Login
-            </Button>
+            <Link to="/">
+                <Button variant="light" type="submit" className="searchbarcontainer button my-2 p-2">
+                    Login
+                </Button>
+            </Link>
+            
         </Form>
         </>
     )
