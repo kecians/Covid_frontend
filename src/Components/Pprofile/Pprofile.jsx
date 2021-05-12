@@ -48,32 +48,30 @@ export default function Pprofile(props) {
         console.log(err.response);
         });
     }, [props.id])
-    console.log(data)
     return (
         <div className="container">
             <Heading  heading="Patient Profile"/>
-            <div className="row py-3">
-                <div className="col-md-6 col-sm-12 col-lg-6 col-12">
+            <div className="row ">
+                <div className="col-md-3 col-sm-12 col-lg-3 col-12">
                     <div class="card profile pt-4">
-                        <Heading  heading="General Info"/>
                         <div class="card-body row">
-                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Name: <span className="font-weight-bold pl-4">{state.name} </span></h6>
+                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Name: <span className="font-weight-bold">{state.name} </span></h6>
                         </div>
                         <div class="card-body row">
-                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Patient id: <span className="font-weight-bold pl-4">{state.patient_id}</span></h6>
+                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Name: <span className="font-weight-bold">{state.patient_status==="A"? "Active": state.patient_status==="R" ? "Recoverd" : state.patient_status==="M" ? "Migrated":null} </span></h6>
                         </div>
                         <div class="card-body row">
-                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Adhar Number:</h6>
+                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Patient id: <span className="font-weight-bold">{state.patient_id}</span></h6>
                         </div>
                         <div class="card-body row">
-                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Contact Number: <span className="font-weight-bold pl-4">{state.contact_number}</span></h6>
+                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Contact Number: <span className="font-weight-bold">{state.contact_number}</span></h6>
                         </div>
                         <div class="card-body row">
-                            <h6 class=" col-md-6 col-sm-6 col-6 col-lg-6  pl-5">Gender: <span className="font-weight-bold pl-4">{state.gender}</span></h6>
-                            <h6 class=" col-md-6 col-sm-6 col-6 col-lg-6  pl-5">Age: <span className="font-weight-bold pl-4">{state.age}</span></h6>
+                            <h6 class=" col-md-6 col-sm-6 col-6 col-lg-6  pl-5">Gender: <span className="font-weight-bold">{state.gender}</span></h6>
+                            <h6 class=" col-md-6 col-sm-6 col-6 col-lg-6  pl-5">Age: <span className="font-weight-bold">{state.age}</span></h6>
                         </div>
                         <div class="card-body row">
-                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Address: <span className="font-weight-bold pl-4">{state.address}</span></h6>
+                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Address: <span className="font-weight-bold">{state.address}</span></h6>
                         </div>
                         <div class="card-body row">
                             <div class=" col-md-4 col-sm-4 col-4 col-lg-4  pl-5">
@@ -89,7 +87,7 @@ export default function Pprofile(props) {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-6 col-sm-12 col-lg-6 col-12 p-2">
+                <div className="col-md-9 col-sm-12 col-lg-9 col-12 p-2">
                     <div class="card profile pt-4">
                         <Heading  heading="Health Info"/>
                         <div class="card-body row">

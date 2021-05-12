@@ -90,7 +90,7 @@ export default function Listview() {
                     </div>
                 </div>
                 <div className="col-md-3 p-2  col-sm-12 col-lg-3 col-12">
-                    <Profile name="Prashant" category="WardBoy"/>
+                    <Profile/>
                     
                 </div>
             </div>

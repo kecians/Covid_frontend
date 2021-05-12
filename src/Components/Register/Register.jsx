@@ -96,6 +96,7 @@ export function Register(props) {
                     <option>Select</option>
                     <option>Nurse</option>
                     <option>Doctor</option>
+                    <option>Admin</option>
                 </Form.Control>
             </Form.Group>
             <Button variant="primary" type="submit" className="button my-2 p-2">

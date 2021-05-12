@@ -31,7 +31,6 @@ export default function Hform(props) {
             state.patient_condition=4   
         }
         event.preventDefault();
-        setState({ loading: true});
         axios.post(patientHealth , { 
             username: state.id,
             oxy_level: state.oxy_level, 
