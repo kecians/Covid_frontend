@@ -1,8 +1,54 @@
-import React from 'react'
-
+import React, {useEffect, useState} from 'react'
+import {Link} from 'react-router-dom'
 import { Button } from 'react-bootstrap'
 import Heading from '../Heading/Heading'
-export default function Pprofile() {
+import { patientHealthProfile } from '../../Api/health.api'
+import { patientProfile } from '../../Api/patient.api'
+import axios from 'axios'
+import cookie from 'react-cookies'
+export default function Pprofile(props) {
+
+    const [state, setState] = useState({})
+    const [data, setData] = useState([])
+    useEffect(() => {
+        axios({
+            url: patientProfile+`${props.id}/`,
+            method: 'GET',
+            headers: {
+              Authorization: `Token ${cookie.load('token')}`,
+            },
+          })
+          .then((res) => {
+            if (res.data.status === 404) {
+              
+            } else {
+              setState(res.data.data)
+            }
+          })
+          .catch((err) => {
+            console.log(err.response);
+          });
+
+          
+        axios({
+        url: patientHealthProfile+`${props.id}/`,
+        method: 'GET',
+        headers: {
+            Authorization: `Token ${cookie.load('token')}`,
+        },
+        })
+        .then((res) => {
+        if (res.data.status === 404) {
+            
+        } else {
+            setData(res.data.data)
+        }
+        })
+        .catch((err) => {
+        console.log(err.response);
+        });
+    }, [props.id])
+    console.log(data)
     return (
         <div className="container">
             <Heading  heading="Patient Profile"/>
@@ -11,26 +57,23 @@ export default function Pprofile() {
                     <div class="card profile pt-4">
                         <Heading  heading="General Info"/>
                         <div class="card-body row">
-                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Name: </h6>
+                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Name: <span className="font-weight-bold pl-4">{state.name} </span></h6>
                         </div>
                         <div class="card-body row">
-                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Patient id:</h6>
+                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Patient id: <span className="font-weight-bold pl-4">{state.patient_id}</span></h6>
                         </div>
                         <div class="card-body row">
                             <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Adhar Number:</h6>
                         </div>
                         <div class="card-body row">
-                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Contact Number:</h6>
+                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Contact Number: <span className="font-weight-bold pl-4">{state.contact_number}</span></h6>
                         </div>
                         <div class="card-body row">
-                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Family Contact Number:</h6>
+                            <h6 class=" col-md-6 col-sm-6 col-6 col-lg-6  pl-5">Gender: <span className="font-weight-bold pl-4">{state.gender}</span></h6>
+                            <h6 class=" col-md-6 col-sm-6 col-6 col-lg-6  pl-5">Age: <span className="font-weight-bold pl-4">{state.age}</span></h6>
                         </div>
                         <div class="card-body row">
-                            <h6 class=" col-md-6 col-sm-6 col-6 col-lg-6  pl-5">Gender:</h6>
-                            <h6 class=" col-md-6 col-sm-6 col-6 col-lg-6  pl-5">Age:</h6>
-                        </div>
-                        <div class="card-body row">
-                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Address:</h6>
+                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Address: <span className="font-weight-bold pl-4">{state.address}</span></h6>
                         </div>
                         <div class="card-body row">
                             <div class=" col-md-4 col-sm-4 col-4 col-lg-4  pl-5">
@@ -46,33 +89,40 @@ export default function Pprofile() {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-6 col-sm-12 col-lg-6 col-12">
+                <div className="col-md-6 col-sm-12 col-lg-6 col-12 p-2">
                     <div class="card profile pt-4">
                         <Heading  heading="Health Info"/>
                         <div class="card-body row">
-                            <h5 class=" col-md-4 col-sm-4 col-4 col-lg-4 text-center">SPO2</h5>
-                            <h5 class=" col-md-4 col-sm-4 col-4 col-lg-4 text-center">Blood Pressure</h5>
-                            <h5 class=" col-md-4 col-sm-4 col-4 col-lg-4 text-center">Temperature</h5>
+                            <h6 class=" col-md-3 col-sm-3 col-3 col-lg-3 text-center font-weight-bold">Patient Condition</h6>
+                            <h6 class=" col-md-3 col-sm-3 col-3 col-lg-3 text-center font-weight-bold">SPO2</h6>
+                            <h6 class=" col-md-3 col-sm-3 col-3 col-lg-3 text-center font-weight-bold">Blood Pressure</h6>
+                            <h6 class=" col-md-3 col-sm-3 col-3 col-lg-3 text-center font-weight-bold">Temperature</h6>
                         </div>
-                        <div class="card-body row">
-                            <p class=" col-md-4 col-sm-4 col-4 col-lg-4 text-center">SPO2</p>
-                            <p class=" col-md-4 col-sm-4 col-4 col-lg-4 text-center">BPressure(mmhg)</p>
-                            <p class=" col-md-4 col-sm-4 col-4 col-lg-4 text-center">Temperature</p>
+                        {data.map((i,index) => (
+                        <div class="card-body row" key={index}>
+                            <p class=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">{i.patient_condition===1? "Asymptomataic" : i.patient_condition===2 ? "Mild" : i.patient_condition===3 ? "Moderate" : "Severe" }</p>
+                            <h5 class=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">{i.oxy_level}</h5>
+                            <p class=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">{i.blood_pres_systolic}/{i.blood_pres_diastolic}(mm hg)</p>
+                            <p class=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">{i.temperature}</p>
                         </div>
+                        ))}
                     </div>
 
 
                     <div className="card-body row">
-                        <div className=" col-md-4 col-sm-4 col-4 col-lg-4 text-center">
-                            <Button variant="light" type="submit" className="searchbarcontainer">
-                                Add Health
-                            </Button>
+                        <div className=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">
+                            <Link to='/list'>
+                                <Button variant="light" type="submit" className="searchbarcontainer">
+                                    All Patients
+                                </Button>
+                            </Link>
                         </div>
-                        <div className=" col-md-4 col-sm-4 col-4 col-lg-4 text-center"> 
-                            
+                        <div className=" col-md-3 col-sm-3 col-3 col-lg-3 text-center"> 
+                            <Link to='/home'>
                             <Button variant="primary" type="submit" className="searchbarcontainer log">
-                                Add Patient
+                                Home
                             </Button>
+                            </Link>
                         </div>
                     </div>
                 </div>

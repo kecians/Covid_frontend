@@ -34,7 +34,7 @@ function App() {
           <PrivateRoute exact path="/list" component={Plist} />
           <PrivateRoute exaact path="/home" component={Searchbar} />
           <PrivateRoute exact path="/patient/admit" component={Admitpatient} />
-          <PrivateRoute exact path="/patient/profile" component={Patientprofile} />
+          <PrivateRoute exact path="/patient/profile/:id" component={Patientprofile} />
           <PrivateRoute exact path="/patient/healthcheck/:id/:name" component={Healthform} />
           </ToastProvider>  
         </Switch>

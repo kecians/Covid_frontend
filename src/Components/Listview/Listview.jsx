@@ -77,7 +77,7 @@ export default function Listview() {
                         {state.map((i,index) => (
                             <div class="card-body row" key={index}>
                                 <p class=" col-md-4 col-sm-4 col-4 col-lg-4 text-center">{i.patient_id}</p>
-                                <p class=" col-md-4 col-sm-4 col-4 col-lg-4 text-center">{i.name}</p>
+                                <p class=" col-md-4 col-sm-4 col-4 col-lg-4 text-center"><Link to={`/patient/profile/${i.patient_id}`} className="btn btn-light searchbarcontainer text-center ">{i.name}</Link></p>
                                 <p class=" col-md-4 col-sm-4 col-4 col-lg-4 text-center">
                                     <Button variant="primary" type="submit" className="searchbarcontainer log">
                                         <Link to={`/patient/healthcheck/${i.patient_id}/${i.name}`}>Health Checkup</Link>
@@ -89,7 +89,7 @@ export default function Listview() {
     
                     </div>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-3 p-2  col-sm-12 col-lg-3 col-12">
                     <Profile name="Prashant" category="WardBoy"/>
                     
                 </div>
