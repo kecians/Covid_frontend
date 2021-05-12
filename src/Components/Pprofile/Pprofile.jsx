@@ -98,7 +98,7 @@ export default function Pprofile(props) {
                         </div>
                         {data.map((i,index) => (
                         <div class="card-body row" key={index}>
-                            <p class=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">{i.patient_condition===1? "Asymptomataic" : i.patient_condition===2 ? "Mild" : i.patient_condition===3 ? "Moderate" : "Severe" }</p>
+                            <p class=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">{i.patient_condition==="1"? "Asymptomataic" : i.patient_condition==="2" ? "Mild" : i.patient_condition==="3" ? "Moderate" : "Severe" }</p>
                             <h5 class=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">{i.oxy_level}</h5>
                             <p class=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">{i.blood_pres_systolic}/{i.blood_pres_diastolic}(mm hg)</p>
                             <p class=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">{i.temperature}</p>
