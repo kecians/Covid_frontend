@@ -4,6 +4,7 @@ import {Redirect} from 'react-router-dom'
 import {patientHealth} from '../../Api/health.api'
 import axios from 'axios'
 import {useToasts} from 'react-toast-notifications'
+import cookie from 'react-cookies'
 export default function Hform(props) {
     const {addToast} = useToasts()
     const initialState = {
@@ -31,7 +32,7 @@ export default function Hform(props) {
             state.patient_condition=4   
         }
         event.preventDefault();
-        axios.post(patientHealth , { 
+        const eData = { 
             username: state.id,
             oxy_level: state.oxy_level, 
             blood_pres_systolic: state.blood_pres_systolic.split('/')[0],
@@ -39,6 +40,14 @@ export default function Hform(props) {
             temperature: state.temperature,
             patient_condition: state.patient_condition
             
+          }
+        axios({
+            url: patientHealth,
+            method: 'POST',
+            data: eData,
+            headers: {
+              Authorization: `Token ${cookie.load('token')}`,
+            },
           })
           .then(res=>{
             if (res.data.status===201){

@@ -4,7 +4,7 @@ import { Form, Button, Col} from 'react-bootstrap'
 import {patientAdmit} from '../../Api/patient.api'
 import axios from 'axios'
 import {Redirect} from 'react-router-dom'
-
+import cookie from 'react-cookies'
 export default function Addpatient() {
     const {addToast} = useToasts()
     const initialState = {
@@ -28,13 +28,20 @@ export default function Addpatient() {
             state.gender="O"
         }
         event.preventDefault();
-        axios.post(patientAdmit , { 
+        const eData={
             name: state.name,
             contact_number: state.contact_number,
             gender: state.gender,
             age: state.age,
             address: state.address,
-            
+        }
+        axios({
+            url: patientAdmit,
+            method: 'POST',
+            data: eData,
+            headers: {
+              Authorization: `Token ${cookie.load('token')}`,
+            },
           })
           .then(res=>{
             if (res.data.status===201){
@@ -93,8 +100,8 @@ export default function Addpatient() {
                         required
                     >
                         <option>Select Gender</option>
-                        <option>Female</option>
                         <option>Male</option>
+                        <option>Female</option>
                         <option>Other</option>
                 </Form.Control>
                 </Form.Group>
