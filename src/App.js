@@ -18,6 +18,8 @@ import Toastify from './Components/Toastify/Toastify'
 import { ToastProvider } from 'react-toast-notifications';
 import LockRoute from './LockRoute'
 import PrivateRoute from './PrivateRoute'
+import Bedchange from './Pages/Bedchange/Bedchange'
+import Statuschange from './Pages/Statuschange/Statuschange'
 function App() {
   return (
     <BrowserRouter>
@@ -36,6 +38,8 @@ function App() {
           <PrivateRoute exact path="/patient/admit" component={Admitpatient} />
           <PrivateRoute exact path="/patient/profile/:id" component={Patientprofile} />
           <PrivateRoute exact path="/patient/healthcheck/:id/:name" component={Healthform} />
+          <PrivateRoute exact path="/patient/bedchange/:id" component={Bedchange} />
+          <PrivateRoute exact path="/patient/statuschange/:id" component={Statuschange} />
           </ToastProvider>  
         </Switch>
       </BrowserRouter>

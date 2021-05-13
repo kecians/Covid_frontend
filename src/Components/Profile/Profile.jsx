@@ -9,13 +9,19 @@ export default function Profile(props) {
             <div class="card-body">
                 <h5 class="card-title">Info</h5>
                 <p class="card-title">Staff Id: <span className="font-weight-bold">{cookie.load("staff_id")} </span></p>
-                <p class="card-title">Category: <span className="font-weight-bold">{cookie.load("staff")} </span></p>
+                <p class="card-title">Category: <span className="font-weight-bold">{cookie.load("staff")==="NURSE"?"DEO":cookie.load("staff")} </span></p>
                 <br />
-                <Link to="/patient/admit">
-                <Button variant="primary" type="submit" className="searchbarcontainer log">
-                    Add Patient
-                </Button>
-                </Link>
+                {cookie.load("staff")==="NURSE" ?
+                    <>
+                    <Link to="/patient/admit">
+                        <Button variant="primary" type="submit" className="searchbarcontainer log">
+                            Add Patient
+                        </Button>
+                    </Link>
+                     </>
+                     : 
+                    null}
+                
             </div>
         </div>
     )
