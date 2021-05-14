@@ -17,6 +17,9 @@ export default function Statusform(props) {
         if (state.status==="Migrated"){
             state.status="M"
         }
+        else if (state.status==="Death"){
+          state.status="D"
+        }
         else{
             state.status="R"
         }
@@ -99,6 +102,7 @@ export default function Statusform(props) {
                         <option>Select Status</option>
                         <option>Migrated</option>
                         <option>Recovered</option>
+                        <option>Death</option>
                         
                     </Form.Control>
                 </Form.Group>

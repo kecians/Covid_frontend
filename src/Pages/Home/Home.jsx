@@ -12,7 +12,6 @@ import Covid from '../../Components/Covid/Covid'
 import './Home.scss'
 
 export default function Home() {
-    document.title = "Frontline | Home"
     return (
         <>
             {/* <NavBar/> */}
