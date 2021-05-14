@@ -57,11 +57,11 @@ export default function Nursehome() {
                 <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2 text-center">
                     <Link to='/list'> 
                         <Button variant="primary" type="submit" className="searchbarcontainer log" >
-                            All Patients 
+                           Active Patients 
                         </Button>
                     </Link>
                     <span className="p-1"></span>
-                    <Link to='/list'> 
+                    <Link to='/home'> 
                         <Button variant="primary" type="submit" className="searchbarcontainer log " >
                             Home
                         </Button>

@@ -14,3 +14,28 @@ code {
 }
 
 
+
+:root{
+
+  --font-size-h : 40px ;
+  --font-size-p : 16px;
+}
+
+
+h1{
+  font-size: var(--font-size-h) !important;
+  
+}
+
+p{
+  font-size: var(--font-size-p) !important; 
+}
+
+@media (max-width : 500px) {
+
+  :root{
+    --font-size-h : 30px !important;
+    --font-size-p : 13px;
+  }
+  
+}
