@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
-import { Button } from 'react-bootstrap'
+import { Button, Table } from 'react-bootstrap'
 import './Listview.scss'
 import Profile from '../Profile/Profile'
 import Infocard from '../Infocard/Infocard'
@@ -9,6 +9,7 @@ import Logout from '../Logout/Logout'
 import cookie from 'react-cookies'
 import {patientAdmit} from '../../Api/patient.api'
 import axios from 'axios'
+import Heading from '../Heading/Heading'
 
 export default function Listview() {
     const [state, setState] = useState([])
@@ -25,7 +26,7 @@ export default function Listview() {
             if (res.data.status === 404) {
               
             } else {
-              setState(res.data.data)
+              setState(res.data.data.reverse())
             }
           })
           .catch((err) => {
@@ -33,7 +34,9 @@ export default function Listview() {
           });
     }, [])
     return (
+        
         <div className="container pt-3">
+            <Heading heading="G.T.R Base Hospital, Almora"/>
             <div className="row">
                 <div className="col-md-9 col-9 col-sm-12">
                     <Searchbar />
@@ -44,9 +47,9 @@ export default function Listview() {
             </div>
             <hr className="mt-4"/>
             {/* Cards for Status for patient check */}
-            <div className="row check">
+            <div className="row">
                 <div className="col-md-4 col-sm-4 col-12 p-2 col-lg-4">
-                    <Infocard name="Checked" data="30"/>
+                    <Infocard name="Checked" data={state.length}/>
                 </div>
                 <div className="col-md-4 col-sm-4 col-12 p-2 col-lg-4">
                     <Infocard name="Not Checked" data="30"/>
@@ -67,33 +70,36 @@ export default function Listview() {
             </div>
             {/* Cards for Status for patient check */}
             <div className="row py-3">
-                <div className="col-md-9 col-sm-12 col-lg-9 col-12">
-                    <div className="card profile">
-                        <div className="card-body row">
-                            <h5 className={cookie.load("staff")==="NURSE"? "col-md-4 col-sm-4 col-4 col-lg-4 text-center": "col-md-6 col-sm-6 col-6 col-lg-6 text-center"}>Patient ID</h5>
-                            <h5 className={cookie.load("staff")==="NURSE"? "col-md-4 col-sm-4 col-4 col-lg-4 text-center": "col-md-6 col-sm-6 col-6 col-lg-6 text-center"}>Patient Name</h5>
-                            {cookie.load("staff")==="NURSE" ?<h5 className=" col-md-4 col-sm-4 col-4 col-lg-4 text-center">Health Update</h5>: null}
-                        </div>
-                        {state.map((i,index) => (
-                            <div className="card-body row" key={index}>
-                                <p className={cookie.load("staff")==="NURSE"? "col-md-4 col-sm-4 col-4 col-lg-4 text-center": "col-md-6 col-sm-6 col-6 col-lg-6 text-center"}>{i.patient_id}</p>
-                                <p className={cookie.load("staff")==="NURSE"? "col-md-4 col-sm-4 col-4 col-lg-4 text-center": "col-md-6 col-sm-6 col-6 col-lg-6 text-center"}><Link to={`/patient/profile/${i.patient_id}`} className="btn btn-light searchbarcontainer text-center ">{i.name}</Link></p>
-                                {cookie.load("staff")==="NURSE"? 
-                                    <>
-                                    <p className=" col-md-4 col-sm-4 col-4 col-lg-4 text-center">
-                                    <Button variant="primary" type="submit" className="searchbarcontainer log">
-                                        <Link to={`/patient/healthcheck/${i.patient_id}/${i.name}`}>Health Checkup</Link>
-                                    </Button>
-                                </p>
-                                </>
-                                : null
-                                }
-                                
-                            </div>
-                        ))}
-                        
+                <div className="col-md-9 col-sm-12 col-lg-9 col-12 profile">
+
+                <Table responsive="md lg sm" className="">
+                        <thead>
+                        <tr>
+                            <th>Patient ID</th>
+                            <th>Patient Name</th>
     
-                    </div>
+                            {cookie.load("staff")==="NURSE" ?<th>Health Update</th>: null}
+                            <th>Admitted On</th>
+                            <th>Status</th>
+                            
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {state.map((i,index) => (
+                        <tr>
+                            <td>{i.patient_id}</td>
+                            <td><Link to={`/patient/profile/${i.patient_id}`} className="text-primary text-center">{i.name}</Link></td>
+                            {cookie.load("staff")==="NURSE"?      
+                               <td> <a href={`/patient/healthcheck/${i.patient_id}/${i.name}`} className="text-primary text-center">Health Checkup</a></td>
+                                     :null
+                            }
+                            <td>{i.created_on.split("T")[0]}</td>
+                            <td>{i.patient_status==="A" ? "Active" : null}</td>
+                            
+                        </tr>
+                        ))}
+                        </tbody>
+                    </Table>
                 </div>
                 <div className="col-md-3 p-2  col-sm-12 col-lg-3 col-12">
                     <Profile/>
