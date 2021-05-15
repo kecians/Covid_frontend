@@ -79,8 +79,7 @@ export default function Listview() {
                         <th>Patient Name</th>
 
                         {cookie.load("staff")==="NURSE" ?<th>Health Update</th>: null}
-                        <th>Admitted On</th>
-                        <th>Status</th>
+                        <th>Admitted On</th> 
                         
                     </tr>
                     </thead>
@@ -105,7 +104,6 @@ export default function Listview() {
                                     :null
                         }
                         <td>{i.created_on? i.created_on.split("T")[0]: "N/A"}</td>
-                        <td>{i.patient_status==="A" ? "Active" : null}</td>
                         
                     </tr>
                     ))}

@@ -1,55 +1,51 @@
-import React from 'react'
-
-import { Button, Form } from 'react-bootstrap'
+import React, {useState} from 'react'
+import { Button, Form, Table, Spinner } from 'react-bootstrap'
+import {Link} from 'react-router-dom'
 import Logout from '../../Components/Logout/Logout'
-// import {patientSearch} from '../../Api/patient.api'
-// import axios from 'axios'
-// import cookie from 'react-cookies'
+import {patientSearch} from '../../Api/patient.api'
+import axios from 'axios'
+import cookie from 'react-cookies'
 export default function Searchbar() {
 
-    // const initialState = {
-    //     show: false,
-    //     loading: false,
-    //     query: '',
-    // }
-    // const [state, setState] = useState(initialState)
+    const initialState = {
+        show: false,
+        loading: false,
+        query: '',
+        data: []
+    }
+    const [state, setState] = useState(initialState)
 
-    // const handleChange = event =>{
-    //     setState({ ...state, [event.target.name]: event.target.value,         
-    //     });
-    //   }
-    // const handleSubmit = event => {
-    //     console.log(event)
-    //     event.preventDefault();
-    //     setState({...state, loading: true})
-    //     axios({
-    //         url: patientSearch+`${state.query}/`,
-    //         method: 'GET',
-    //         headers: {
-    //             Authorization: `Token ${cookie.load('token')}`,
-    //     },
-    //     })
-    //     .then((res) => {
-    //     if (res.data.status === 404) {
-    //         console.log(res)
-    //         setState({...state, show: true})
-    //     } else {
-    //         setState({...state, show: true})
-    //         // setState(false)
-    //         // setState(res.data.data.reverse())
-    //         console.log(res.data)
-    //     }
-    //     })
-    //     .catch((err) => {
-    //     console.log(err.response);
-    //     });
+    const handleChange = event =>{
+        setState({ ...state, [event.target.name]: event.target.value,         
+        });
+      }
+    const handleSubmit = event => {
+        event.preventDefault();
+        setState({...state, loading: true})
+        axios({
+            url: patientSearch+`${state.query}/`,
+            method: 'GET',
+            headers: {
+                Authorization: `Token ${cookie.load('token')}`,
+        },
+        })
+        .then((res) => {
+        if (res.data.status === 404) {
+            setState({...state, show: true, data: res.data.data})
+        } else {
+            setState({...state, show: true, data: res.data.data.reverse()})
+        }
+        })
+        .catch((err) => {
+            console.log(err.response);
+        });
 
-    // }
+    }
     return (
         <>
         <div className="row">
             <div className="col-md-9 col-9 col-sm-12">
-                <Form > {/*onSubmit={handleSubmit}*/}
+                <Form onSubmit={handleSubmit} id="form4"> {/*onSubmit={handleSubmit}*/}
                         <Form.Group controlId="Patientid" className='searchbarcontainer'>
                         <i className='fa fa-search serachicon'></i>
                         <input  
@@ -57,9 +53,8 @@ export default function Searchbar() {
                             type="text"
                             placeholder='Search...' 
                             name="query" 
-                            
+                            onChange={handleChange}
                         />
-                        {/* onChange={handleChange}  */}
                         </Form.Group>
                     <Button 
                         variant="light" type="submit" 
@@ -67,38 +62,106 @@ export default function Searchbar() {
                         Search
                     </Button>
                 </Form>
-                {/* {state.show? 
+                {cookie.load("staff")!=="NURSE"? 
                     <div className="filter mt-4 row">
-                    <Form onSubmit={handleSubmit} className="searchbarcontainer">
-                    <Button 
-                        variant="outline-primary" 
-                        type="submit" 
-                        className="searchbarcontainer col-12 mt-2 col-md-3 col-sm-3 mx-2 d-none d-md-block d-lg-block d-sm-block" 
-                        onClick={(e)=>{
-                            setState({...state, query: "migrated"});
-                            
-                        }}
-                        >
-                        Migrated
-                    </Button>
+                    <Form onSubmit={handleSubmit} className="">
+                        <Button 
+                            variant="outline-primary" 
+                            type="submit" 
+                            className="searchbarcontainer col-12 mt-2 col-md-3 col-sm-3 mx-2 d-none d-md-block d-lg-block d-sm-block" 
+                            onClick={(e)=>{
+                                setState({...state, query: "migrated"});
+                                
+                            }}
+                            >
+                            Migrated
+                        </Button>
                     </Form>
                     
-                    <Button variant="outline-primary" type="submit" className="searchbarcontainer col-12 mt-2 col-md-3 col-sm-3 mx-2 d-none d-md-block d-lg-block d-sm-block">
-                        Recovered
-                    </Button>
-                    <Button variant="outline-primary" type="submit" className="searchbarcontainer col-12 mt-2 col-md-3 col-sm-3 mx-2 d-none d-md-block d-lg-block d-sm-block">
-                        Death
-                    </Button>
+                    <Form onSubmit={handleSubmit} className="">
+                        <Button 
+                            variant="outline-primary" 
+                            type="submit" 
+                            className="searchbarcontainer col-12 mt-2 col-md-3 col-sm-3 mx-2 d-none d-md-block d-lg-block d-sm-block" 
+                            onClick={(e)=>{
+                                setState({...state, query: "death"});
+                                
+                            }}
+                            >
+                            Death
+                        </Button>
+                    </Form>
+                    <Form onSubmit={handleSubmit} className="">
+                        <Button 
+                            variant="outline-primary" 
+                            type="submit" 
+                            className="searchbarcontainer col-12 mt-2 col-md-3 col-sm-3 mx-2 d-none d-md-block d-lg-block d-sm-block" 
+                            onClick={(e)=>{
+                                setState({...state, query: "recovered"});
+                                
+                            }}
+                            >
+                            Recovered
+                        </Button>
+                    </Form>
                 </div>   
                 : null
-                } */}
+                }
             </div>
             <div className="col-md-1 col-3 col-sm-12"> 
                 <Logout />
             </div>
         </div>
          
-        
+        {state.show ? 
+            <div className="row py-3">
+                <div className="col-md-12 col-sm-12 col-lg-12 col-12 profile">
+                    
+                    <Table responsive="md" className="">
+                        <thead>
+                        <tr>
+                            <th>Patient ID</th>
+                            <th>Patient Name</th>
+
+                            {cookie.load("staff")==="NURSE" ?<th>Health Update</th>: null}
+                            <th>Admitted On</th> 
+                            
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {state.loading ? 
+                            <tr>
+                                <td>
+                                    <span>Loading.....</span>
+                                    <Spinner animation="border" size="lg" className=""/>
+                                
+                                </td>
+                            </tr>
+                            :
+                        null
+                        }
+                        {typeof(state.data)==="string"? "No Data Found !!!": <>
+                        
+                        {state.data.map((i,index) => (
+                        <tr>
+                            <td>{i.patient_id}</td>
+                            <td><Link to={`/patient/profile/${i.patient_id}`} className="text-primary text-center">{i.name}</Link></td>
+                            {cookie.load("staff")==="NURSE"?      
+                                <td> <a href={`/patient/healthcheck/${i.patient_id}/${i.name}`} className="text-primary text-center">Health Checkup</a></td>
+                                        :null
+                            }
+                            <td>{i.created_on? i.created_on.split("T")[0]: "N/A"}</td>
+                            
+                        </tr>
+                        ))}
+                        </>}
+                        </tbody>
+                    </Table>
+                </div>    
+            </div>
+
+        : null
+        }
         </>
     )
 }

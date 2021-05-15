@@ -19,6 +19,7 @@ export default function Hform(props) {
     }
     const [state, setState] = useState(initialState)
     const handleSubmit = event => {
+        event.preventDefault();
         if (state.patient_condition==="Asymptomataic"){
             state.patient_condition=1
         }
@@ -31,7 +32,7 @@ export default function Hform(props) {
         else{
             state.patient_condition=4   
         }
-        event.preventDefault();
+        
         const eData = { 
             username: state.id,
             oxy_level: state.oxy_level, 
