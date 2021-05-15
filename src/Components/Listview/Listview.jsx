@@ -39,7 +39,7 @@ export default function Listview() {
     return (
         
         <div className="container pt-3">
-            <Heading heading="G.T.R Base Hospital, Almora"/>
+            <Heading heading="Goberdhan Tiwari Government Base Hospital, Almora"/>
             <div className="row">
                 <div className="col-md-12 col-12 col-sm-12">
                     <Searchbar />

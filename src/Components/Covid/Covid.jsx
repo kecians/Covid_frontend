@@ -33,7 +33,7 @@ export default function Covid(){
         <>     
           <div className="container-fluid bg-silver pt-5">
               <div className="pt-4">
-               <Heading heading='G.T.R Base Hospital, Almora'/>   
+               <Heading heading='Goberdhan Tiwari Government Base Hospital, Almora'/>   
               </div>
               <div className="row">
                     <div className="col-lg-6 col-md-6 col-sm-12 d-none d-sm-block d-md-block">

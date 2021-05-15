@@ -8,6 +8,7 @@ export default function Healthform(props) {
     console.log(id, name)
     return (
         <div className="container-fluid bg-silver pt-4">
+            <Heading heading="Goberdhan Tiwari Government Base Hospital, Almora"/>
             <Heading heading="Health Check Form"/>
             <div className="row">
                 <div className="col-md-3 col-12 col-sm-12"></div>

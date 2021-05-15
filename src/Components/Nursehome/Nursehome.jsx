@@ -4,7 +4,7 @@ import Searchbar from '../Searchbar/Searchbar'
 import { Button } from 'react-bootstrap' 
 import Profile from '../Profile/Profile'
 import Infocard from '../Infocard/Infocard'
-import Logout from '../Logout/Logout'
+// import Logout from '../Logout/Logout'
 import {allotedBeds} from '../../Api/patient.api'
 import axios from 'axios'
 import cookie from 'react-cookies'
@@ -37,14 +37,14 @@ export default function Nursehome() {
     // console.log(state, data)
     return (
         <div className="container pt-3">
-            <Heading heading="G.T.R Base Hospital, Almora"/>
+            <Heading heading="Goberdhan Tiwari Government Base Hospital, Almora"/>
             <div className="row">
-                <div className="col-md-9 col-9 col-sm-9">
+                <div className="col-md-12 col-12 col-sm-12">
                     <Searchbar />
                 </div>
-                <div className="col-md-3 col-3 col-sm-3"> 
+                {/* <div className="col-md-3 col-3 col-sm-3"> 
                     <Logout />
-                </div>
+                </div> */}
             </div>
             <hr className="mt-4"/>
             <div className="row">
