@@ -1,11 +1,11 @@
 // import dependencies
 
 
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // import pages
-
+import Publicpage from './Pages/Publicpage/Publicpage'
 import Home from './Pages/Home/Home'
 import Plist from './Pages/Plist/Plist'
 import Searchbar  from './Pages/Info/Info'
@@ -31,8 +31,9 @@ function App() {
           >
           <Loader />
           <Toastify />
-          <LockRoute exact path="/" component={Home} />  
-          <Route exact path="/signup" component={Signup} />
+          <LockRoute exact path="/" component={Publicpage} />  
+          <LockRoute exact path="/login" component={Home} />  
+          <LockRoute exact path="/signup" component={Signup} />
           <PrivateRoute exact path="/list" component={Plist} />
           <PrivateRoute exaact path="/home" component={Searchbar} />
           <PrivateRoute exact path="/patient/admit" component={Admitpatient} />

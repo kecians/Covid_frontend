@@ -31,14 +31,15 @@ export default function Searchbar() {
         })
         .then((res) => {
         if (res.data.status === 404) {
-            setState({...state, show: true, data: res.data.data})
+            setState({...state, show: true, loading: false, data: "Data Not Found!!"})
         } else {
             setState({...state, show: true, data: res.data.data.reverse()})
         }
         })
         .catch((err) => {
-            console.log(err.response);
+            setState({...state, show: true, loading: false, data: "Data Not Found!!"})
         });
+        setState({...state, loading: false})
 
     }
     return (
@@ -58,17 +59,18 @@ export default function Searchbar() {
                         </Form.Group>
                     <Button 
                         variant="light" type="submit" 
-                        className="searchbarcontainer col-5 col-md-3 col-sm-3 mx-2 mt-2">
+                        className="searchbarcontainer col-5 col-md-3 col-sm-3  mt-2">
                         Search
                     </Button>
                 </Form>
                 {cookie.load("staff")!=="NURSE"? 
                     <div className="filter mt-4 row">
-                    <Form onSubmit={handleSubmit} className="">
+                    <Form onSubmit={handleSubmit} className=" mx-3  d-none d-md-block d-lg-block d-sm-block">
+                        
                         <Button 
                             variant="outline-primary" 
                             type="submit" 
-                            className="searchbarcontainer col-12 mt-2 col-md-3 col-sm-3 mx-2 d-none d-md-block d-lg-block d-sm-block" 
+                            className="searchbarcontainer" 
                             onClick={(e)=>{
                                 setState({...state, query: "migrated"});
                                 
@@ -78,11 +80,11 @@ export default function Searchbar() {
                         </Button>
                     </Form>
                     
-                    <Form onSubmit={handleSubmit} className="">
+                    <Form onSubmit={handleSubmit} className="mx-3  d-none d-md-block d-lg-block d-sm-block">
                         <Button 
                             variant="outline-primary" 
                             type="submit" 
-                            className="searchbarcontainer col-12 mt-2 col-md-3 col-sm-3 mx-2 d-none d-md-block d-lg-block d-sm-block" 
+                            className="searchbarcontainer" 
                             onClick={(e)=>{
                                 setState({...state, query: "death"});
                                 
@@ -91,11 +93,11 @@ export default function Searchbar() {
                             Death
                         </Button>
                     </Form>
-                    <Form onSubmit={handleSubmit} className="">
+                    <Form onSubmit={handleSubmit} className="mx-3  d-none d-md-block d-lg-block d-sm-block">
                         <Button 
                             variant="outline-primary" 
                             type="submit" 
-                            className="searchbarcontainer col-12 mt-2 col-md-3 col-sm-3 mx-2 d-none d-md-block d-lg-block d-sm-block" 
+                            className="searchbarcontainer" 
                             onClick={(e)=>{
                                 setState({...state, query: "recovered"});
                                 
@@ -140,10 +142,10 @@ export default function Searchbar() {
                             :
                         null
                         }
-                        {typeof(state.data)==="string"? "No Data Found !!!": <>
+                        {typeof(state.data)==="string"? "Data Not Found!!": <>
                         
                         {state.data.map((i,index) => (
-                        <tr>
+                        <tr key={index}>
                             <td>{i.patient_id}</td>
                             <td><Link to={`/patient/profile/${i.patient_id}`} className="text-primary text-center">{i.name}</Link></td>
                             {cookie.load("staff")==="NURSE"?      

@@ -22,7 +22,7 @@ export default function Pprofile(props) {
           })
           .then((res) => {
             if (res.data.status === 404) {
-              
+                // setState(res.data.data)
             } else {
                 setLoading(false)
                 setState(res.data.data)
@@ -42,7 +42,7 @@ export default function Pprofile(props) {
         })
         .then((res) => {
         if (res.data.status === 404) {
-            
+            setData(res.data.data)
         } else {
             setData(res.data.data)
         }
@@ -51,6 +51,8 @@ export default function Pprofile(props) {
         console.log(err.response);
         });
     }, [props.id])
+
+    // console.log(data)
     return (
         <div className="container p-2">
             <Heading  heading="Patient Profile"/>
@@ -125,7 +127,9 @@ export default function Pprofile(props) {
                             :
                         null
                         }
-                        {data.map((i,index) => (
+                        {typeof(data)==="string"? data: 
+                            <>
+                            {data.map((i,index) => (
                         <tr>
                              <td>
                                 {i.created_on? i.created_on.split("T")[0]: "N/A"}
@@ -140,6 +144,8 @@ export default function Pprofile(props) {
                             
                         </tr>
                         ))}
+                            </>
+                        }
                         </tbody>
                      </Table>
                     </div>
