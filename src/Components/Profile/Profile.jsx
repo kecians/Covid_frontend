@@ -5,11 +5,11 @@ import { Button } from 'react-bootstrap'
 import cookie from 'react-cookies' 
 export default function Profile(props) {
     return (
-        <div class="card profile">
-            <div class="card-body">
-                <h5 class="card-title">Info</h5>
-                <p class="card-title">Staff Id: <span className="font-weight-bold">{cookie.load("staff_id")} </span></p>
-                <p class="card-title">Category: <span className="font-weight-bold">{cookie.load("staff")==="NURSE"?"DEO":cookie.load("staff")} </span></p>
+        <div className="card profile">
+            <div className="card-body">
+                <h5 className="card-title">Info</h5>
+                <p className="card-title">Staff Id: <span className="font-weight-bold">{cookie.load("staff_id")} </span></p>
+                <p className="card-title">Category: <span className="font-weight-bold">{cookie.load("staff")==="NURSE"?"DEO":cookie.load("staff")} </span></p>
                 <br />
                 {cookie.load("staff")==="NURSE" ?
                     <>

@@ -1,16 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
-import Searchbar from '../Searchbar/Searchbar'
 import { Button } from 'react-bootstrap' 
-import Profile from '../Profile/Profile'
-import Infocard from '../Infocard/Infocard'
+import Infocard from '../../Components/Infocard/Infocard'
 // import Logout from '../Logout/Logout'
 import {allotedBeds} from '../../Api/patient.api'
 import axios from 'axios'
-import cookie from 'react-cookies'
-import Heading from '../Heading/Heading'
+// import cookie from 'react-cookies'
+import Heading from '../../Components/Heading/Heading'
 
-export default function Nursehome() {
+export default function Publicpage() {
     const [state, setState] = useState({})
     const [data, setData] = useState({})
 
@@ -18,9 +16,7 @@ export default function Nursehome() {
         axios({
             url: allotedBeds,
             method: 'GET',
-            headers: {
-              Authorization: `Token ${cookie.load('token')}`,
-            },
+           
           })
           .then((res) => {
             if (res.data.status === 404) {
@@ -38,14 +34,7 @@ export default function Nursehome() {
     return (
         <div className="container pt-3">
             <Heading heading="Goberdhan Tiwari Government Base Hospital, Almora"/>
-            <div className="row">
-                <div className="col-md-12 col-12 col-sm-12">
-                    <Searchbar />
-                </div>
-                {/* <div className="col-md-3 col-3 col-sm-3"> 
-                    <Logout />
-                </div> */}
-            </div>
+            
             <hr className="mt-4"/>
             <div className="row">
                 <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2">
@@ -55,15 +44,11 @@ export default function Nursehome() {
                     <Infocard name="Total Beds" data={state.total} />
                 </div>
                 <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2 text-center">
-                    <Link to='/list'> 
-                        <Button variant="primary" type="submit" className="searchbarcontainer log" >
-                           Active Patients 
-                        </Button>
-                    </Link>
+                    
                     <span className="p-1"></span>
-                    <Link to='/home'> 
+                    <Link to='/login'> 
                         <Button variant="primary" type="submit" className="searchbarcontainer log " >
-                            Home
+                            Login
                         </Button>
                     </Link>
                 </div>
@@ -71,7 +56,7 @@ export default function Nursehome() {
             </div>
 
             <div className="row py-3">
-                <div className="col-md-9 col-sm-12 col-lg-9 col-12 p-2">
+                <div className="col-md-12 col-sm-12 col-lg-12 col-12 p-2">
                     <div className="card profile">
                         <div className="card-body row">
                             <h6 className=" col-md-3 col-sm-3 col-3 col-lg-3 font-weight-bold text-center">General Beds (Available/Total)</h6>
@@ -100,10 +85,7 @@ export default function Nursehome() {
     
                     </div>
                 </div>
-                <div className="col-md-3 col-sm-12 col-lg-3 col-12 p-2">
-                    <Profile />
-                </div>
-            </div>
+                           </div>
 
         </div>
     )
