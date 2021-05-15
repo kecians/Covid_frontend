@@ -26,7 +26,8 @@ export default function Listview() {
           .then((res) => {
             // localStorage.setItem('profileId', res.data.data.id);
             if (res.data.status === 404) {
-              
+                setLoading(false)
+                setState(res.data.data)
             } else {
                 setLoading(false)
                 setState(res.data.data.reverse())
@@ -95,7 +96,11 @@ export default function Listview() {
                         :
                     null
                     }
-                    {state.map((i,index) => (
+                    {typeof(state)==="string"? 
+                    "Patients Doesn't Exist!!"
+                    :
+                    <>
+                        {state.map((i,index) => (
                     <tr>
                         <td>{i.patient_id}</td>
                         <td><Link to={`/patient/profile/${i.patient_id}`} className="text-primary text-center">{i.name}</Link></td>
@@ -107,6 +112,8 @@ export default function Listview() {
                         
                     </tr>
                     ))}
+                    </>
+                    }
                     </tbody>
                 </Table>
                 </div>
