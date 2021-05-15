@@ -6,8 +6,9 @@ import { patientHealthProfile } from '../../Api/health.api'
 import { patientProfile } from '../../Api/patient.api'
 import axios from 'axios'
 import cookie from 'react-cookies'
+import {useToasts} from 'react-toast-notifications'
 export default function Pprofile(props) {
-
+    const {addToast} = useToasts()
     const [state, setState] = useState({})
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
@@ -20,14 +21,15 @@ export default function Pprofile(props) {
           })
           .then((res) => {
             if (res.data.status === 404) {
-                alert("Details Not Found")
+                addToast("Details Not Found!!", {appearance: "error"})
             } else {
                 setLoading(false)
                 setState(res.data.data)
             }
           })
           .catch((err) => {
-            console.log(err.response);
+            addToast("Details Not Found!!", {appearance: "error"})
+            // console.log(err.response);
           });
 
           
@@ -44,7 +46,7 @@ export default function Pprofile(props) {
         }
         })
         .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
         });
     }, [props.id])
 
@@ -54,36 +56,51 @@ export default function Pprofile(props) {
             <Heading  heading="Patient Profile"/>
             <div className="row ">
                 <div className="col-md-4 col-sm-12 col-lg-4 col-12 p-2">
-                    <div class="card profile pt-4">
-                        <div class="card-body row">
-                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Name: <span className="font-weight-bold">{state.name} </span></h6>
+                    <div className="card profile pt-4">
+                        <div className="card-body row">
+                            <h6 className=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Name: <span className="font-weight-bold">{state.name} </span></h6>
                         </div>
-                        <div class="card-body row">
-                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Status: <span className="font-weight-bold">{state.patient_status==="A"? "Active": state.patient_status==="R" ? "Recoverd" : state.patient_status==="M" ? "Migrated":null} </span></h6>
+                        <div className="card-body row">
+                            <h6 className=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Status: <span className="font-weight-bold">{state.patient_status==="A"? "Active": state.patient_status==="R" ? "Recoverd" : state.patient_status==="M" ? "Migrated":null} </span></h6>
                         </div>
-                        <div class="card-body row">
-                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Patient id: <span className="font-weight-bold">{state.patient_id}</span></h6>
+                        <div className="card-body row">
+                            <h6 className=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Patient Condition: <span className="font-weight-bold">{state.health_condition==="1"? "Asymptomataic": state.health_condition==="2"? "Mild": state.health_condition==="3"? "Moderate": "Severe"}</span></h6>
+
                         </div>
-                        <div class="card-body row">
-                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Contact Number: <span className="font-weight-bold">{state.contact_number}</span></h6>
+                        <div className="card-body row">
+                            <h6 className=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Bed Number: <span className="font-weight-bold">
+                                {state.patient_bed?state.patient_bed.bed_number: null}
+                                (
+                                {state.patient_bed ? 
+                                    state.patient_bed.bed_category==="1"? "General Bed": state.patient_bed.bed_category==="2"?
+                                            "O2 Bed": state.patient_bed.bed_category==="3"? "ICU": "Vantilator":null
+
+                                })</span></h6>
+
                         </div>
-                        <div class="card-body row">
-                            <h6 class=" col-md-6 col-sm-6 col-6 col-lg-6  pl-5">Gender: <span className="font-weight-bold">{state.gender}</span></h6>
-                            <h6 class=" col-md-6 col-sm-6 col-6 col-lg-6  pl-5">Age: <span className="font-weight-bold">{state.age}</span></h6>
+                        <div className="card-body row">
+                            <h6 className=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Patient id: <span className="font-weight-bold">{state.patient_id}</span></h6>
                         </div>
-                        <div class="card-body row">
-                            <h6 class=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Address: <span className="font-weight-bold">{state.address}</span></h6>
+                        <div className="card-body row">
+                            <h6 className=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Contact Number: <span className="font-weight-bold">{state.contact_number}</span></h6>
+                        </div>
+                        <div className="card-body row">
+                            <h6 className=" col-md-6 col-sm-6 col-6 col-lg-6  pl-5">Gender: <span className="font-weight-bold">{state.gender}</span></h6>
+                            <h6 className=" col-md-6 col-sm-6 col-6 col-lg-6  pl-5">Age: <span className="font-weight-bold">{state.age}</span></h6>
+                        </div>
+                        <div className="card-body row">
+                            <h6 className=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Address: <span className="font-weight-bold">{state.address}</span></h6>
                         </div>
                         {cookie.load("staff")==="DOCTOR"? 
-                            <div class="card-body row">
-                            <div class=" col-md-4 col-sm-4 col-4 col-lg-4  pl-5">
+                            <div className="card-body row">
+                            <div className=" col-md-4 col-sm-4 col-4 col-lg-4  pl-5">
                                 <Link to={`/patient/bedchange/${state.patient_id}`}>
                                     <Button variant="primary" type="submit" className="searchbarcontainer log">
                                         Change Bed
                                     </Button>
                                 </Link>
                             </div>
-                            <div class=" col-md-4 col-sm-4 col-4 col-lg-4  pl-5">
+                            <div className=" col-md-4 col-sm-4 col-4 col-lg-4  pl-5">
                                 <Link to={`/patient/statuschange/${props.id}`}>
                                     <Button variant="primary" type="submit" className="searchbarcontainer log">
                                         Change Status
@@ -98,7 +115,7 @@ export default function Pprofile(props) {
                 </div>
                 <div className="col-md-8 col-sm-12 col-lg-8 col-12 p-2 profile">
                 
-                    <div class="pt-4">
+                    <div className="pt-4">
                         <Heading  heading="Health Info"/>
                         <Table responsive="md" className="">
                         <thead>
