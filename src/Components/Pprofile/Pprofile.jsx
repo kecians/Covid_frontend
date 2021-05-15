@@ -16,13 +16,11 @@ export default function Pprofile(props) {
         axios({
             url: patientProfile+`${props.id}/`,
             method: 'GET',
-            headers: {
-              Authorization: `Token ${cookie.load('token')}`,
-            },
+            
           })
           .then((res) => {
             if (res.data.status === 404) {
-                // setState(res.data.data)
+                alert("Details Not Found")
             } else {
                 setLoading(false)
                 setState(res.data.data)
@@ -36,9 +34,7 @@ export default function Pprofile(props) {
         axios({
         url: patientHealthProfile+`${props.id}/`,
         method: 'GET',
-        headers: {
-            Authorization: `Token ${cookie.load('token')}`,
-        },
+       
         })
         .then((res) => {
         if (res.data.status === 404) {
@@ -151,22 +147,28 @@ export default function Pprofile(props) {
                     </div>
 
 
+                    {cookie.load("token")? 
                     <div className="card-body row">
-                        <div className=" col-md-3 col-sm-3 col-6 col-lg-3 text-center">
-                            <Link to='/list'>
-                                <Button variant="light" type="submit" className="searchbarcontainer">
-                                   Active Patients
-                                </Button>
-                            </Link>
-                        </div>
-                        <div className=" col-md-3 col-sm-3 col-6 col-lg-3 text-center"> 
-                            <Link to='/home'>
-                            <Button variant="primary" type="submit" className="searchbarcontainer log">
-                                Home
+                    <div className=" col-md-3 col-sm-3 col-6 col-lg-3 text-center">
+                        <Link to='/list'>
+                            <Button variant="light" type="submit" className="searchbarcontainer">
+                               Active Patients
                             </Button>
-                            </Link>
-                        </div>
+                        </Link>
                     </div>
+                    <div className=" col-md-3 col-sm-3 col-6 col-lg-3 text-center"> 
+                        <Link to='/home'>
+                        <Button variant="primary" type="submit" className="searchbarcontainer log">
+                            Home
+                        </Button>
+                        </Link>
+                    </div>
+                </div>: <Link to='/'>
+                        <Button variant="primary" type="submit" className="searchbarcontainer log">
+                            Back
+                        </Button>
+                        </Link>
+                    }
                 </div>
             </div>
         </div>

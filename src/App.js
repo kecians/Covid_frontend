@@ -1,7 +1,7 @@
 // import dependencies
 
 
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // import pages
@@ -20,6 +20,8 @@ import LockRoute from './LockRoute'
 import PrivateRoute from './PrivateRoute'
 import Bedchange from './Pages/Bedchange/Bedchange'
 import Statuschange from './Pages/Statuschange/Statuschange'
+import Publicpatientprofile from './Pages/Publicpatientprofile/Publicpatientprofile'
+
 function App() {
   return (
     <BrowserRouter>
@@ -37,10 +39,11 @@ function App() {
           <PrivateRoute exact path="/list" component={Plist} />
           <PrivateRoute exaact path="/home" component={Searchbar} />
           <PrivateRoute exact path="/patient/admit" component={Admitpatient} />
-          <PrivateRoute exact path="/patient/profile/:id" component={Patientprofile} />
+          <Route exact path="/patient/profile/:id" component={Patientprofile} />
           <PrivateRoute exact path="/patient/healthcheck/:id/:name" component={Healthform} />
           <PrivateRoute exact path="/patient/bedchange/:id" component={Bedchange} />
           <PrivateRoute exact path="/patient/statuschange/:id" component={Statuschange} />
+          <LockRoute exact path="/patient/profile/" component={Publicpatientprofile} />
           </ToastProvider>  
         </Switch>
       </BrowserRouter>
