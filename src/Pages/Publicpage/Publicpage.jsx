@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
-import { Button } from 'react-bootstrap' 
+import { Button, Table } from 'react-bootstrap' 
 import Infocard from '../../Components/Infocard/Infocard'
 // import Logout from '../Logout/Logout'
 import {allotedBeds} from '../../Api/patient.api'
@@ -32,10 +32,11 @@ export default function Publicpage() {
     }, [])
     // console.log(state, data)
     return (
-        <div className="container pt-3">
+        <div className="container-fluid pt-3 bg-silver">
             <Heading heading="Goberdhan Tiwari Government Base Hospital, Almora"/>
             
             <hr className="mt-4"/>
+            <div className="container">
             <div className="row">
                 <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2">
                     <Infocard name="Total Patients" data="30"/>
@@ -56,37 +57,33 @@ export default function Publicpage() {
             </div>
 
             <div className="row py-3">
-                <div className="col-md-12 col-sm-12 col-lg-12 col-12 p-2">
-                    <div className="card profile">
-                        <div className="card-body row">
-                            <h6 className=" col-md-3 col-sm-3 col-3 col-lg-3 font-weight-bold text-center">General Beds (Available/Total)</h6>
-                            <h6 className=" col-md-3 col-sm-3 col-3 col-lg-3 font-weight-bold text-center">Oxygen Beds (Available/Total)</h6>
-                            <h6 className=" col-md-3 col-sm-3 col-3 col-lg-3 font-weight-bold text-center">ICU Beds (Available/Total)</h6>
-                            <h6 className=" col-md-3 col-sm-3 col-3 col-lg-3 font-weight-bold text-center">Ventilator Beds (Available/Total)</h6>
-                        </div>
-                        <div className="card-body row">
-                            <p className=" col-md-3 col-sm-3 col-3 col-lg-3 text-center"><span className="text-primary">{String(state.general-data.general)}</span>/{state.general}</p>
-                            <p className=" col-md-3 col-sm-3 col-3 col-lg-3 text-center"><span className="text-primary">{String(state.oxygen-data.oxygen)}</span>/{state.oxygen}</p>
-                            <p className=" col-md-3 col-sm-3 col-3 col-lg-3 text-center"><span className="text-primary">{String(state.icu-data.icu)}</span>/{state.icu}</p>
-                            <p className=" col-md-3 col-sm-3 col-3 col-lg-3 text-center"><span className="text-primary">{String(state.ventillator-data.ventillator)}</span>/{state.ventillator}</p>
-                        </div>
-                        {/* <div className="card-body row">
-                            <p className=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">{data.general}(Occupied)</p>
-                            <p className=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">{data.oxygen}(Occupied)</p>
-                            <p className=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">{data.icu}(Occupied)</p>
-                            <p className=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">{data.ventillator}(Occupied)</p>
-                        </div>
-                        <div className="card-body row">
-                            <p className=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">{state.general-data.general }(Available)</p>
-                            <p className=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">{state.oxygen-data.oxygen }(Available)</p>
-                            <p className=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">{state.icu-data.icu }(Available)</p>
-                            <p className=" col-md-3 col-sm-3 col-3 col-lg-3 text-center">{state.ventillator-data.ventillator }(Available)</p>
-                        </div> */}
-    
+                    <div className="col-md-12 col-sm-12 col-lg-12 col-12 profile">
+                    <Table responsive="md" className="">
+                        <thead>
+                        <tr>
+                            <th>Total Beds(Available/Total)</th>
+                            <th>General Beds (Available/Total)</th>
+                            <th>Oxygen Beds (Available/Total)</th>
+                            <th>ICU Beds (Available/Total)</th>
+                            <th>Ventilator Beds (Available/Total)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><span className="text-primary">{state.total-data.total}</span>/{state.total}</td>
+                            <td><span className="text-primary">{state.general-data.general }</span>/{state.general}</td>
+                            <td><span className="text-primary">{state.oxygen-data.oxygen }</span>/{state.oxygen}</td>                            
+                            <td><span className="text-primary">{state.icu-data.icu }</span>/{state.icu}</td>
+                            <td><span className="text-primary">{state.ventillator-data.ventillator }</span>/{state.ventillator}</td>
+                            
+                        </tr>
+                       
+                        </tbody>
+                    </Table>
+                        
                     </div>
                 </div>
-                           </div>
-
+            </div>
         </div>
     )
 
