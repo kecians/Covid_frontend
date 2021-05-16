@@ -4,7 +4,7 @@ import { Button, Table, Spinner } from 'react-bootstrap'
 import './Listview.scss'
 import Profile from '../Profile/Profile'
 import Searchbar from '../Searchbar/Searchbar'
-// import Logout from '../Logout/Logout'
+import Logout from '../Logout/Logout'
 import cookie from 'react-cookies'
 import {patientAdmit} from '../../Api/patient.api'
 import axios from 'axios'
@@ -47,29 +47,33 @@ export default function Listview() {
             </div>
             <hr className="mt-4"/>
             {/* Cards for Status for patient check */}
-            <div className="row">
-                <div className="col-md-4 col-sm-4 col-12 p-2 col-lg-4">
+            <div className="col-md-12 col-sm-12 col-12 p-2 col-lg-12">
                     
                     <Link to='/home'> 
-                        <Button variant="primary" type="submit" className="searchbarcontainer log " >
+                        <Button variant="primary" type="submit" className="searchbarcontainer log mt-2" >
                             Home
                         </Button>
                     </Link>
                     <span className="p-1"></span>
-                    <Button variant="primary" type="submit" className="searchbarcontainer log" >
+                    <Button variant="primary" type="submit" className="searchbarcontainer log mt-2" >
                         <Link to='/list'> 
                             Active Patients 
                         </Link>
                     </Button>
-                    
+                    <span className="p-1"></span>
+                    {cookie.load("staff")==="NURSE" ?
+                    <>
+                    <Link to="/patient/admit">
+                        <Button variant="primary" type="submit" className="searchbarcontainer log mt-2">
+                            Add Patient
+                        </Button>
+                    </Link>
+                     </>
+                     : 
+                    null}
+                    <span className="p-1"></span>
+                    <Logout />
                 </div>
-                <div className="col-md-4 col-sm-4 col-12 p-2 col-lg-4">
-                    
-                </div>
-                <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2 text-center">
-                    
-                </div>
-            </div>
             {/* Cards for Status for patient check */}
             <div className="row py-3">
                 <div className="col-md-10 col-sm-12 col-lg-10 col-12 profile">
