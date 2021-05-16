@@ -14,6 +14,7 @@ export default function Hform(props) {
         blood_pres_systolic: '',
         temperature: '',
         patient_condition: '',
+        pulse_rate: '',
         redirect: false
 
     }
@@ -39,7 +40,8 @@ export default function Hform(props) {
             blood_pres_systolic: state.blood_pres_systolic.split('/')[0],
             blood_pres_diastolic: state.blood_pres_systolic.split('/')[1],
             temperature: state.temperature,
-            patient_condition: state.patient_condition
+            patient_condition: state.patient_condition,
+            pulse_rate: state.pulse_rate
             
           }
         axios({
@@ -105,6 +107,16 @@ export default function Hform(props) {
                             type='number'				                        
                             placeholder='SPO2 Level'                             
                             name='oxy_level'
+                            onChange= { handleChange }
+                            required
+                        />
+                </Form.Group>
+
+                <Form.Group controlId=''>
+                        <Form.Control
+                            type='number'				                        
+                            placeholder='Pulse Rate'                             
+                            name='pulse_rate'
                             onChange= { handleChange }
                             required
                         />

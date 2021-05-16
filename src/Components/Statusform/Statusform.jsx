@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import { Form, Button} from 'react-bootstrap' 
 import {Redirect} from 'react-router-dom'
-import {patientStatus, patientFacility} from '../../Api/patient.api'
+import {patientStatus, patientMigration} from '../../Api/patient.api'
 import axios from 'axios'
 import {useToasts} from 'react-toast-notifications'
 import cookie from 'react-cookies'
@@ -10,7 +10,8 @@ export default function Statusform(props) {
     const initialState = {
         id: props.id,
         status: '',
-        facility: ''
+        migrated_to: '',
+        reason: ''
     }
     const [state, setState] = useState(initialState)
     const handleSubmit = event => {
@@ -51,13 +52,15 @@ export default function Statusform(props) {
             addToast('The server is not excepting any request at this moment!! Try again later', { appearance: 'error' });
           });
           //  Facility change api
-          if (state.facility.length){
+          if (state.migrated_to.length || state.reason.length){
             const eda = { 
-              facility: state.facility
+              migrated_to: state.migrated_to,
+              reason: state.reason,
+              patient: state.id
             }
             axios({
-              url: patientFacility+`${state.id}/`,
-              method: 'PATCH',
+              url: patientMigration,
+              method: 'POST',
               data: eda,
               headers: {
                 Authorization: `Token ${cookie.load('token')}`,
@@ -109,19 +112,49 @@ export default function Statusform(props) {
                     </Form.Control>
                 </Form.Group>
                 {state.status==="Migrated"?
-                    <Form.Group controlId='facility'>
+                    <>
+                    <Form.Group controlId='reason'>
+                      <Form.Control
+                          as='textarea'
+                          name='reason'
+                          required
+                          placeholder="Cause of migration...."
+                          rows="3"
+                          onChange= { handleChange }
+                      >                
+                      </Form.Control>
+                    </Form.Group>
+                    <Form.Group controlId='migrated_to'>
                     <Form.Control
                         as='textarea'
-                        name='facility'
+                        name='migrated_to'
                         required
-                        placeholder="Covid Facility"
-                        rows="6"
+                        placeholder="Migrated to...."
+                        rows="4"
                         onChange= { handleChange }
                     >                
                     </Form.Control>
-                    </Form.Group>: null
+                    </Form.Group>
+                    
+                    </>
+                    : null
                 }
-                
+                {state.status==="Death"?
+                    <>
+                    <Form.Group controlId='reason'>
+                      <Form.Control
+                          as='textarea'
+                          name='reason'
+                          required
+                          placeholder="Cause of migration...."
+                          rows="3"
+                          onChange= { handleChange }
+                      >                
+                      </Form.Control>
+                    </Form.Group>
+                    </>
+                    : null
+                }
                 <Button variant="primary" type="submit" className="button my-2 p-2">
                     Submit
                 </Button>
