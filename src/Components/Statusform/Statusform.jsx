@@ -51,35 +51,33 @@ export default function Statusform(props) {
             addToast('The server is not excepting any request at this moment!! Try again later', { appearance: 'error' });
           });
           //  Facility change api
-          if (state.facility.length){
-            const eda = { 
-              facility: state.facility
-            }
-            axios({
-              url: patientFacility+`${state.id}/`,
-              method: 'PATCH',
-              data: eda,
-              headers: {
-                Authorization: `Token ${cookie.load('token')}`,
-              },
-            })
-            .then(res=>{
-              if (res.data.status===200){
-                addToast(res.data.msg, { appearance: 'success' });
-                setState({ redirect: true});
-              }
-              else if (res.data.status===400){
-                setState({ redirect: false});
-                addToast("Error occurred try again!!", { appearance: 'error' });
-              }
-            })
-            .catch(error => {
-              setState({ redirect: false});
-              console.log(error)
-              addToast('The server is not excepting any request at this moment!! Try again later', { appearance: 'error' });
-            });
+
+          const eda = { 
+            facility: state.facility
           }
-          
+          axios({
+            url: patientFacility+`${state.id}/`,
+            method: 'PATCH',
+            data: eda,
+            headers: {
+              Authorization: `Token ${cookie.load('token')}`,
+            },
+          })
+          .then(res=>{
+            if (res.data.status===200){
+              addToast(res.data.msg, { appearance: 'success' });
+              setState({ redirect: true});
+            }
+            else if (res.data.status===400){
+              setState({ redirect: false});
+              addToast("Error occurred try again!!", { appearance: 'error' });
+            }
+          })
+          .catch(error => {
+            setState({ redirect: false});
+            console.log(error)
+            addToast('The server is not excepting any request at this moment!! Try again later', { appearance: 'error' });
+          });
           
       }
       const handleChange = event =>{
