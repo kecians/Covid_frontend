@@ -58,8 +58,7 @@ export default function Publicpage() {
                             Patient Detail
                         </Button>
                     </Link>
-                </div>
-                <div className="col-md-12 col-sm-12 col-lg-12 col-12 profile">
+                    <div className="col-md-12 col-sm-12 col-lg-12 col-12 profile">
                     <Table responsive="md" className="">
                         <thead>
                         <tr>
@@ -84,7 +83,7 @@ export default function Publicpage() {
                     </Table>
                         
                     </div>
-            </div>
+                </div>
             </div>
             </div>
         </div>

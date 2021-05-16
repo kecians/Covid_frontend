@@ -48,7 +48,7 @@ export default function Pprofile(props) {
         .catch((err) => {
         // console.log(err.response);
         });
-    }, [props.id, addToast])
+    }, [props.id])
 
     // console.log(data)
     return (
