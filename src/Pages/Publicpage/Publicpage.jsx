@@ -85,6 +85,7 @@ export default function Publicpage() {
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     )
 
