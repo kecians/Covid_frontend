@@ -13,15 +13,11 @@ export default function Addpatient() {
         gender: '',
         age: '',
         address: '',
-        bed_number: '',
-        patient_condition: '',
-        bed_category: '',
         redirect: false
 
     }
     const [state, setState] = useState(initialState)
     const handleSubmit = event => {
-        // For Gender
         if (state.gender==="Male"){
             state.gender="M"
         }
@@ -31,38 +27,6 @@ export default function Addpatient() {
         else if (state.gender==="Other"){
             state.gender="O"
         }
-        //
-
-        // For Patient condition 
-        if (state.patient_condition==="Asymptomataic"){
-            state.patient_condition=1
-        }
-        else if (state.patient_condition==="Mild"){
-            state.patient_condition=2
-        }
-        else if (state.patient_condition==="Moderate"){
-            state.patient_condition=3
-        }
-        else{
-            state.patient_condition=4   
-        }
-        //
-        
-        // For bed Category
-
-        if (state.bed_category==="General Bed"){
-            state.bed_category="1"
-        }
-        else if (state.bed_category==="Oxygen Bed"){
-            state.bed_category="2"
-        }
-        else if (state.bed_category==="ICU"){
-            state.bed_category="3"
-        }
-        else{
-            state.bed_category="4"
-        }
-        //
         event.preventDefault();
         const eData={
             name: state.name,
@@ -70,9 +34,6 @@ export default function Addpatient() {
             gender: state.gender,
             age: state.age,
             address: state.address,
-            bed_number: state.bed_number,
-            health_condition: state.patient_condition,
-            bed_category: state.bed_category,
         }
         axios({
             url: patientAdmit,
@@ -89,7 +50,7 @@ export default function Addpatient() {
               setState({ redirect: true});
             }
             else if (res.data.status===400){
-              addToast("Bed Number Already Alloted!!", { appearance: 'error' });
+              addToast("Error occurred try again!!", { appearance: 'error' });
             }
           })
           .catch(error => {
@@ -156,45 +117,7 @@ export default function Addpatient() {
                 </Form.Group>
 
             </Form.Row>
-            <Form.Group controlId='patient_condition'>
-                    <Form.Control
-                        as='select'
-                        name='patient_condition'
-                        required
-                        onChange= { handleChange }
-                    >
-                        <option>Select</option>
-                        <option>Asymptomataic</option>
-                        <option>Mild</option>
-                        <option>Moderate</option>
-                        <option>Severe</option>
-                    </Form.Control>
-            </Form.Group>
-            <Form.Group controlId='bed_number'>
-                    <Form.Control
-                        type='number'				                        
-                        placeholder='Bed Number'                             
-                        name='bed_number'
-                        onChange={handleChange}
-                        required
-                        
-                    />
-            </Form.Group>
 
-            <Form.Group  controlId="Name">
-            <Form.Control
-                    as='select'
-                    name='bed_category'
-                    onChange={handleChange}
-                    required
-                >
-                    <option>Select Bed Category</option>
-                    <option>General Bed</option>
-                    <option>Oxygen Bed</option>
-                    <option>ICU Bed</option>
-                    <option>Ventilators</option>
-            </Form.Control>
-            </Form.Group>
             <Form.Group controlId="exampleForm.ControlTextarea1" >
                 <Form.Control 
                     as="textarea"  
@@ -204,8 +127,7 @@ export default function Addpatient() {
                     onChange={handleChange}
                     required
                     />
-            </Form.Group>
-            	
+            </Form.Group>	
             <Button variant="primary" type="submit" className="button my-2 p-2">
                 Submit
             </Button>
