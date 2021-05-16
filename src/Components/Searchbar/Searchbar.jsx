@@ -143,7 +143,7 @@ export default function Searchbar() {
                         :
                     null
                     }
-                    {typeof(state)==="string"? 
+                    {typeof(state.data)==="string"? 
                     "Patients Doesn't Exist!!"
                     :
                     <>
