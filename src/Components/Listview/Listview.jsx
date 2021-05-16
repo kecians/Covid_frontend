@@ -86,7 +86,7 @@ export default function Listview() {
 
                         {cookie.load("staff")==="NURSE" ?<th>Health Update</th>: null}
                         <th>Patients Condition</th>
-                        <th>Bed Number</th>
+                        <th>Alloted Bed</th>
                         <th>Admitted On</th> 
                     </tr>
                     </thead>
