@@ -11,7 +11,7 @@ import Heading from '../../Components/Heading/Heading'
 export default function Publicpage() {
     const [state, setState] = useState({})
     const [data, setData] = useState({})
-
+    const [count, setCount] = useState(0)
     useEffect(() => {
         axios({
             url: allotedBeds,
@@ -24,6 +24,7 @@ export default function Publicpage() {
             } else {
               setState(res.data.total_beds)
               setData(res.data.alloted_beds)
+              setCount(res.data.data.length)
             }
           })
           .catch((err) => {
@@ -39,7 +40,7 @@ export default function Publicpage() {
             <div className="container">
             <div className="row">
                 <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2">
-                    <Infocard name="Total Patients" data="30"/>
+                    <Infocard name="Total Patients" data={count} />
                 </div>
                 <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2">
                     <Infocard name="Total Beds" data={state.total} />
@@ -52,12 +53,13 @@ export default function Publicpage() {
                             Login
                         </Button>
                     </Link>
+                    <Link to='/patient/profile'> 
+                        <Button variant="primary" type="submit" className="searchbarcontainer log m-2" >
+                            Patient Detail
+                        </Button>
+                    </Link>
                 </div>
-                
-            </div>
-
-            <div className="row py-3">
-                    <div className="col-md-12 col-sm-12 col-lg-12 col-12 profile">
+                <div className="col-md-12 col-sm-12 col-lg-12 col-12 profile">
                     <Table responsive="md" className="">
                         <thead>
                         <tr>
@@ -82,7 +84,7 @@ export default function Publicpage() {
                     </Table>
                         
                     </div>
-                </div>
+            </div>
             </div>
         </div>
     )

@@ -4,7 +4,7 @@ import Searchbar from '../Searchbar/Searchbar'
 import { Button, Table } from 'react-bootstrap' 
 // import Profile from '../Profile/Profile'
 import Infocard from '../Infocard/Infocard'
-// import Logout from '../Logout/Logout'
+import Logout from '../Logout/Logout'
 import {allotedBeds} from '../../Api/patient.api'
 import axios from 'axios'
 import cookie from 'react-cookies'
@@ -14,7 +14,7 @@ import Profile from '../Profile/Profile'
 export default function Nursehome() {
     const [state, setState] = useState({})
     const [data, setData] = useState({})
-
+    const [count, setCount] = useState(0)
     useEffect(() => {
         axios({
             url: allotedBeds,
@@ -29,6 +29,7 @@ export default function Nursehome() {
             } else {
               setState(res.data.total_beds)
               setData(res.data.alloted_beds)
+              setCount(res.data.data.length)
             }
           })
           .catch((err) => {
@@ -49,24 +50,46 @@ export default function Nursehome() {
             </div>
             <hr className="mt-4"/>
             <div className="row">
-                <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2">
-                    <Infocard name="Total Patients" data="30"/>
-                </div>
-                <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2">
-                    <Infocard name="Total Beds" data={state.total} />
-                </div>
-                <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2 text-center">
-                    <Link to='/list'> 
-                        <Button variant="primary" type="submit" className="searchbarcontainer log" >
-                           Active Patients 
-                        </Button>
-                    </Link>
-                    <span className="p-1"></span>
+                <div className="col-md-12 col-sm-12 col-12 p-2 col-lg-12">
+                    
                     <Link to='/home'> 
-                        <Button variant="primary" type="submit" className="searchbarcontainer log " >
+                        <Button variant="primary" type="submit" className="searchbarcontainer log mt-2" >
                             Home
                         </Button>
                     </Link>
+                    <span className="p-1"></span>
+                    <Button variant="primary" type="submit" className="searchbarcontainer log mt-2" >
+                        <Link to='/list'> 
+                            Active Patients 
+                        </Link>
+                    </Button>
+                    <span className="p-1"></span>
+                    {cookie.load("staff")==="NURSE" ?
+                    <>
+                    <Link to="/patient/admit">
+                        <Button variant="primary" type="submit" className="searchbarcontainer log mt-2">
+                            Add Patient
+                        </Button>
+                    </Link>
+                     </>
+                     : 
+                    null}
+                    <span className="p-1"></span>
+                    <Logout />
+                </div>
+                <div className="col-md-4 col-sm-4 col-12 p-2 col-lg-4">
+                    
+                </div>
+                <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2 text-center">
+                    
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2">
+                    <Infocard name="Total Patients" data={count}/>
+                </div>
+                <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2">
+                    <Infocard name="Total Beds" data={state.total} />
                 </div>
                 
             </div>

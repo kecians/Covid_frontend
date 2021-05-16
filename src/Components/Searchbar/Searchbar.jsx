@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Button, Form, Table, Spinner } from 'react-bootstrap'
 import {Link} from 'react-router-dom'
-import Logout from '../../Components/Logout/Logout'
+// import Logout from '../../Components/Logout/Logout'
 import {patientSearch} from '../../Api/patient.api'
 import axios from 'axios'
 import cookie from 'react-cookies'
@@ -110,9 +110,9 @@ export default function Searchbar() {
                 : null
                 }
             </div>
-            <div className="col-md-1 col-3 col-sm-12"> 
+            {/* <div className="col-md-1 col-3 col-sm-12"> 
                 <Logout />
-            </div>
+            </div> */}
         </div>
          
         {state.show ? 
@@ -120,45 +120,58 @@ export default function Searchbar() {
                 <div className="col-md-12 col-sm-12 col-lg-12 col-12 profile">
                     
                     <Table responsive="md" className="">
-                        <thead>
-                        <tr>
-                            <th>Patient ID</th>
-                            <th>Patient Name</th>
+                    <thead>
+                    <tr>
+                        <th>Patient ID</th>
+                        <th>Patient Name</th>
 
-                            {cookie.load("staff")==="NURSE" ?<th>Health Update</th>: null}
-                            <th>Admitted On</th> 
+                        {cookie.load("staff")==="NURSE" ?<th>Health Update</th>: null}
+                        <th>Patients Condition</th>
+                        <th>Alloted Bed</th>
+                        <th>Admitted On</th> 
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {state.loading ? 
+                        <tr>
+                            <td>
+                                <span>Loading.....</span>
+                                <Spinner animation="border" size="lg" className=""/>
                             
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {state.loading ? 
-                            <tr>
-                                <td>
-                                    <span>Loading.....</span>
-                                    <Spinner animation="border" size="lg" className=""/>
-                                
-                                </td>
-                            </tr>
-                            :
-                        null
-                        }
-                        {typeof(state.data)==="string"? "Data Not Found!!": <>
-                        
+                        :
+                    null
+                    }
+                    {typeof(state)==="string"? 
+                    "Patients Doesn't Exist!!"
+                    :
+                    <>
                         {state.data.map((i,index) => (
-                        <tr key={index}>
-                            <td>{i.patient_id}</td>
-                            <td><Link to={`/patient/profile/${i.patient_id}`} className="text-primary text-center">{i.name}</Link></td>
-                            {cookie.load("staff")==="NURSE"?      
-                                <td> <a href={`/patient/healthcheck/${i.patient_id}/${i.name}`} className="text-primary text-center">Health Checkup</a></td>
-                                        :null
-                            }
-                            <td>{i.created_on? i.created_on.split("T")[0]: "N/A"}</td>
-                            
-                        </tr>
-                        ))}
-                        </>}
-                        </tbody>
-                    </Table>
+                    <tr>
+                        <td>{i.patient_id}</td>
+                        <td><Link to={`/patient/profile/${i.patient_id}`} className="text-primary text-center">{i.name}</Link></td>
+                        {cookie.load("staff")==="NURSE"?      
+                            <td> <Link to={`/patient/healthcheck/${i.patient_id}/${i.name}`} className="text-primary text-center">Health Checkup</Link></td>
+                                    :null
+                        }
+                        <td>{i.health_condition==="1"? "Asymptomataic": i.health_condition==="2"? "Mild": i.health_condition==="3"? "Moderate": "Severe"}</td>
+                        <td>{i.patient_bed?i.patient_bed.bed_number: null}
+                        (
+                                {i.patient_bed ? 
+                                    i.patient_bed.bed_category==="1"? "General Bed": i.patient_bed.bed_category==="2"?
+                                            "O2 Bed": i.patient_bed.bed_category==="3"? "ICU": "Vantilator":null
+
+                                })
+                        </td>
+                        <td>{i.created_on? i.created_on.split("T")[0]: "N/A"}</td>
+                        
+                    </tr>
+                    ))}
+                    </>
+                    }
+                    </tbody>
+                </Table>
                 </div>    
             </div>
 
