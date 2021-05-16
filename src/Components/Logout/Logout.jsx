@@ -11,7 +11,7 @@ export function Logout(props) {
       }
     return (
       
-      <Button variant="primary" type="submit" className="searchbarcontainer log" onClick={()=>{
+      <Button variant="primary" type="submit" className="searchbarcontainer log mt-2" onClick={()=>{
           store.dispatch(loading());
           setTimeout(() => {
           store.dispatch(logout());

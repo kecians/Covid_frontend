@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Button, Form, Table, Spinner } from 'react-bootstrap'
 import {Link} from 'react-router-dom'
-import Logout from '../../Components/Logout/Logout'
+// import Logout from '../../Components/Logout/Logout'
 import {patientSearch} from '../../Api/patient.api'
 import axios from 'axios'
 import cookie from 'react-cookies'
@@ -110,9 +110,9 @@ export default function Searchbar() {
                 : null
                 }
             </div>
-            <div className="col-md-1 col-3 col-sm-12"> 
+            {/* <div className="col-md-1 col-3 col-sm-12"> 
                 <Logout />
-            </div>
+            </div> */}
         </div>
          
         {state.show ? 
