@@ -19,7 +19,7 @@ import {
 
   const initialState = {
     token: tokenChange,
-    staff_id: cookie.load('staff_id'),
+    username: cookie.load('username'),
     staff: cookie.load('staff'),
     isAuthenticated: authState,
     isLoading: false,
@@ -38,7 +38,7 @@ import {
       case LOGIN_SUCCESS:
   
         cookie.save('token', action.payload.data.token, { path: '/', expires: new Date(Date.now()+ 3600 * 1000 * 24 * 60)});
-        cookie.save('staff_id', action.payload.data.staff_id, { path: '/', expires: new Date(Date.now()+ 3600 * 1000 * 24 * 60)});
+        cookie.save('username', action.payload.data.username, { path: '/', expires: new Date(Date.now()+ 3600 * 1000 * 24 * 60)});
         cookie.save('staff', action.payload.data.staff_category, { path: '/', expires: new Date(Date.now()+ 3600 * 1000 * 24 * 60)});
         return {
           ...state,
@@ -46,13 +46,13 @@ import {
           isLoading: false,
           staff: action.payload.data.staff_category,
           isAuthenticated: true,
-          staff_id: action.payload.data.staff_id,
+          username: action.payload.data.username,
           toastMessage: action.payload.msg,
           error: action.payload.status
         };
       case REGISTER_SUCCESS:
         cookie.save('token', action.payload.data.token, { path: '/', expires: new Date(Date.now()+ 3600 * 1000 * 24 * 60)});
-        cookie.save('staff_id', action.payload.data.staff_id, { path: '/', expires: new Date(Date.now()+ 3600 * 1000 * 24 * 60)});
+        cookie.save('username', action.payload.data.username, { path: '/', expires: new Date(Date.now()+ 3600 * 1000 * 24 * 60)});
         cookie.save('staff', action.payload.data.staff_category, { path: '/', expires: new Date(Date.now()+ 3600 * 1000 * 24 * 60)});
         return {
           ...state,
@@ -60,19 +60,19 @@ import {
           isLoading: false,
           staff: action.payload.data.staff_category,
           isAuthenticated: true,
-          staff_id: action.payload.data.staff_id,
+          username: action.payload.data.username,
           toastMessage: action.payload.msg,
           error: action.payload.status
         };
       case LOGOUT_SUCCESS:
         cookie.remove('token', { path: '/', expires: new Date(Date.now()+ 3600 * 1000 * 24 * 60)})
-        cookie.remove('staff_id', { path: '/', expires: new Date(Date.now()+ 3600 * 1000 * 24 * 60)});
+        cookie.remove('username', { path: '/', expires: new Date(Date.now()+ 3600 * 1000 * 24 * 60)});
         cookie.remove('staff', { path: '/', expires: new Date(Date.now()+ 3600 * 1000 * 24 * 60)});
         // window.location.reload();
         return {
           ...state,
           token: null,
-          staff_id: null,
+          username: null,
           isAuthenticated: false,
           isLoading: false,
           error: "200",
@@ -102,8 +102,8 @@ import {
         }
       case REGISTERERROR:
         let msg = '';
-        if ('staff_id' in action.payload.data){
-          msg = action.payload.data.staff_id[0]
+        if ('username' in action.payload.data){
+          msg = action.payload.data.username[0]
         }
         else{
           msg = action.payload.data.msg
