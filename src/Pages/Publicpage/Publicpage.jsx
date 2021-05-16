@@ -58,11 +58,6 @@ export default function Publicpage() {
                             Patient Detail
                         </Button>
                     </Link>
-                </div>
-                
-            </div>
-
-            <div className="row py-3">
                     <div className="col-md-12 col-sm-12 col-lg-12 col-12 profile">
                     <Table responsive="md" className="">
                         <thead>
