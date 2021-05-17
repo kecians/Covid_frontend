@@ -55,7 +55,7 @@ export default function Pprofile(props) {
         <div className="container p-2">
             <Heading  heading="Patient Profile"/>
             <div className="row ">
-                <div className="col-md-4 col-sm-12 col-lg-4 col-12 p-2">
+                <div className="col-md-3 col-sm-12 col-lg-3 col-12 p-2">
                     <div className="card profile pt-4">
                         <div className="card-body row">
                             <h6 className=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Name: <span className="font-weight-bold">{state.name} </span></h6>
@@ -113,7 +113,7 @@ export default function Pprofile(props) {
                         
                     </div>
                 </div>
-                <div className="col-md-8 col-sm-12 col-lg-8 col-12 p-2 profile">
+                <div className="col-md-9 col-sm-12 col-lg-9 col-12 p-2 profile">
                 
                     <div className="pt-4">
                         <Heading  heading="Health Info"/>
@@ -122,9 +122,10 @@ export default function Pprofile(props) {
                         <tr>
                             <th>Updated At (Date(Time))</th>
                             <th>Patient Condition</th>
-                            <th>SPO2</th>
+                            <th>SPO2 (%)</th>
                             <th>Blood Pressure</th>
                             <th>Temperature (F)</th>
+                            <th>Pulse Rate (BPM)</th>
                             
                         </tr>
                         </thead>
@@ -152,7 +153,7 @@ export default function Pprofile(props) {
                             <td>{i.oxy_level}%</td>
                             <td>{i.blood_pres_systolic}/{i.blood_pres_diastolic}(mm hg)</td>
                             <td>{i.temperature}(F)</td>
-                           
+                            <td>{i.pulse_rate}(BPM)</td>
                             
                             
                         </tr>
