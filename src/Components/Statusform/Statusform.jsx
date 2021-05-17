@@ -26,7 +26,7 @@ export default function Statusform(props) {
         }
         event.preventDefault();
         const eData = { 
-            status: state.status
+            patient_status: state.status
           }
         axios({
             url: patientStatus+`${state.id}/`,
@@ -56,7 +56,7 @@ export default function Statusform(props) {
             const eda = { 
               migrated_to: state.migrated_to,
               reason: state.reason,
-              patient: state.id
+              patient_id: state.id
             }
             axios({
               url: patientMigration,
