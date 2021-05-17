@@ -125,10 +125,17 @@ export default function Searchbar() {
                         <th>Patient ID</th>
                         <th>Patient Name</th>
 
-                        {cookie.load("staff")==="NURSE" ?<th>Health Update</th>: null}
-                        <th>Patients Condition</th>
-                        <th>Alloted Bed</th>
+                        {/* {cookie.load("staff")==="NURSE" ?<th>Health Update</th>: null} */}
                         <th>Admitted On</th> 
+                        <th>{state.query==="migrated"? "Migrated On":state.query==="death"? "Deceased On": "Recovered On"}</th> 
+                        {state.query==="migrated"? 
+                            <th>Migrated To</th>
+                            :null
+                        }
+                        {state.query!=="recovered"? 
+                            <th>Reason</th>
+                            :null
+                        }
                     </tr>
                     </thead>
                     <tbody>
@@ -151,21 +158,17 @@ export default function Searchbar() {
                     <tr>
                         <td>{i.patient_id}</td>
                         <td><Link to={`/patient/profile/${i.patient_id}`} className="text-primary text-center">{i.name}</Link></td>
-                        {cookie.load("staff")==="NURSE"?      
-                            <td> <Link to={`/patient/healthcheck/${i.patient_id}/${i.name}`} className="text-primary text-center">Health Checkup</Link></td>
-                                    :null
-                        }
-                        <td>{i.health_condition==="1"? "Asymptomataic": i.health_condition==="2"? "Mild": i.health_condition==="3"? "Moderate": "Severe"}</td>
-                        <td>{i.patient_bed?i.patient_bed.bed_number: null}
-                        (
-                                {i.patient_bed ? 
-                                    i.patient_bed.bed_category==="1"? "General Bed": i.patient_bed.bed_category==="2"?
-                                            "O2 Bed": i.patient_bed.bed_category==="3"? "ICU": "Vantilator":null
-
-                                })
-                        </td>
-                        <td>{i.created_on? i.created_on.split("T")[0]: "N/A"}</td>
                         
+                        <td>{i.created_on? i.created_on.split("T")[0]: "N/A"}</td>
+                        <td>{i.created_on? i.updated_on.split("T")[0]: "N/A"}</td>
+                        {state.query==="migrated"? 
+                            <td>{i.patient_migrate? i.patient_migrate.migrated_to: "N/A"}</td>
+                            :null
+                        }
+                        {state.query==="migrated"? 
+                            <td>{i.patient_migrate? i.patient_migrate.reason: "N/A"}</td>
+                            :null
+                        }
                     </tr>
                     ))}
                     </>

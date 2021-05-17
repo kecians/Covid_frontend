@@ -28,7 +28,7 @@ export default function Listview() {
                 setState(res.data.data)
             } else {
                 setLoading(false)
-                setState(res.data.data.reverse())
+                setState(res.data.data)
             }
           })
           .catch((err) => {
