@@ -109,7 +109,7 @@ export default function Listview() {
                         {state.map((i,index) => (
                     <tr>
                         <td>{i.patient_id}</td>
-                        <td><Link to={`/patient/profile/${i.patient_id}`} className="text-primary text-center">{i.name}</Link></td>
+                        <td><Link to={`/patient/profile/${i.patient_id}/${i.contact_number}`} className="text-primary text-center">{i.name}</Link></td>
                         {cookie.load("staff")==="NURSE"?      
                             <td> <Link to={`/patient/healthcheck/${i.patient_id}/${i.name}`} className="text-primary text-center">Health Checkup</Link></td>
                                     :null

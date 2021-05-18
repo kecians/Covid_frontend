@@ -55,7 +55,7 @@ export default function Publicpage() {
                     </Link>
                     <Link to='/patient/profile'> 
                         <Button variant="primary" type="submit" className="searchbarcontainer log m-2" >
-                            Patient Detail
+                            Patient Login
                         </Button>
                     </Link>
                 </div>

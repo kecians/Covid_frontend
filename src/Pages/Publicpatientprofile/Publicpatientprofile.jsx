@@ -7,7 +7,7 @@ import Heading from '../../Components/Heading/Heading'
 import {Link} from 'react-router-dom'
 export default function Publicpatientprofile() {
     // const {addToast} = useToasts()
-    const [state, setState] = useState({query: ''})
+    const [state, setState] = useState({query: '', contact: ''})
       const handleChange = event =>{
         setState({ ...state, [event.target.name]: event.target.value,         
         });
@@ -25,15 +25,24 @@ export default function Publicpatientprofile() {
 
                     <Form className="loginform" id="form1">
                         <Form.Group  controlId="Patientid">
-                                    <Form.Control 
-                                        type="text" 
-                                        placeholder="Patient id" 
-                                        name = 'query'
-                                        onChange={handleChange}
-                                        required
-                                        />
-                                </Form.Group>
-                        <Link to={`/patient/profile/${state.query}`}>
+                            <Form.Control 
+                                type="text" 
+                                placeholder="Patient id" 
+                                name = 'query'
+                                onChange={handleChange}
+                                required
+                                />
+                        </Form.Group>
+                        <Form.Group  controlId="Patientid">
+                            <Form.Control 
+                                type="password" 
+                                placeholder="Patient Password" 
+                                name = 'contact'
+                                onChange={handleChange}
+                                required
+                                />
+                        </Form.Group>
+                        <Link to={`/patient/profile/${state.query}/${state.contact}`}>
                             <Button variant="primary" className="button my-2 p-2">
                                 Submit
                             </Button>
