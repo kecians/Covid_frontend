@@ -92,7 +92,7 @@ export default function Searchbar() {
                             >
                             Death
                         </Button>
-                    </Form>
+                    </Form> 
                     <Form onSubmit={handleSubmit} className="mx-3  d-none d-md-block d-lg-block d-sm-block">
                         <Button 
                             variant="outline-primary" 
@@ -165,7 +165,7 @@ export default function Searchbar() {
                             <td>{i.patient_migrate? i.patient_migrate.migrated_to: "N/A"}</td>
                             :null
                         }
-                        {state.query==="migrated"? 
+                        {state.query!=="recovered"? 
                             <td>{i.patient_migrate? i.patient_migrate.reason: "N/A"}</td>
                             :null
                         }
