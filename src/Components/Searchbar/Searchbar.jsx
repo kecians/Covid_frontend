@@ -124,10 +124,8 @@ export default function Searchbar() {
                     <tr>
                         <th>Patient ID</th>
                         <th>Patient Name</th>
-
-                        {/* {cookie.load("staff")==="NURSE" ?<th>Health Update</th>: null} */}
                         <th>Admitted On</th> 
-                        <th>{state.query==="migrated"? "Migrated On":state.query==="death"? "Deceased On": "Recovered On"}</th> 
+                        <th>{state.query==="migrated"? "Migrated On":state.query==="death"? "Deceased On": state.query==="death"? "Recovered On": "Last Updated on"}</th> 
                         {state.query==="migrated"? 
                             <th>Migrated To</th>
                             :null
