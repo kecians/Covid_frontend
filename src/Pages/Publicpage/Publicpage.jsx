@@ -7,7 +7,7 @@ import {allotedBeds} from '../../Api/patient.api'
 import axios from 'axios'
 // import cookie from 'react-cookies'
 import Heading from '../../Components/Heading/Heading'
-
+import Footer from '../../Components/Footer/Footer'
 export default function Publicpage() {
     const [state, setState] = useState({})
     const [data, setData] = useState({})
@@ -33,6 +33,7 @@ export default function Publicpage() {
     }, [])
     // console.log(state, data)
     return (
+        <>
         <div className="container-fluid pt-3 bg-silver">
             <Heading heading="Goberdhan Tiwari Government Base Hospital, Almora"/>
             
@@ -87,6 +88,10 @@ export default function Publicpage() {
             </div>
             </div>
         </div>
+        <div className="container-fluid p-0 m-0 pt-5 bg-silver">
+                <Footer />  
+            </div>
+        </>
     )
 
     

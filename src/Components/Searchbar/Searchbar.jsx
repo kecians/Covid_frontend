@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import { Button, Form, Table, Spinner } from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 // import Logout from '../../Components/Logout/Logout'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import {patientSearch} from '../../Api/patient.api'
 import axios from 'axios'
 import cookie from 'react-cookies'
@@ -62,6 +63,7 @@ export default function Searchbar() {
                         className="searchbarcontainer col-5 col-md-3 col-sm-3  mt-2">
                         Search
                     </Button>
+                    
                 </Form>
                 {cookie.load("staff")!=="NURSE"? 
                     <div className="filter mt-4 row">
@@ -118,8 +120,16 @@ export default function Searchbar() {
         {state.show ? 
             <div className="row py-3">
                 <div className="col-md-12 col-sm-12 col-lg-12 col-12 profile">
-                    
-                    <Table responsive="md" className="">
+                   
+                    <ReactHTMLTableToExcel
+                        id="test-table-xls-button"
+                        className="searchbarcontainer btn btn-outline-primary mt-2"
+                        table="searchtable"
+                        filename="patientlist"
+                        sheet="Patientlist"
+                        buttonText="Download as XLS"
+                    />
+                    <Table responsive="md" className="" id="searchtable">
                     <thead>
                     <tr>
                         <th>Patient ID</th>

@@ -5,6 +5,7 @@ import { Form, Button} from 'react-bootstrap'
 import Heading from '../../Components/Heading/Heading'
 // import axios from 'axios'
 import {Link} from 'react-router-dom'
+import Footer from '../../Components/Footer/Footer'
 export default function Publicpatientprofile() {
     // const {addToast} = useToasts()
     const [state, setState] = useState({query: '', contact: ''})
@@ -14,6 +15,7 @@ export default function Publicpatientprofile() {
       }
 
     return (
+        <>
         <div className="container-fluid bg-silver p-4">
             <Heading heading="Goberdhan Tiwari Government Base Hospital, Almora"/>
             <hr className="mt-4"/>
@@ -53,5 +55,9 @@ export default function Publicpatientprofile() {
                 </div>
             </div>
         </div>
+        <div className="container-fluid p-0 m-0 pt-5 bg-silver">
+        <Footer />  
+        </div>
+    </>
     )
 }
