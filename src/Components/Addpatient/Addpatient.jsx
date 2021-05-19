@@ -74,7 +74,19 @@ export default function Addpatient() {
             health_condition: state.patient_condition,
             bed_category: state.bed_category,
         }
-        axios({
+        if (typeof state.contact_number !== "undefined") {
+
+            var pattern = new RegExp(/^[0-9\b]+$/);
+          
+            if (!pattern.test(state.contact_number)) {
+                return addToast("Please enter valid phone number!", { appearance: 'error' });
+          
+            }else if(state.contact_number.length < 10){
+                return addToast("Please enter valid phone number!", { appearance: 'error' });
+            }
+          
+          }
+          axios({
             url: patientAdmit,
             method: 'POST',
             data: eData,
@@ -96,6 +108,7 @@ export default function Addpatient() {
             setState({ redirect: false});
             addToast('The server is not excepting any request at this moment!! Try again later', { appearance: 'error' });
           });
+        
           
       }
       const handleChange = event =>{
