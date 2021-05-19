@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import Searchbar from '../Searchbar/Searchbar'
 import { Button, Table } from 'react-bootstrap' 
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 // import Profile from '../Profile/Profile'
 import Infocard from '../Infocard/Infocard'
 import Logout from '../Logout/Logout'
@@ -75,6 +76,15 @@ export default function Nursehome() {
                      : 
                     null}
                     <span className="p-1"></span>
+                    <ReactHTMLTableToExcel
+                        id="test-table-xls-button"
+                        className="searchbarcontainer btn btn-primary mt-2 log"
+                        table="totalbedinfo"
+                        filename="Bedinfo"
+                        sheet="Bedinfo"
+                        buttonText="Download as XLS"
+                    />
+                    <span className="p-1"></span>
                     <Logout />
                 </div>
                 <div className="col-md-4 col-sm-4 col-12 p-2 col-lg-4">
@@ -96,7 +106,7 @@ export default function Nursehome() {
 
             <div className="row py-3">
                     <div className="col-md-9 col-sm-9 col-lg-9 col-12 profile">
-                    <Table responsive="md" className="">
+                    <Table responsive="md" className="" id="totalbedinfo">
                         <thead>
                         <tr>
                             <th>Total Beds(Available/Total)</th>

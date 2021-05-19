@@ -9,7 +9,7 @@ import cookie from 'react-cookies'
 import {patientAdmit} from '../../Api/patient.api'
 import axios from 'axios'
 import Heading from '../Heading/Heading'
-
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 export default function Listview() {
     const [loading, setLoading] = useState(false)
     const [state, setState] = useState([])
@@ -72,13 +72,23 @@ export default function Listview() {
                      : 
                     null}
                     <span className="p-1"></span>
+                    <ReactHTMLTableToExcel
+                        id="test-table-xls-button"
+                        className="searchbarcontainer btn btn-primary mt-2 log"
+                        table="activetable"
+                        filename="Activepatientlist"
+                        sheet="Activepatient"
+                        buttonText="Download as XLS"
+                    />
+                    <span className="p-1"></span>
                     <Logout />
+                    
+                    
                 </div>
             {/* Cards for Status for patient check */}
             <div className="row py-3">
                 <div className="col-md-10 col-sm-12 col-lg-10 col-12 profile">
-                
-                <Table responsive="md" className="">
+                <Table responsive="md" className="" id="activetable">
                     <thead>
                     <tr>
                         <th>Patient ID</th>
