@@ -16,6 +16,8 @@ export default function Addpatient() {
         bed_number: '',
         patient_condition: '',
         bed_category: '',
+        covid_status: '',
+        remark: '',
         redirect: false
 
     }
@@ -63,6 +65,14 @@ export default function Addpatient() {
             state.bed_category="4"
         }
         //
+        // For Covid Status 
+        if (state.covid_status==="Suspect"){
+            state.covid_status='S'
+        }
+        else if (state.covid_status==="Positive"){
+            state.covid_status='P'
+        }
+
         event.preventDefault();
         const eData={
             name: state.name,
@@ -73,6 +83,8 @@ export default function Addpatient() {
             bed_number: state.bed_number,
             health_condition: state.patient_condition,
             bed_category: state.bed_category,
+            covid_status: state.covid_status,
+            remark: state.remark
         }
         if (typeof state.contact_number !== "undefined") {
 
@@ -82,7 +94,7 @@ export default function Addpatient() {
                 return addToast("Please enter valid phone number!", { appearance: 'error' });
           
             }else if(state.contact_number.length < 10){
-                return addToast("Please enter valid phone number!", { appearance: 'error' });
+                return addToast("Phone number must be atleast 10 digit long!", { appearance: 'error' });
             }
           
           }
@@ -176,13 +188,26 @@ export default function Addpatient() {
                         required
                         onChange= { handleChange }
                     >
-                        <option>Select</option>
+                        <option>Select Patient Condition</option>
                         <option>Asymptomataic</option>
                         <option>Mild</option>
                         <option>Moderate</option>
                         <option>Severe</option>
                     </Form.Control>
             </Form.Group>
+            <Form.Group controlId='covid_status'>
+                    <Form.Control
+                        as='select'
+                        name='covid_status'
+                        required
+                        onChange= { handleChange }
+                    >
+                        <option>Select Covid Status</option>
+                        <option>Suspect</option>
+                        <option>Positive</option>
+                    </Form.Control>
+            </Form.Group>
+
             <Form.Group controlId='bed_number'>
                     <Form.Control
                         type='text'				                        
@@ -218,7 +243,15 @@ export default function Addpatient() {
                     required
                     />
             </Form.Group>
-            	
+            <Form.Group controlId='remark'>
+                    <Form.Control
+                        as='textarea'	
+                        rows="6" 			                        
+                        placeholder='Remark'                             
+                        name='remark'
+                        onChange={handleChange}
+                    />
+            </Form.Group>
             <Button variant="primary" type="submit" className="button my-2 p-2">
                 Submit
             </Button>
