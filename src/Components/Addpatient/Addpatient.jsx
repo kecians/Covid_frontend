@@ -121,7 +121,7 @@ export default function Addpatient() {
 
             <Form.Group controlId='contact_number'>
                     <Form.Control
-                        type='number'				                        
+                        type='text'				                        
                         placeholder='Contact Number'                             
                         name='contact_number'
                         onChange={handleChange}
@@ -144,9 +144,9 @@ export default function Addpatient() {
                         <option>Other</option>
                 </Form.Control>
                 </Form.Group>
-                <Form.Group as={Col} controlId='contact_number'>
+                <Form.Group as={Col} controlId='age'>
                     <Form.Control
-                        type='number'				                        
+                        type='text'				                        
                         placeholder='Age'                             
                         name='age'
                         onChange={handleChange}
@@ -172,7 +172,7 @@ export default function Addpatient() {
             </Form.Group>
             <Form.Group controlId='bed_number'>
                     <Form.Control
-                        type='number'				                        
+                        type='text'				                        
                         placeholder='Bed Number'                             
                         name='bed_number'
                         onChange={handleChange}
@@ -181,7 +181,7 @@ export default function Addpatient() {
                     />
             </Form.Group>
 
-            <Form.Group  controlId="Name">
+            <Form.Group  controlId="category">
             <Form.Control
                     as='select'
                     name='bed_category'
@@ -195,7 +195,7 @@ export default function Addpatient() {
                     <option>Ventilators</option>
             </Form.Control>
             </Form.Group>
-            <Form.Group controlId="exampleForm.ControlTextarea1" >
+            <Form.Group controlId="address" >
                 <Form.Control 
                     as="textarea"  
                     rows="6" 
