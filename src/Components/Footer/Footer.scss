@@ -1,10 +1,11 @@
 
 .footer{
+    
     // background: #3a3a3a;
     background: rgb(26, 25, 25);
     color: #fff;
-   
-    .dropdown-item,{
+    width: 100% !important;
+    .dropdown-item{
         color: #fff ;
         font-size: 1em;
     }
@@ -17,6 +18,20 @@
     }
 }
 
+.footer p{
+    word-spacing: 3px;
+    width: auto !important;
+    margin-top : 8px !important;
+}
+
+.footer .divider-p {
+    position: relative;
+    width: 50%;
+    height: 1px;
+    background-color: rgb(12, 129, 197);
+    margin : -15px auto 0px auto;
+
+}
 ul{
     list-style: none;
     padding: 0;
