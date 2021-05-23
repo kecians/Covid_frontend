@@ -476,7 +476,7 @@ export default function Addpatient() {
                                     </div>
                                     <div className="bg-light text-light p-2 my-4" style={{borderRadius: "30px"}}>
                                         <div className="text-info"> 
-                                            <div className="font-weight-bold p-1">Vaccine Type: {i.type}</div>
+                                            <div className="font-weight-bold p-1">Vaccine Type: {i.type==="1"? "Covishield": "Covaxin"}</div>
                                             <div className="font-weight-bold p-1">Vaccinated On: {i.vaccinated_on}</div>
                                             <Button className="fa fa-trash btn btn-primary searchbarcontainer log"
                                                 onClick={()=>{

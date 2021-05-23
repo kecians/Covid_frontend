@@ -122,7 +122,7 @@ export default function Listview() {
                     :
                     <>
                         {state.map((i,index) => (
-                    <tr>
+                    <tr key={index}>
                         <td>{i.patient_id}</td>
                         <td><Link to={`/patient/profile/${i.patient_id}/${i.contact_number}`} className="text-primary text-center">{i.name}</Link></td>
                         {cookie.load("staff")==="NURSE"?      
@@ -140,7 +140,7 @@ export default function Listview() {
                                 
                         </td>
                         <td>{i.created_on? i.created_on.split("T")[0]: "N/A"}</td>
-                        <td>{i.covid_status==="P" ? "Positive": i.covid_status==="S"? "Suspect": "N/A"}</td>
+                        <td>{i.covid_status==="P" ? "Positive": i.covid_status==="S"? "Suspect": i.covid_status==="N" ? "Negative": "N/A"}</td>
                         <td>{i.remark}</td>
                         
                     </tr>
