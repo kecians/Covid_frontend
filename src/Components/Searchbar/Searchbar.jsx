@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import { Button, Form, Table, Spinner } from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 // import Logout from '../../Components/Logout/Logout'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import {patientSearch} from '../../Api/patient.api'
 import axios from 'axios'
 import cookie from 'react-cookies'
@@ -62,6 +63,7 @@ export default function Searchbar() {
                         className="searchbarcontainer col-5 col-md-3 col-sm-3  mt-2">
                         Search
                     </Button>
+                    
                 </Form>
                 {cookie.load("staff")!=="NURSE"? 
                     <div className="filter mt-4 row">
@@ -92,7 +94,7 @@ export default function Searchbar() {
                             >
                             Death
                         </Button>
-                    </Form>
+                    </Form> 
                     <Form onSubmit={handleSubmit} className="mx-3  d-none d-md-block d-lg-block d-sm-block">
                         <Button 
                             variant="outline-primary" 
@@ -118,16 +120,22 @@ export default function Searchbar() {
         {state.show ? 
             <div className="row py-3">
                 <div className="col-md-12 col-sm-12 col-lg-12 col-12 profile">
-                    
-                    <Table responsive="md" className="">
+                   
+                    <ReactHTMLTableToExcel
+                        id="test-table-xls-button"
+                        className="searchbarcontainer btn btn-outline-primary mt-2"
+                        table="searchtable"
+                        filename="patientlist"
+                        sheet="Patientlist"
+                        buttonText="Download as XLS"
+                    />
+                    <Table responsive="md" className="" id="searchtable">
                     <thead>
                     <tr>
                         <th>Patient ID</th>
                         <th>Patient Name</th>
-
-                        {/* {cookie.load("staff")==="NURSE" ?<th>Health Update</th>: null} */}
                         <th>Admitted On</th> 
-                        <th>{state.query==="migrated"? "Migrated On":state.query==="death"? "Deceased On": "Recovered On"}</th> 
+                        <th>{state.query==="migrated"? "Migrated On":state.query==="death"? "Deceased On": state.query==="death"? "Recovered On": "Last Updated on"}</th> 
                         {state.query==="migrated"? 
                             <th>Migrated To</th>
                             :null
@@ -165,7 +173,7 @@ export default function Searchbar() {
                             <td>{i.patient_migrate? i.patient_migrate.migrated_to: "N/A"}</td>
                             :null
                         }
-                        {state.query==="migrated"? 
+                        {state.query!=="recovered"? 
                             <td>{i.patient_migrate? i.patient_migrate.reason: "N/A"}</td>
                             :null
                         }

@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import Searchbar from '../Searchbar/Searchbar'
 import { Button, Table } from 'react-bootstrap' 
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 // import Profile from '../Profile/Profile'
-import Infocard from '../Infocard/Infocard'
+// import Infocard from '../Infocard/Infocard'
 import Logout from '../Logout/Logout'
 import {allotedBeds} from '../../Api/patient.api'
 import axios from 'axios'
@@ -15,6 +16,8 @@ export default function Nursehome() {
     const [state, setState] = useState({})
     const [data, setData] = useState({})
     const [count, setCount] = useState(0)
+    const [status, setStatus] = useState({})
+
     useEffect(() => {
         axios({
             url: allotedBeds,
@@ -30,6 +33,7 @@ export default function Nursehome() {
               setState(res.data.total_beds)
               setData(res.data.alloted_beds)
               setCount(res.data.data.length)
+              setStatus(res.data.patient_status)
             }
           })
           .catch((err) => {
@@ -58,11 +62,11 @@ export default function Nursehome() {
                         </Button>
                     </Link>
                     <span className="p-1"></span>
-                    <Button variant="primary" type="submit" className="searchbarcontainer log mt-2" >
-                        <Link to='/list'> 
-                            Active Patients 
-                        </Link>
-                    </Button>
+                    <Link to='/list'> 
+                        <Button variant="primary" type="submit" className="searchbarcontainer log mt-2" >
+                                Active Patients 
+                        </Button>
+                    </Link>
                     <span className="p-1"></span>
                     {cookie.load("staff")==="NURSE" ?
                     <>
@@ -75,27 +79,22 @@ export default function Nursehome() {
                      : 
                     null}
                     <span className="p-1"></span>
+                    <ReactHTMLTableToExcel
+                        id="test-table-xls-button"
+                        className="searchbarcontainer btn btn-primary mt-2 log"
+                        table="totalbedinfo"
+                        filename="Bedinfo"
+                        sheet="Bedinfo"
+                        buttonText="Download as XLS"
+                    />
+                    <span className="p-1"></span>
                     <Logout />
                 </div>
-                <div className="col-md-4 col-sm-4 col-12 p-2 col-lg-4">
-                    
-                </div>
-                <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2 text-center">
-                    
-                </div>
             </div>
-            <div className="row">
-                <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2">
-                    <Infocard name="Total Patients" data={count}/>
-                </div>
-                <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2">
-                    <Infocard name="Total Beds" data={state.total} />
-                </div>
-                
-            </div>
-
+            
             <div className="row py-3">
                     <div className="col-md-9 col-sm-9 col-lg-9 col-12 profile">
+                    <Heading heading="Today's Bed Status"/>
                     <Table responsive="md" className="">
                         <thead>
                         <tr>
@@ -119,9 +118,33 @@ export default function Nursehome() {
                         </tbody>
                     </Table>
                     </div>
-
+                
                     <div className="col-md-3 col-sm-3 col-lg-3 col-12  p-2">
                         <Profile />
+                    </div>
+                    <div className="col-md-9 col-sm-9 col-lg-9 col-12 profile mt-2">
+                        <Heading heading="Today's Patient Status"/>
+                        <Table responsive="md" className="font-weight-bold" >
+                            <thead>
+                            <tr>
+                                <th>Active</th>
+                                <th>Recovered</th>
+                                <th>Migrated</th>
+                                <th>Death </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>{count}</td>
+                                <td>{status.recovered}</td>
+                                <td>{status.migrated}</td>                            
+                                <td>{status.death}</td>
+                                
+                                
+                            </tr>
+                        
+                            </tbody>
+                        </Table>
                     </div>
                 </div>
 

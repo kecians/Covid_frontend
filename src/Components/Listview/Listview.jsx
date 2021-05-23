@@ -2,14 +2,14 @@ import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import { Button, Table, Spinner } from 'react-bootstrap'
 import './Listview.scss'
-import Profile from '../Profile/Profile'
+// import Profile from '../Profile/Profile'
 import Searchbar from '../Searchbar/Searchbar'
 import Logout from '../Logout/Logout'
 import cookie from 'react-cookies'
 import {patientAdmit} from '../../Api/patient.api'
 import axios from 'axios'
 import Heading from '../Heading/Heading'
-
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 export default function Listview() {
     const [loading, setLoading] = useState(false)
     const [state, setState] = useState([])
@@ -47,6 +47,8 @@ export default function Listview() {
             </div>
             <hr className="mt-4"/>
             {/* Cards for Status for patient check */}
+            
+            <div className="row">
             <div className="col-md-12 col-sm-12 col-12 p-2 col-lg-12">
                     
                     <Link to='/home'> 
@@ -55,11 +57,11 @@ export default function Listview() {
                         </Button>
                     </Link>
                     <span className="p-1"></span>
-                    <Button variant="primary" type="submit" className="searchbarcontainer log mt-2" >
-                        <Link to='/list'> 
+                    <Link to='/list'> 
+                        <Button variant="primary" type="submit" className="searchbarcontainer log mt-2" >
                             Active Patients 
-                        </Link>
-                    </Button>
+                        </Button>
+                    </Link>
                     <span className="p-1"></span>
                     {cookie.load("staff")==="NURSE" ?
                     <>
@@ -72,13 +74,24 @@ export default function Listview() {
                      : 
                     null}
                     <span className="p-1"></span>
+                    <ReactHTMLTableToExcel
+                        id="test-table-xls-button"
+                        className="searchbarcontainer btn btn-primary mt-2 log"
+                        table="activetable"
+                        filename="Activepatientlist"
+                        sheet="Activepatient"
+                        buttonText="Download as XLS"
+                    />
+                    <span className="p-1"></span>
                     <Logout />
+                    
+                    
                 </div>
+            </div>
             {/* Cards for Status for patient check */}
             <div className="row py-3">
-                <div className="col-md-10 col-sm-12 col-lg-10 col-12 profile">
-                
-                <Table responsive="md" className="">
+                <div className="col-md-12 col-sm-12 col-lg-12 col-12 profile">
+                <Table responsive="md" className="" id="activetable">
                     <thead>
                     <tr>
                         <th>Patient ID</th>
@@ -88,6 +101,8 @@ export default function Listview() {
                         <th>Patients Condition</th>
                         <th>Alloted Bed</th>
                         <th>Admitted On</th> 
+                        <th>Covid Status</th> 
+                        <th>Remark</th> 
                     </tr>
                     </thead>
                     <tbody>
@@ -109,7 +124,7 @@ export default function Listview() {
                         {state.map((i,index) => (
                     <tr>
                         <td>{i.patient_id}</td>
-                        <td><Link to={`/patient/profile/${i.patient_id}`} className="text-primary text-center">{i.name}</Link></td>
+                        <td><Link to={`/patient/profile/${i.patient_id}/${i.contact_number}`} className="text-primary text-center">{i.name}</Link></td>
                         {cookie.load("staff")==="NURSE"?      
                             <td> <Link to={`/patient/healthcheck/${i.patient_id}/${i.name}`} className="text-primary text-center">Health Checkup</Link></td>
                                     :null
@@ -124,6 +139,8 @@ export default function Listview() {
                                 })
                         </td>
                         <td>{i.created_on? i.created_on.split("T")[0]: "N/A"}</td>
+                        <td>{i.covid_status==="P" ? "Positive": i.covid_status==="S"? "Suspect": "N/A"}</td>
+                        <td>{i.remark}</td>
                         
                     </tr>
                     ))}
@@ -132,10 +149,10 @@ export default function Listview() {
                     </tbody>
                 </Table>
                 </div>
-                <div className="col-md-2 p-2  col-sm-12 col-lg-2 col-12">
+                {/* <div className="col-md-2 p-2  col-sm-12 col-lg-2 col-12">
                     <Profile/>
                     
-                </div>
+                </div> */}
             </div>
            
         </div>

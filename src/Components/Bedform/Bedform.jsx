@@ -82,7 +82,7 @@ export default function Bedform(props) {
 
             <Form.Group controlId='bed_number'>
                     <Form.Control
-                        type='number'				                        
+                        type='text'				                        
                         placeholder='Bed Number'                             
                         name='bed_number'
                         onChange={handleChange}

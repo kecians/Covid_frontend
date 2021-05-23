@@ -15,7 +15,7 @@ export default function Pprofile(props) {
     useEffect(() => {
         setLoading(true)
         axios({
-            url: patientProfile+`${props.id}/`,
+            url: patientProfile+`${props.id}/${props.contact}/`,
             method: 'GET',
             
           })
@@ -25,30 +25,29 @@ export default function Pprofile(props) {
             } else {
                 setLoading(false)
                 setState(res.data.data)
-            }
+                axios({
+                    url: patientHealthProfile+`${props.id}/`,
+                    method: 'GET',
+                   
+                    })
+                    .then((res) => {
+                    if (res.data.status === 404) {
+                        setData(res.data.data)
+                    } else {
+                        setData(res.data.data)
+                    }
+                    })
+                    .catch((err) => {
+                    // console.log(err.response);
+                    });
+             }
           })
           .catch((err) => {
             addToast("Details Not Found!!", {appearance: "error"})
             // console.log(err.response);
           });
 
-          
-        axios({
-        url: patientHealthProfile+`${props.id}/`,
-        method: 'GET',
-       
-        })
-        .then((res) => {
-        if (res.data.status === 404) {
-            setData(res.data.data)
-        } else {
-            setData(res.data.data)
-        }
-        })
-        .catch((err) => {
-        // console.log(err.response);
-        });
-    }, [props.id, addToast])
+    }, [props.id, addToast, props.contact])
 
     // console.log(data)
     return (
