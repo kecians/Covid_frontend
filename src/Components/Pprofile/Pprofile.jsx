@@ -68,7 +68,7 @@ export default function Pprofile(props) {
                         </div>
                         <div className="card-body row">
                             <h6 className=" col-md-12 col-sm-12 col-12 col-lg-12  pl-5">Bed Number: <span className="font-weight-bold">
-                                {state.patient_bed?state.patient_bed.bed_number: null}
+                                {state.patient_bed?state.patient_bed.bed_id: null}
                                 (
                                 {state.patient_bed ? 
                                     state.patient_bed.bed_category==="1"? "General Bed": state.patient_bed.bed_category==="2"?
@@ -166,24 +166,25 @@ export default function Pprofile(props) {
 
                     {cookie.load("token")? 
                     <div className="card-body row">
-                    <div className=" col-md-3 col-sm-3 col-6 col-lg-3 text-center">
-                        <Link to='/list'>
-                            <Button variant="light" type="submit" className="searchbarcontainer">
-                               Active Patients
+                        <div className=" col-md-3 col-sm-3 col-6 col-lg-3 text-center">
+                            <Link to='/list'>
+                                <Button variant="light" type="submit" className="searchbarcontainer">
+                                Active Patients
+                                </Button>
+                            </Link>
+                        </div>
+                        
+                        <Link to='/home'>
+                            <Button variant="primary" type="submit" className="searchbarcontainer log">
+                                Home
                             </Button>
                         </Link>
                     </div>
-                    <div className=" col-md-3 col-sm-3 col-6 col-lg-3 text-center"> 
-                        <Link to='/home'>
-                        <Button variant="primary" type="submit" className="searchbarcontainer log">
-                            Home
-                        </Button>
-                        </Link>
-                    </div>
-                </div>: <Link to='/'>
-                        <Button variant="primary" type="submit" className="searchbarcontainer log">
-                            Back
-                        </Button>
+                    : 
+                <       Link to='/'>
+                            <Button variant="primary" type="submit" className="searchbarcontainer log">
+                                Back
+                            </Button>
                         </Link>
                     }
                 </div>

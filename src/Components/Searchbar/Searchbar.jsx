@@ -165,7 +165,7 @@ export default function Searchbar() {
                         {state.data.map((i,index) => (
                     <tr>
                         <td>{i.patient_id}</td>
-                        <td><Link to={`/patient/profile/${i.patient_id}`} className="text-primary text-center">{i.name}</Link></td>
+                        <td><Link to={`/patient/profile/${i.patient_id}/${i.contact_number}`}className="text-primary text-center">{i.name}</Link></td>
                         
                         <td>{i.created_on? i.created_on.split("T")[0]: "N/A"}</td>
                         <td>{i.created_on? i.updated_on.split("T")[0]: "N/A"}</td>

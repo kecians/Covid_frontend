@@ -6,6 +6,7 @@ import axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import cookie from 'react-cookies'
 export default function Addpatient() {
+    
     const {addToast} = useToasts()
     const initialState = {
         name: '',
@@ -13,15 +14,57 @@ export default function Addpatient() {
         gender: '',
         age: '',
         address: '',
-        bed_number: '',
         patient_condition: '',
+        bed_number: '',
         bed_category: '',
-        covid_status: '',
+        ward: '',
+        floor: '',
         remark: '',
-        redirect: false
+        is_tested: '',
+        type: '',
+        result: '',
+        is_vaccinated: '',
+        redirect: false,
 
     }
+    const info = {
+        1: 'General',
+        2: 'Bed',
+        3: 'Covid Test',
+        4: 'Covid Vaccine'
+    }
+    const vac = {
+       "Covishield": "1",
+       "Covaxin": "2"
+    }
+    const vaccineState = {
+        type: '',
+        vaccinated_on: '',
+    }
+
+    const [vaccine, setVaccine] = useState(vaccineState)
     const [state, setState] = useState(initialState)
+    const [count, setCount] = useState(1)
+    const [show, setShow] = useState(false)
+
+    const handleVaccineChange = e =>{
+        const { name, value } = e.target;
+        setVaccine({
+        ...vaccine,
+        [name]: name==="type"? vac[value]: value,
+        });
+    }
+    const [vaccine_status, setVaccine_status] = useState([])
+
+    const handleVaccineSave = e =>{
+        e.preventDefault();
+        setVaccine_status([...vaccine_status, vaccine])
+    }
+    const handleRemoveItem = idx => {
+        const temp = [...vaccine_status];
+        temp.splice(idx, 1);
+        setVaccine_status(temp);
+    }
     const handleSubmit = event => {
         // For Gender
         if (state.gender==="Male"){
@@ -65,12 +108,38 @@ export default function Addpatient() {
             state.bed_category="4"
         }
         //
-        // For Covid Status 
-        if (state.covid_status==="Suspect"){
-            state.covid_status='S'
+
+        //  For is_tested
+        if(state.is_tested==="Yes"){
+            state.is_tested = true
         }
-        else if (state.covid_status==="Positive"){
-            state.covid_status='P'
+        else{
+            state.is_tested = false
+        }
+
+        // For Covid test type
+        if(state.type==="Rapid Antigen"){
+            state.type = '1'
+        }
+        else if(state.type==="RT-PCR"){
+            state.type = '2'
+        }
+        else{
+            state.type = '3'
+        }
+
+        // For Covid test status 
+        if (state.result==="Positive"){
+            state.result='1'
+        }
+        else if (state.result==="Negative"){
+            state.result='2'
+        }
+        else if (state.result==="Awaited"){
+            state.result='3'
+        }
+        else {
+            state.result='4'
         }
 
         event.preventDefault();
@@ -80,11 +149,28 @@ export default function Addpatient() {
             gender: state.gender,
             age: state.age,
             address: state.address,
-            bed_number: state.bed_number,
             health_condition: state.patient_condition,
-            bed_category: state.bed_category,
             covid_status: state.covid_status,
-            remark: state.remark
+            remark: state.remark,
+            patient_bed: 
+                {
+                    bed_number: state.bed_number,
+                    bed_category: state.bed_category,
+                    ward: state.ward,
+                    floor: state.floor
+                },
+            patient_covid_test: 
+                {
+                    is_tested: state.is_tested, 
+                    type: state.type,
+                    result: state.result
+                }
+            ,
+            patient_vaccine_status: {
+                is_vaccinated: state.is_vaccinated,
+                vaccine_status: vaccine_status
+            }
+            
         }
         if (typeof state.contact_number !== "undefined") {
 
@@ -131,130 +217,370 @@ export default function Addpatient() {
     if (state.redirect){
         return <Redirect to='/list' />
     }
-
+    
     return (
+        <>
+
+        <div className="bg-primary text-light p-4 my-4" style={{borderRadius: "30px"}}>
+            <h4><span className="font-weight-bold ">{info[count]} Details</span></h4> <h5><span className="">Step {count} / 4</span> </h5>  
+        </div>
+
+
         <Form className="loginform" onSubmit={handleSubmit} id="form1">
-            <Form.Group  controlId="Name">
-                <Form.Control 
-                    type="text" 
-                    placeholder="Name" 
-                    name="name"
-                    onChange={handleChange}
-                    required/>
-            </Form.Group>
-
-
-            <Form.Group controlId='contact_number'>
-                    <Form.Control
-                        type='text'				                        
-                        placeholder='Contact Number'                             
-                        name='contact_number'
+            
+            {/* For Step 1 */}
+            {count===1? <>
+            
+                <Form.Group  controlId="Name">
+                    <Form.Control 
+                        type="text" 
+                        placeholder="Name" 
+                        name="name"
                         onChange={handleChange}
-                        required
-                        
-                    />
-            </Form.Group>
-
-            <Form.Row>
-                <Form.Group as={Col} controlId="Name">
-                <Form.Control
-                        as='select'
-                        name='gender'
-                        onChange={handleChange}
-                        required
-                    >
-                        <option>Select Gender</option>
-                        <option>Male</option>
-                        <option>Female</option>
-                        <option>Other</option>
-                </Form.Control>
-                </Form.Group>
-                <Form.Group as={Col} controlId='age'>
-                    <Form.Control
-                        type='text'				                        
-                        placeholder='Age'                             
-                        name='age'
-                        onChange={handleChange}
-                        required
-                        
-                    />
+                        value={state.name}
+                        required/>
                 </Form.Group>
 
-            </Form.Row>
-            <Form.Group controlId='patient_condition'>
-                    <Form.Control
-                        as='select'
-                        name='patient_condition'
-                        required
-                        onChange= { handleChange }
-                    >
-                        <option>Select Patient Condition</option>
-                        <option>Asymptomataic</option>
-                        <option>Mild</option>
-                        <option>Moderate</option>
-                        <option>Severe</option>
-                    </Form.Control>
-            </Form.Group>
-            <Form.Group controlId='covid_status'>
-                    <Form.Control
-                        as='select'
-                        name='covid_status'
-                        required
-                        onChange= { handleChange }
-                    >
-                        <option>Select Covid Status</option>
-                        <option>Suspect</option>
-                        <option>Positive</option>
-                    </Form.Control>
-            </Form.Group>
 
-            <Form.Group controlId='bed_number'>
+                <Form.Group controlId='contact_number'>
+                        <Form.Control
+                            type='text'				                        
+                            placeholder='Contact Number'                             
+                            name='contact_number'
+                            onChange={handleChange}
+                            value={state.contact_number}
+                            required
+                            
+                        />
+                </Form.Group>
+
+                <Form.Row>
+                    <Form.Group as={Col} controlId="Name">
                     <Form.Control
-                        type='text'				                        
-                        placeholder='Bed Number'                             
-                        name='bed_number'
+                            as='select'
+                            name='gender'
+                            onChange={handleChange}
+                            value={state.gender}
+                            required
+                        >
+                            <option>Select Gender</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Other</option>
+                    </Form.Control>
+                    </Form.Group>
+                    <Form.Group as={Col} controlId='age'>
+                        <Form.Control
+                            type='text'				                        
+                            placeholder='Age'                             
+                            name='age'
+                            onChange={handleChange}
+                            value={state.age}
+                            required
+                            
+                        />
+                    </Form.Group>
+
+                </Form.Row>
+                <Form.Group controlId='patient_condition'>
+                        <Form.Control
+                            as='select'
+                            name='patient_condition'
+                            required
+                            value={state.patient_condition}
+                            onChange= { handleChange }
+                        >
+                            <option>Select Patient Condition</option>
+                            <option>Asymptomataic</option>
+                            <option>Mild</option>
+                            <option>Moderate</option>
+                            <option>Severe</option>
+                        </Form.Control>
+                </Form.Group>
+                
+                <Form.Group controlId="address" >
+                    <Form.Control 
+                        as="textarea"  
+                        rows="6" 
+                        name="address" 
+                        placeholder="Address" 
                         onChange={handleChange}
+                        value={state.address}
                         required
-                        
-                    />
-            </Form.Group>
+                        />
+                </Form.Group>
+                <Form.Group controlId="remark" >
+                    <Form.Control 
+                        as="textarea"  
+                        rows="6" 
+                        name="remark" 
+                        placeholder="Remark" 
+                        onChange={handleChange}
+                        value={state.remark}
+                        required
+                        />
+                </Form.Group>
+                </>
+                : 
+                null
+            }
+            {/* For Step 1 */}
 
-            <Form.Group  controlId="category">
-            <Form.Control
-                    as='select'
-                    name='bed_category'
-                    onChange={handleChange}
-                    required
+            {/* For Step 2 */}
+            {count===2? 
+                <>
+                    <Form.Group  controlId="ward">
+                        <Form.Control
+                                as='select'
+                                name='ward'
+                                onChange={handleChange}
+                                required
+                                value={state.ward}
+                            >
+                                <option>Select Ward</option>
+                                <option>A</option>
+                                <option>B</option>
+                                
+                        </Form.Control>
+                    </Form.Group>
+                    <Form.Group  controlId="floor">
+                        <Form.Control
+                                as='select'
+                                name='floor'
+                                onChange={handleChange}
+                                value={state.floor}
+                                required
+                            >
+                                <option>Select Floor</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                        </Form.Control>
+                    </Form.Group>
+                    <Form.Group  controlId="category">
+                        <Form.Control
+                                as='select'
+                                name='bed_category'
+                                onChange={handleChange}
+                                value={state.bed_category}
+                                required
+                            >
+                                <option>Select Bed Category</option>
+                                <option>General Bed</option>
+                                <option>Oxygen Bed</option>
+                                <option>ICU Bed</option>
+                                <option>Ventilators</option>
+                        </Form.Control>
+                    </Form.Group>
+                    <Form.Group controlId='bed_number'>
+                        <Form.Control
+                            type='text'				                        
+                            placeholder='Bed Number'                             
+                            name='bed_number'
+                            onChange={handleChange}
+                            value={state.bed_number}
+                            required
+                            
+                        />
+                    </Form.Group>
+                    
+                
+                </>
+                : 
+                null
+            }
+            {/* For Step 2 */}
+
+            {/* For Step 3 */}
+            {count===3? 
+                <>
+                    <Form.Group  controlId="test">
+                        <Form.Control
+                                as='select'
+                                name='is_tested'
+                                onChange={handleChange}
+                                value={state.is_tested}
+                                required
+                            >
+                                <option>Select Test Status</option>
+                                <option>Yes</option>
+                                <option>No</option>
+                        </Form.Control>
+                    </Form.Group>
+                    {state.is_tested==="Yes"? 
+                        <>
+                            <Form.Group  controlId="test-type">
+                                <Form.Control
+                                        as='select'
+                                        name='type'
+                                        onChange={handleChange}
+                                        value={state.type}
+                                        required
+                                    >
+                                        <option>Select Test</option>
+                                        <option>Rapid Antigen</option>
+                                        <option>RT-PCR</option>
+                                        <option>TrueNat</option>
+                                </Form.Control>
+                            </Form.Group>
+                            <Form.Group  controlId="test-result">
+                                <Form.Control
+                                        as='select'
+                                        name='result'
+                                        onChange={handleChange}
+                                        value={state.result}
+                                        required
+                                    >
+                                        <option>Select Test Result</option>
+                                        <option>Positive</option>
+                                        <option>Negative</option>
+                                        <option>Awaited</option>
+                                        <option>Rejected</option>
+                                </Form.Control>
+                            </Form.Group>
+                        </>
+                        : 
+                        null
+                    }
+                </>
+                : 
+                null
+            }
+
+            {/* For Step 3 */}
+
+            {/* For Step 4 */}
+            {count===4? 
+                <>
+                    <Form.Group  controlId="test">
+                        <Form.Control
+                                as='select'
+                                name='is_vaccinated'
+                                onChange={handleChange}
+                                value={state.is_vaccinated}
+                                required
+                            >
+                                <option>Select Vaccine Status</option>
+                                <option>Yes</option>
+                                <option>No</option>
+                        </Form.Control>
+                    </Form.Group> 
+                    {vaccine_status.length ? 
+
+                        vaccine_status.map((i,index)=>{
+                            return(
+                                <div key={index} id={`dose${index}`}>
+                                    <div className="bg-primary text-light p-1 my-4" style={{borderRadius: "30px"}}>
+                                        <h5 className="text-center"> <span className="font-weight-bold">{index+1}-Dose</span></h5>
+                                    </div>
+                                    <div className="bg-light text-light p-2 my-4" style={{borderRadius: "30px"}}>
+                                        <div className="text-info"> 
+                                            <div className="font-weight-bold p-1">Vaccine Type: {i.type==="1"? "Covishield": "Covaxin"}</div>
+                                            <div className="font-weight-bold p-1">Vaccinated On: {i.vaccinated_on}</div>
+                                            <Button className="fa fa-trash btn btn-primary searchbarcontainer log"
+                                                onClick={()=>{
+                                                    handleRemoveItem(index)
+                                                }}
+                                            >
+                                            </Button>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+
+                            )
+                        })
+                        : null
+                    }
+                    {state.is_vaccinated==="Yes" && show? 
+                        <>
+                            <Form.Group  controlId="test-vaccine">
+                                <Form.Control
+                                        as='select'
+                                        name='type'
+                                        onChange={handleVaccineChange}
+                                        required
+                                    >
+                                        <option>Select Vaccine Type</option>
+                                        <option>Covishield</option>
+                                        <option>Covaxin</option>
+                                </Form.Control>
+                            </Form.Group>
+                            <Form.Group  controlId="vaccinated_on">
+                                <Form.Control
+                                       type="date"
+                                        name='vaccinated_on'
+                                        onChange={handleVaccineChange}
+                                        placeholder= "YYYY-MM-DD"
+                                        required
+                                    />
+                            </Form.Group>
+                        </>
+                        : 
+                        null
+                    }
+                    {state.is_vaccinated==="Yes" && show ? 
+                        <>
+                            <div className="my-2">
+                            <Button variant="outline-primary" 
+                                onClick={handleVaccineSave}  
+                                className="searchbarcontainer">
+                                Save
+                            </Button>
+                            </div>
+                        
+                        </> 
+                        : 
+                        null
+                    }
+                    {state.is_vaccinated==="Yes"?
+                            <div>
+                                <i className={ show ? "fa  btn btn-primary searchbarcontainer log fa-check": " fa  btn btn-primary searchbarcontainer log fa-plus"}
+                                onClick={()=>{
+                                    show ? setShow(false): setShow(true)
+                                }}
+                            >   {show? " Submit": " Add Dose"}
+                            </i>  
+                            </div>
+                              
+                              :null
+                    }
+
+                </>
+                : 
+                null
+            }
+            {/* For Step 4 */}
+
+
+            {count!==1? 
+                <Button variant="info" 
+                    onClick={()=>{
+                        count>1? setCount(count-1): setCount(count)
+                        }} 
+                    className="  buttonpre my-2 p-2"
                 >
-                    <option>Select Bed Category</option>
-                    <option>General Bed</option>
-                    <option>Oxygen Bed</option>
-                    <option>ICU Bed</option>
-                    <option>Ventilators</option>
-            </Form.Control>
-            </Form.Group>
-            <Form.Group controlId="address" >
-                <Form.Control 
-                    as="textarea"  
-                    rows="6" 
-                    name="address" 
-                    placeholder="Address" 
-                    onChange={handleChange}
-                    required
-                    />
-            </Form.Group>
-            <Form.Group controlId='remark'>
-                    <Form.Control
-                        as='textarea'	
-                        rows="6" 			                        
-                        placeholder='Remark'                             
-                        name='remark'
-                        onChange={handleChange}
-                    />
-            </Form.Group>
-            <Button variant="primary" type="submit" className="button my-2 p-2">
-                Submit
-            </Button>
+                    Previous
+                </Button>: null
+            }
+            
+            {count!==4? 
+                <Button variant="primary" 
+                    onClick={()=>{
+                        count<4? setCount(count+1): setCount(count)
+                        
+                        }}  className="buttonnext my-2 p-2">
+                    Next
+                </Button>: null
+            }
+             {count===4? 
+                 <Button variant="primary" type="submit" className="buttonnext my-2 p-2">
+                    Submit
+                </Button>
+             : null
+            }
         </Form>
+        </>
     )
 }
