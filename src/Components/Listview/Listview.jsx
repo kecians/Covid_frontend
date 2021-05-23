@@ -130,13 +130,14 @@ export default function Listview() {
                                     :null
                         }
                         <td>{i.health_condition==="1"? "Asymptomataic": i.health_condition==="2"? "Mild": i.health_condition==="3"? "Moderate": "Severe"}</td>
-                        <td>{i.patient_bed?i.patient_bed.bed_number: null}
+                        <td>{i.patient_bed?i.patient_bed.bed_id: null}
                         (
                                 {i.patient_bed ? 
                                     i.patient_bed.bed_category==="1"? "General Bed": i.patient_bed.bed_category==="2"?
                                             "O2 Bed": i.patient_bed.bed_category==="3"? "ICU": "Vantilator":null
 
                                 })
+                                
                         </td>
                         <td>{i.created_on? i.created_on.split("T")[0]: "N/A"}</td>
                         <td>{i.covid_status==="P" ? "Positive": i.covid_status==="S"? "Suspect": "N/A"}</td>
