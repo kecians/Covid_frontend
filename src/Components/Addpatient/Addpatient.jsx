@@ -106,12 +106,38 @@ export default function Addpatient() {
             state.bed_category="4"
         }
         //
-        // For Covid Status 
-        if (state.covid_status==="Suspect"){
-            state.covid_status='S'
+
+        //  For is_tested
+        if(state.is_tested==="Yes"){
+            state.is_tested = true
         }
-        else if (state.covid_status==="Positive"){
-            state.covid_status='P'
+        else{
+            state.is_tested = false
+        }
+
+        // For Covid test type
+        if(state.type==="Rapid Antigen"){
+            state.type = '1'
+        }
+        else if(state.type==="RT-PCR"){
+            state.type = '2'
+        }
+        else{
+            state.type = '3'
+        }
+
+        // For Covid test status 
+        if (state.result==="Positive"){
+            state.result='1'
+        }
+        else if (state.result==="Negative"){
+            state.result='2'
+        }
+        else if (state.result==="Awaited"){
+            state.result='3'
+        }
+        else {
+            state.result='4'
         }
 
         event.preventDefault();
@@ -121,11 +147,29 @@ export default function Addpatient() {
             gender: state.gender,
             age: state.age,
             address: state.address,
-            bed_number: state.bed_number,
             health_condition: state.patient_condition,
-            bed_category: state.bed_category,
             covid_status: state.covid_status,
-            remark: state.remark
+            remark: state.remark,
+            patient_bed: [
+                {
+                    bed_number: state.bed_number,
+                    bed_category: state.bed_category,
+                    ward: state.ward,
+                    floor: state.floor
+                }
+                ],
+            patient_covid_test: 
+                {
+                    is_tested: state.is_tested, 
+                    type: state.type,
+                    result: state.result
+                }
+            ,
+            patient_vaccine_status: {
+                is_vaccinated: state.is_vaccinated,
+                vaccine_status: vaccine_status
+            }
+            
         }
         if (typeof state.contact_number !== "undefined") {
 
