@@ -6,6 +6,7 @@ import axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import cookie from 'react-cookies'
 export default function Addpatient() {
+    
     const {addToast} = useToasts()
     const initialState = {
         name: '',
@@ -23,8 +24,6 @@ export default function Addpatient() {
         type: '',
         result: '',
         is_vaccinated: '',
-        type_vaccine: '',
-        vaccinated_on: '',
         redirect: false,
 
     }
@@ -34,8 +33,36 @@ export default function Addpatient() {
         3: 'Covid Test',
         4: 'Covid Vaccine'
     }
+    const vaccineState = {
+        type_vaccine: '',
+        vaccinated_on: '',
+    }
+    const [vaccine, setVaccine] = useState(vaccineState)
     const [state, setState] = useState(initialState)
     const [count, setCount] = useState(1)
+    const [show, setShow] = useState(false)
+
+    const handleVaccineChange = e =>{
+        const { name, value } = e.target;
+        setVaccine({
+        ...vaccine,
+        [name]: value,
+        });
+    }
+
+    const [vaccine_status, setVaccine_status] = useState([])
+
+    const handleVaccineSave = e =>{
+        e.preventDefault();
+        setVaccine_status([...vaccine_status, vaccine])
+    }
+    const handleRemoveItem = idx => {
+        const temp = [...vaccine_status];
+        temp.splice(idx, 1);
+        setVaccine_status(temp);
+    }
+
+    console.log(vaccine_status)
     const handleSubmit = event => {
         // For Gender
         if (state.gender==="Male"){
@@ -145,7 +172,7 @@ export default function Addpatient() {
     if (state.redirect){
         return <Redirect to='/list' />
     }
-    console.log(state)
+    // console.log(state)
     return (
         <>
 
@@ -234,6 +261,17 @@ export default function Addpatient() {
                         placeholder="Address" 
                         onChange={handleChange}
                         value={state.address}
+                        required
+                        />
+                </Form.Group>
+                <Form.Group controlId="remark" >
+                    <Form.Control 
+                        as="textarea"  
+                        rows="6" 
+                        name="remark" 
+                        placeholder="Remark" 
+                        onChange={handleChange}
+                        value={state.remark}
                         required
                         />
                 </Form.Group>
@@ -383,7 +421,87 @@ export default function Addpatient() {
                                 <option>No</option>
                         </Form.Control>
                     </Form.Group> 
-                
+                    {vaccine_status.length ? 
+
+                        vaccine_status.map((i,index)=>{
+                            return(
+                                <div key={index} id={`dose${index}`}>
+                                    <div className="bg-primary text-light p-1 my-4" style={{borderRadius: "30px"}}>
+                                        <h5 className="text-center"> <span className="font-weight-bold">{index+1}-Dose</span></h5>
+                                    </div>
+                                    <div className="bg-light text-light p-2 my-4" style={{borderRadius: "30px"}}>
+                                        <div className="text-info"> 
+                                            <div className="font-weight-bold p-1">Vaccine Type: {i.type_vaccine}</div>
+                                            <div className="font-weight-bold p-1">Vaccinated On: {i.vaccinated_on}</div>
+                                            <Button className="fa fa-trash btn btn-primary searchbarcontainer log"
+                                                onClick={()=>{
+                                                    handleRemoveItem(index)
+                                                }}
+                                            >
+                                            </Button>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+
+                            )
+                        })
+                        : null
+                    }
+                    {state.is_vaccinated==="Yes" && show? 
+                        <>
+                            <Form.Group  controlId="test-vaccine">
+                                <Form.Control
+                                        as='select'
+                                        name='type_vaccine'
+                                        onChange={handleVaccineChange}
+                                        required
+                                    >
+                                        <option>Select Vaccine Type</option>
+                                        <option>Covishield</option>
+                                        <option>Covaxin</option>
+                                </Form.Control>
+                            </Form.Group>
+                            <Form.Group  controlId="vaccinated_on">
+                                <Form.Control
+                                       type="date"
+                                        name='vaccinated_on'
+                                        onChange={handleVaccineChange}
+                                        placeholder= "YYYY-MM-DD"
+                                        required
+                                    />
+                            </Form.Group>
+                        </>
+                        : 
+                        null
+                    }
+                    {state.is_vaccinated==="Yes" && show ? 
+                        <>
+                            <div className="my-2">
+                            <Button variant="outline-primary" 
+                                onClick={handleVaccineSave}  
+                                className="searchbarcontainer">
+                                Save
+                            </Button>
+                            </div>
+                        
+                        </> 
+                        : 
+                        null
+                    }
+                    {state.is_vaccinated==="Yes"?
+                            <div>
+                                <i className={ show ? "fa  btn btn-primary searchbarcontainer log fa-check": " fa  btn btn-primary searchbarcontainer log fa-plus"}
+                                onClick={()=>{
+                                    show ? setShow(false): setShow(true)
+                                }}
+                            >   {show? " Submit": " Add Dose"}
+                            </i>  
+                            </div>
+                              
+                              :null
+                    }
+
                 </>
                 : 
                 null
@@ -401,14 +519,22 @@ export default function Addpatient() {
                     Previous
                 </Button>: null
             }
-
-            <Button variant="primary" 
-                onClick={()=>{
-                    count<4? setCount(count+1): setCount(count)
-                    
-                    }}  className="buttonnext my-2 p-2">
-                Next
-            </Button>
+            
+            {count!==4? 
+                <Button variant="primary" 
+                    onClick={()=>{
+                        count<4? setCount(count+1): setCount(count)
+                        
+                        }}  className="buttonnext my-2 p-2">
+                    Next
+                </Button>: null
+            }
+             {count===4? 
+                 <Button variant="primary" type="submit" className="buttonnext my-2 p-2">
+                    Submit
+                </Button>
+             : null
+            }
         </Form>
         </>
     )
