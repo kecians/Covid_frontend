@@ -7,6 +7,10 @@ export class Footer extends Component {
           <footer className="footer container-fluid ">
                   <div className="dropdown-divider"></div>
                   <div className="row align-items-center justify-content-center p-1">
+                    <h6>Designed & Developed by</h6>
+                  </div>
+                  
+                  <div className="row align-items-center justify-content-center p-1">
                     <h6>&copy;Copyright ©2021 All rights reserved</h6>
                   </div>
           </footer>
