@@ -49,7 +49,6 @@ export default function Addpatient() {
 
     const handleVaccineChange = e =>{
         const { name, value } = e.target;
-        console.log(e.target)
         setVaccine({
         ...vaccine,
         [name]: name==="type"? vac[value]: value,
@@ -66,8 +65,6 @@ export default function Addpatient() {
         temp.splice(idx, 1);
         setVaccine_status(temp);
     }
-
-    console.log(vaccine_status)
     const handleSubmit = event => {
         // For Gender
         if (state.gender==="Male"){
@@ -155,14 +152,13 @@ export default function Addpatient() {
             health_condition: state.patient_condition,
             covid_status: state.covid_status,
             remark: state.remark,
-            patient_bed: [
+            patient_bed: 
                 {
                     bed_number: state.bed_number,
                     bed_category: state.bed_category,
                     ward: state.ward,
                     floor: state.floor
-                }
-                ],
+                },
             patient_covid_test: 
                 {
                     is_tested: state.is_tested, 
@@ -221,7 +217,7 @@ export default function Addpatient() {
     if (state.redirect){
         return <Redirect to='/list' />
     }
-    // console.log(state)
+    
     return (
         <>
 
