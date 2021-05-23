@@ -27,6 +27,22 @@ h1{
   
 }
 
+h2{
+  font-size : calc(var(--font-size-h) - 5) !important; 
+}
+
+h4{
+  font-size : calc(var(--font-size-h) - 10) !important;
+}
+
+h5{
+  font-size : calc(var(--font-size-h) - 15 ) !important;
+}
+
+h6{
+  font-size : calc( var(--font-size-h) - 20) !important;
+}
+
 p{
   font-size: var(--font-size-p) !important; 
 }
@@ -35,7 +51,7 @@ p{
 
   :root{
     --font-size-h : 30px !important;
-    --font-size-p : 13px;
+    --font-size-p : 10px;
   }
   
 }

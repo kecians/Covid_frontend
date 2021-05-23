@@ -11,6 +11,8 @@ export default function Bedform(props) {
         patient_id: props.id,
         bed_number: '',
         bed_category: '',
+        floor: '',
+        ward: '',
         redirect: false
 
     }
@@ -22,7 +24,7 @@ export default function Bedform(props) {
         else if (state.bed_category==="Oxygen Bed"){
             state.bed_category="2"
         }
-        else if (state.bed_category==="ICU"){
+        else if (state.bed_category==="ICU Bed"){
             state.bed_category="3"
         }
         else{
@@ -33,6 +35,8 @@ export default function Bedform(props) {
             patient_id: state.patient_id,
             bed_number: state.bed_number,
             bed_category: state.bed_category,
+            ward: state.ward,
+            floor: state.floor
         }
         axios({
             url: patientBedalloatment,
@@ -49,11 +53,18 @@ export default function Bedform(props) {
               setState({ redirect: true});
             }
             else if (res.data.status===400){
-              addToast("Error occurred try again!!", { appearance: 'error' });
+                if(res.data.data.bed_number){
+                    addToast(res.data.data.bed_number[0], { appearance: 'error' })
+                }
+                if(res.data.data.bed_category) {
+                    addToast("Beds are full in this category!", { appearance: 'error' })
+                }
+              
             }
           })
           .catch(error => {
             setState({ redirect: false});
+            console.log(error)
             addToast('The server is not excepting any request at this moment!! Try again later', { appearance: 'error' });
           });
           
@@ -70,29 +81,58 @@ export default function Bedform(props) {
     return (
         <Form className="loginform" onSubmit={handleSubmit} id="form1">
             <Form.Group  controlId="Patientid">
-                        <Form.Control 
-                            type="text" 
-                            placeholder="Patient id" 
-                            value = {state.patient_id}
-                            // name = 'patient_id'
-                            required
-                            />
-                    </Form.Group>
-
-
-            <Form.Group controlId='bed_number'>
-                    <Form.Control
-                        type='text'				                        
-                        placeholder='Bed Number'                             
-                        name='bed_number'
-                        onChange={handleChange}
-                        required
-                        
+                <Form.Control 
+                    type="text" 
+                    placeholder="Patient id" 
+                    value = {state.patient_id}
+                    // name = 'patient_id'
+                    readOnly
+                    required
                     />
             </Form.Group>
 
+            <Form.Group  controlId="ward">
+                <Form.Control
+                        as='select'
+                        name='ward'
+                        onChange={handleChange}
+                        required
+                    >
+                        <option>Select Ward</option>
+                        <option>A</option>
+                        <option>B</option>
+                       
+                </Form.Control>
+            </Form.Group>
+
+            <Form.Group  controlId="floor">
+                <Form.Control
+                        as='select'
+                        name='floor'
+                        onChange={handleChange}
+                        required
+                    >
+                        <option>Select Floor</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                </Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId='bed_number'>
+                <Form.Control
+                    type='text'				                        
+                    placeholder='Bed Number'                             
+                    name='bed_number'
+                    onChange={handleChange}
+                    required
+                    
+                />
+            </Form.Group>
+
             <Form.Group  controlId="Name">
-            <Form.Control
+                <Form.Control
                     as='select'
                     name='bed_category'
                     onChange={handleChange}
@@ -103,7 +143,7 @@ export default function Bedform(props) {
                     <option>Oxygen Bed</option>
                     <option>ICU Bed</option>
                     <option>Ventilators</option>
-            </Form.Control>
+                </Form.Control>
             </Form.Group>
             <Button variant="primary" type="submit" className="button my-2 p-2">
                 Submit
