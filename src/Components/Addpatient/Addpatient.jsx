@@ -33,10 +33,15 @@ export default function Addpatient() {
         3: 'Covid Test',
         4: 'Covid Vaccine'
     }
+    const vac = {
+       "Covishield": "1",
+       "Covaxin": "2"
+    }
     const vaccineState = {
-        type_vaccine: '',
+        type: '',
         vaccinated_on: '',
     }
+
     const [vaccine, setVaccine] = useState(vaccineState)
     const [state, setState] = useState(initialState)
     const [count, setCount] = useState(1)
@@ -44,12 +49,12 @@ export default function Addpatient() {
 
     const handleVaccineChange = e =>{
         const { name, value } = e.target;
+        console.log(e.target)
         setVaccine({
         ...vaccine,
-        [name]: value,
+        [name]: name==="type"? vac[value]: value,
         });
     }
-
     const [vaccine_status, setVaccine_status] = useState([])
 
     const handleVaccineSave = e =>{
@@ -475,7 +480,7 @@ export default function Addpatient() {
                                     </div>
                                     <div className="bg-light text-light p-2 my-4" style={{borderRadius: "30px"}}>
                                         <div className="text-info"> 
-                                            <div className="font-weight-bold p-1">Vaccine Type: {i.type_vaccine}</div>
+                                            <div className="font-weight-bold p-1">Vaccine Type: {i.type}</div>
                                             <div className="font-weight-bold p-1">Vaccinated On: {i.vaccinated_on}</div>
                                             <Button className="fa fa-trash btn btn-primary searchbarcontainer log"
                                                 onClick={()=>{
@@ -497,7 +502,7 @@ export default function Addpatient() {
                             <Form.Group  controlId="test-vaccine">
                                 <Form.Control
                                         as='select'
-                                        name='type_vaccine'
+                                        name='type'
                                         onChange={handleVaccineChange}
                                         required
                                     >
