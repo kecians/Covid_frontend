@@ -78,7 +78,7 @@ export default function Searchbar() {
                                 
                             }}
                             >
-                            Migrated
+                            Referred
                         </Button>
                     </Form>
                     
@@ -108,6 +108,19 @@ export default function Searchbar() {
                             Recovered
                         </Button>
                     </Form>
+                    <Form onSubmit={handleSubmit} className="mx-3  d-none d-md-block d-lg-block d-sm-block">
+                        <Button 
+                            variant="outline-primary" 
+                            type="submit" 
+                            className="searchbarcontainer" 
+                            onClick={(e)=>{
+                                setState({...state, query: "home_isolated"});
+                                
+                            }}
+                            >
+                            Home Isolated
+                        </Button>
+                    </Form>
                 </div>   
                 : null
                 }
@@ -134,6 +147,11 @@ export default function Searchbar() {
                     <tr>
                         <th>Patient ID</th>
                         <th>Patient Name</th>
+                        {state.query==="home_isolated"? 
+                            <th>Health Update</th>
+                            :null
+                        }
+                        
                         <th>Admitted On</th> 
                         <th>{state.query==="migrated"? "Migrated On":state.query==="death"? "Deceased On": state.query==="death"? "Recovered On": "Last Updated on"}</th> 
                         {state.query==="migrated"? 
@@ -166,7 +184,10 @@ export default function Searchbar() {
                     <tr>
                         <td>{i.patient_id}</td>
                         <td><Link to={`/patient/profile/${i.patient_id}/${i.contact_number}`}className="text-primary text-center">{i.name}</Link></td>
-                        
+                        {state.query==="home_isolated"?      
+                            <td> <Link to={`/patient/healthcheck/${i.patient_id}/${i.name}`} className="text-primary text-center">Health Checkup</Link></td>
+                                    :null
+                        }
                         <td>{i.created_on? i.created_on.split("T")[0]: "N/A"}</td>
                         <td>{i.created_on? i.updated_on.split("T")[0]: "N/A"}</td>
                         {state.query==="migrated"? 

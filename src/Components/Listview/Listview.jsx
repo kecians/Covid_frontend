@@ -26,6 +26,7 @@ export default function Listview() {
             if (res.data.status === 404) {
                 setLoading(false)
                 setState(res.data.data)
+                // setvaccine
             } else {
                 setLoading(false)
                 setState(res.data.data)
@@ -91,7 +92,7 @@ export default function Listview() {
             {/* Cards for Status for patient check */}
             <div className="row py-3">
                 <div className="col-md-12 col-sm-12 col-lg-12 col-12 profile">
-                <Table responsive="md" className="" id="activetable">
+                <Table responsive="lg" className="" id="activetable">
                     <thead>
                     <tr>
                         <th>Patient ID</th>
@@ -102,7 +103,10 @@ export default function Listview() {
                         <th>Alloted Bed</th>
                         <th>Admitted On</th> 
                         <th>Covid Status</th> 
+                        <th>Vaccinated</th> 
+                        <th>Vaccine Details</th> 
                         <th>Remark</th> 
+                        
                     </tr>
                     </thead>
                     <tbody>
@@ -141,6 +145,17 @@ export default function Listview() {
                         </td>
                         <td>{i.created_on? i.created_on.split("T")[0]: "N/A"}</td>
                         <td>{i.covid_status==="P" ? "Positive": i.covid_status==="S"? "Suspect": i.covid_status==="N" ? "Negative": "N/A"}</td>
+                        <td>{i.patient_vaccine_status?i.patient_vaccine_status.is_vaccinated? "Yes":"No": "N/A" }</td>
+                        <td>
+                            {i.patient_vaccine_status?
+                                i.patient_vaccine_status.is_vaccinated?  
+                                    i.patient_vaccine_status.vaccine_status[i.patient_vaccine_status.vaccine_status.length-1].type==="1"? 
+                                        `Covishield/${i.patient_vaccine_status.vaccine_status[i.patient_vaccine_status.vaccine_status.length-1].vaccinated_on}`: `Covaxin/${i.patient_vaccine_status.vaccine_status[i.patient_vaccine_status.vaccine_status.length-1].vaccinated_on}`
+                                    : 
+                                "N/A"
+                            : "N/A"
+                            }
+                        </td>
                         <td>{i.remark}</td>
                         
                     </tr>
