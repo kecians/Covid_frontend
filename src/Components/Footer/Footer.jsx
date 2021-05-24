@@ -16,7 +16,7 @@ export class Footer extends Component {
                   
                  
                  
-                    <p className=" text-center">Guided by : &ensp;<a href="/">Dr. Kunwar Singh Vaisla (H.O.D. CSE BTKIT ALMORA) &ensp; </a></p>
+                    <p className=" text-center">Guided by : &ensp;<a href="/">Dr. Kunwar Singh Vaisla &ensp; </a></p>
                     <div className="divider-p"></div>
                
 
