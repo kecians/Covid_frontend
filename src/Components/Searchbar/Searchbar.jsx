@@ -92,7 +92,7 @@ export default function Searchbar() {
                                 
                             }}
                             >
-                            Death
+                            Deceased
                         </Button>
                     </Form> 
                     <Form onSubmit={handleSubmit} className="mx-3  d-none d-md-block d-lg-block d-sm-block">
@@ -189,13 +189,15 @@ export default function Searchbar() {
                                     :null
                         }
                         <td>{i.created_on? i.created_on.split("T")[0]: "N/A"}</td>
-                        <td>{i.created_on? i.updated_on.split("T")[0]: "N/A"}</td>
+                        <td>{state.query!=="death"? i.updated_on? i.updated_on.split("T")[0]: "N/A" : i.patient_death? i.patient_death.expired_on: "N/A"}</td>
+
                         {state.query==="migrated"? 
                             <td>{i.patient_migrate? i.patient_migrate.migrated_to: "N/A"}</td>
                             :null
                         }
                         {state.query!=="recovered"? 
-                            <td>{i.patient_migrate? i.patient_migrate.reason: "N/A"}</td>
+                            <td>{state.query==="death"? 
+                            i.patient_death? i.patient_death.reason: "N/A": i.patient_migrate? i.patient_migrate.reason: "N/A" }</td>
                             :null
                         }
                     </tr>
