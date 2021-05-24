@@ -177,7 +177,7 @@ export default function Statusform(props) {
                 }
                 {state.status==="Death"?
                     <>
-                    <Form.Group controlId='reason'>
+                    <Form.Group controlId='ex'>
                       <Form.Control
                           type="date"
                           name='expired_on'
@@ -192,7 +192,7 @@ export default function Statusform(props) {
                           as='textarea'
                           name='reason'
                           required
-                          placeholder="Cause of migration...."
+                          placeholder="Cause of Death...."
                           rows="3"
                           onChange= { handleChange }
                       >                

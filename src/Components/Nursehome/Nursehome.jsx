@@ -131,7 +131,7 @@ export default function Nursehome() {
                                 <th>Active</th>
                                 <th>Recovered</th>
                                 <th>Referred</th>
-                                <th>Death </th>
+                                <th>Deceased </th>
                             </tr>
                             </thead>
                             <tbody>
