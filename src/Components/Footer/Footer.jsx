@@ -17,7 +17,7 @@ export class Footer extends Component {
                   
                  
                  
-                    <p className=" text-center p-2">Bipin Treipathi Kumaon Institute of Technology, Almora</p>
+                    <p className=" text-center p-2">Bipin Tripathi Kumaon Institute of Technology, Almora</p>
                     <div className="divider-p"></div>
                
 
