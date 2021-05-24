@@ -118,7 +118,7 @@ export default function Pprofile(props) {
                         <p className="card-title pl-3">Vaccinated: <span className="font-weight-bold">  &ensp; &ensp;{vaccine.is_vaccinated ? "Yes": "No"} </span></p>
                         {vaccine.vaccine_status? vaccine.vaccine_status.map((i,index)=>{
                             return(
-                                <p className="card-title pl-3">Dose {index+1}: <span className="font-weight-bold">  &ensp; &ensp;{i.type==="1" ? "Covishield": i.type==="2"? `Covaxin/${i.vaccinated_on}`:"N/A"} </span></p>
+                                <p className="card-title pl-3">Dose {index+1}: <span className="font-weight-bold">  &ensp; &ensp;{i.type==="1" ? `Covishield/${i.vaccinated_on}`: i.type==="2"? `Covaxin/${i.vaccinated_on}`:"N/A"} </span></p>
                             )
                         })
                         : null
