@@ -133,7 +133,7 @@ export default function Listview() {
                             <td> <Link to={`/patient/healthcheck/${i.patient_id}/${i.name}`} className="text-primary text-center">Health Checkup</Link></td>
                                     :null
                         }
-                        <td>{i.health_condition==="1"? "Asymptomataic": i.health_condition==="2"? "Mild": i.health_condition==="3"? "Moderate": "Severe"}</td>
+                        <td>{i.health_condition==="1"? "Asymptomatic": i.health_condition==="2"? "Mild": i.health_condition==="3"? "Moderate": "Severe"}</td>
                         <td>{i.patient_bed?i.patient_bed.bed_id: null}
                         (
                                 {i.patient_bed ? 
