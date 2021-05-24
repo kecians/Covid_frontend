@@ -10,6 +10,7 @@ import {allotedBeds} from '../../Api/patient.api'
 import axios from 'axios'
 import cookie from 'react-cookies'
 import Heading from '../Heading/Heading'
+import HeadingSmall from '../HeadingSmall/HeadingSmall'
 import Profile from '../Profile/Profile'
 
 export default function Nursehome() {
@@ -94,7 +95,7 @@ export default function Nursehome() {
             
             <div className="row py-3">
                     <div className="col-md-9 col-sm-9 col-lg-9 col-12 profile">
-                    <Heading heading="Today's Bed Status"/>
+                    <HeadingSmall heading="Today's Bed Status"/>
                     <Table responsive="md" className="">
                         <thead>
                         <tr>
@@ -123,13 +124,13 @@ export default function Nursehome() {
                         <Profile />
                     </div>
                     <div className="col-md-9 col-sm-9 col-lg-9 col-12 profile mt-2">
-                        <Heading heading="Today's Patient Status"/>
+                        <HeadingSmall heading="Today's Patient Status"/>
                         <Table responsive="md" className="font-weight-bold" >
                             <thead>
                             <tr>
                                 <th>Active</th>
                                 <th>Recovered</th>
-                                <th>Migrated</th>
+                                <th>Referred</th>
                                 <th>Death </th>
                             </tr>
                             </thead>

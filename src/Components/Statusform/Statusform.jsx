@@ -15,11 +15,14 @@ export default function Statusform(props) {
   }
   const [state, setState] = useState(initialState)
   const handleSubmit = event => {
-      if (state.status==="Migrated"){
+      if (state.status==="Referred"){
           state.status="M"
       }
       else if (state.status==="Death"){
         state.status="D"
+      }
+      else if(state.status==="Home Isolated"){
+        state.status="H"
       }
       else{
           state.status="R"
@@ -106,13 +109,14 @@ export default function Statusform(props) {
                         onChange= { handleChange }
                     >
                         <option>Select Status</option>
-                        <option>Migrated</option>
+                        <option>Referred</option>
                         <option>Recovered</option>
                         <option>Death</option>
+                        <option>Home Isolated</option>
                         
                     </Form.Control>
                 </Form.Group>
-                {state.status==="Migrated"?
+                {state.status==="Referred"?
                     <>
                     <Form.Group controlId='reason'>
                       <Form.Control
@@ -130,7 +134,7 @@ export default function Statusform(props) {
                         as='textarea'
                         name='migrated_to'
                         required
-                        placeholder="Migrated to...."
+                        placeholder="Referred to...."
                         rows="4"
                         onChange= { handleChange }
                     >                

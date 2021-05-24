@@ -7,6 +7,7 @@ import {allotedBeds} from '../../Api/patient.api'
 import axios from 'axios'
 // import cookie from 'react-cookies'
 import Heading from '../../Components/Heading/Heading'
+import HeadingSmall from '../../Components/HeadingSmall/HeadingSmall'
 import Footer from '../../Components/Footer/Footer'
 export default function Publicpage() {
     const [state, setState] = useState({})
@@ -56,7 +57,7 @@ export default function Publicpage() {
                         </Link>
                     </div>
                     <div className="col-md-12 col-sm-12 col-lg-12 col-12 profile ">
-                        <Heading heading="Today's Bed Status"/>
+                        <HeadingSmall heading="Today's Bed Status"/>
                         <Table responsive="md" className="">
                             <thead>
                             <tr>
@@ -81,13 +82,13 @@ export default function Publicpage() {
                         </Table>
                     </div>
                     <div className="col-md-12 col-sm-12 col-lg-12 col-12 profile mt-2">
-                        <Heading heading="Today's Patient Status"/>
+                        <HeadingSmall heading="Today's Patient Status"/>
                         <Table responsive="md" className="font-weight-bold" >
                             <thead>
                             <tr>
                                 <th>Active</th>
                                 <th>Recovered</th>
-                                <th>Migrated</th>
+                                <th>Referred</th>
                                 <th>Death </th>
                             </tr>
                             </thead>
