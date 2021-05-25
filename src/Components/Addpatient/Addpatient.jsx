@@ -79,7 +79,7 @@ export default function Addpatient() {
         //
 
         // For Patient condition 
-        if (state.patient_condition==="Asymptomataic"){
+        if (state.patient_condition==="Asymptomatic"){
             state.patient_condition=1
         }
         else if (state.patient_condition==="Mild"){
@@ -88,13 +88,16 @@ export default function Addpatient() {
         else if (state.patient_condition==="Moderate"){
             state.patient_condition=3
         }
-        else{
+        else if (state.patient_condition==="Severe"){
             state.patient_condition=4   
+        }
+        else{
+            state.patient_condition=""
         }
         //
         
         // For bed Category
-
+        
         if (state.bed_category==="General Bed"){
             state.bed_category="1"
         }
@@ -104,8 +107,11 @@ export default function Addpatient() {
         else if (state.bed_category==="ICU"){
             state.bed_category="3"
         }
-        else{
+        else if(state.bed_category==="Ventilators"){
             state.bed_category="4"
+        }
+        else{
+            state.bed_category=""
         }
         //
 
@@ -116,6 +122,14 @@ export default function Addpatient() {
         else{
             state.is_tested = false
         }
+        
+        // For Vaccine Status
+        if(state.is_vaccinated==="Yes"){
+            state.is_vaccinated = true
+        }
+        else{
+            state.is_vaccinated = false
+        }
 
         // For Covid test type
         if(state.type==="Rapid Antigen"){
@@ -124,10 +138,10 @@ export default function Addpatient() {
         else if(state.type==="RT-PCR"){
             state.type = '2'
         }
-        else{
+        else if(state.type==="TrueNat"){
             state.type = '3'
         }
-
+        
         // For Covid test status 
         if (state.result==="Positive"){
             state.result='1'
@@ -138,7 +152,7 @@ export default function Addpatient() {
         else if (state.result==="Awaited"){
             state.result='3'
         }
-        else {
+        else if (state.result==="Rejected") {
             state.result='4'
         }
 
@@ -183,7 +197,33 @@ export default function Addpatient() {
                 return addToast("Phone number must be atleast 10 digit long!", { appearance: 'error' });
             }
           
-          }
+        }
+        if (typeof state.age !== "undefined") {
+            if (!pattern.test(state.age)) {
+                return addToast("Please enter valid age!", { appearance: 'error' });
+            }
+          
+        }
+        if(state.patient_condition === ""){
+            return addToast("Please enter valid choice for patient condition!", { appearance: 'error' });
+        }
+        if(state.ward === ""){
+            return addToast("Please enter valid choice for ward category!", { appearance: 'error' });
+        }
+        if(state.floor === ""){
+            return addToast("Please enter valid choice for floor category!", { appearance: 'error' });
+        }
+        
+        if(state.bed_category === ""){
+            return addToast("Please enter valid choice for bed category!", { appearance: 'error' });
+        }
+        if (typeof state.bed_number !== "undefined" || state.bed_number === "") {
+            if (!pattern.test(state.bed_number)) {
+                return addToast("Please enter valid bed number!", { appearance: 'error' });
+            }
+          
+        }
+        
           axios({
             url: patientAdmit,
             method: 'POST',
@@ -195,7 +235,6 @@ export default function Addpatient() {
           .then(res=>{
             if (res.data.status===201){
               addToast(res.data.msg, { appearance: 'success' });
-              document.getElementById("form1").reset();
               setState({ redirect: true});
             }
             else if (res.data.status===400){
@@ -226,7 +265,7 @@ export default function Addpatient() {
         </div>
 
 
-        <Form className="loginform" onSubmit={handleSubmit} id="form1">
+        <Form className="loginform" onSubmit={handleSubmit}>
             
             {/* For Step 1 */}
             {count===1? <>
@@ -260,7 +299,6 @@ export default function Addpatient() {
                             as='select'
                             name='gender'
                             onChange={handleChange}
-                            value={state.gender}
                             required
                         >
                             <option>Select Gender</option>
@@ -287,11 +325,10 @@ export default function Addpatient() {
                             as='select'
                             name='patient_condition'
                             required
-                            value={state.patient_condition}
                             onChange= { handleChange }
                         >
                             <option>Select Patient Condition</option>
-                            <option>Asymptomataic</option>
+                            <option>Asymptomatic</option>
                             <option>Mild</option>
                             <option>Moderate</option>
                             <option>Severe</option>
@@ -335,7 +372,6 @@ export default function Addpatient() {
                                 name='ward'
                                 onChange={handleChange}
                                 required
-                                value={state.ward}
                             >
                                 <option>Select Ward</option>
                                 <option>A</option>
@@ -348,7 +384,6 @@ export default function Addpatient() {
                                 as='select'
                                 name='floor'
                                 onChange={handleChange}
-                                value={state.floor}
                                 required
                             >
                                 <option>Select Floor</option>
@@ -363,7 +398,6 @@ export default function Addpatient() {
                                 as='select'
                                 name='bed_category'
                                 onChange={handleChange}
-                                value={state.bed_category}
                                 required
                             >
                                 <option>Select Bed Category</option>
@@ -400,7 +434,6 @@ export default function Addpatient() {
                                 as='select'
                                 name='is_tested'
                                 onChange={handleChange}
-                                value={state.is_tested}
                                 required
                             >
                                 <option>Select Test Status</option>
@@ -415,7 +448,6 @@ export default function Addpatient() {
                                         as='select'
                                         name='type'
                                         onChange={handleChange}
-                                        value={state.type}
                                         required
                                     >
                                         <option>Select Test</option>
