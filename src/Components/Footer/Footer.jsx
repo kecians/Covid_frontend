@@ -22,7 +22,7 @@ export class Footer extends Component {
                
 
               
-                    <p className=" text-center p-2">&copy;Copyright ©2021 All rights reserved</p>
+                    <p className=" text-center p-2 m-0">&copy;Copyright ©2021 All rights reserved</p>
                  
           </footer>
         )
