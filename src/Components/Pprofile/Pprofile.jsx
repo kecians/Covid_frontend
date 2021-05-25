@@ -107,7 +107,7 @@ export default function Pprofile(props) {
                 <div className="col-md-6  col-sm-12 col-lg-6 col-12 mb-2">
                     <div className="card-body card profile">
                         <HeadingSmall  heading="Covid Test Info"/>
-                        <p className="card-title pl-3">Covid Tested: <span className="font-weight-bold">  &ensp; &ensp;{test.is_tested? "Yes": "No"} </span></p>
+                        <p className="card-title pl-3">Covid Tested: <span className="font-weight-bold">  &ensp; &ensp;{test.is_tested===true? "Yes": "No"} </span></p>
                         <p className="card-title pl-3">Covid Test Type: <span className="font-weight-bold">  &ensp; &ensp;{test.type==="1"? "Rapid-Antigen": test.type==="2" ? "RT-PCR" : test.type==="3" ? "TrueNat":"N/A"} </span></p>
                         <p className="card-title pl-3">Covid Test Result: <span className="font-weight-bold">  &ensp; &ensp;{test.result==="1"? "Positive": test.result==="2" ? "Negative" : test.result==="3" ? "Awaited": test.result==="4"? "Rejected":"N/A"} </span></p>
                         <br />
@@ -115,7 +115,7 @@ export default function Pprofile(props) {
                         <br />
 
                         <HeadingSmall  heading="Covid Vaccine Info"/>
-                        <p className="card-title pl-3">Vaccinated: <span className="font-weight-bold">  &ensp; &ensp;{vaccine.is_vaccinated ? "Yes": "No"} </span></p>
+                        <p className="card-title pl-3">Vaccinated: <span className="font-weight-bold">  &ensp; &ensp;{vaccine.is_vaccinated===true ? "Yes": "No"} </span></p>
                         {vaccine.vaccine_status? vaccine.vaccine_status.map((i,index)=>{
                             return(
                                 <p className="card-title pl-3">Dose {index+1}: <span className="font-weight-bold">  &ensp; &ensp;{i.type==="1" ? `Covishield/${i.vaccinated_on}`: i.type==="2"? `Covaxin/${i.vaccinated_on}`:"N/A"} </span></p>
