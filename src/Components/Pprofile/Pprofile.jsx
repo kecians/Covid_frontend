@@ -84,16 +84,14 @@ export default function Pprofile(props) {
                         <p className="card-title pl-3">Address: <span className="font-weight-bold">  &ensp; &ensp;{state.address}</span></p>
                         <br />
                         {cookie.load("staff")==="DOCTOR"? 
-                            <div className="card-body row">
-                            <div className=" col-md-4 col-sm-4 col-4 col-lg-4  pl-5">
-                                <Link to={`/patient/bedchange/${state.patient_id}`}>
+                            <div className="row">
+                            <div className=" col-md-12 col-sm-12 col-12 col-lg-12">
+                                <Link  className="p-2" to={`/patient/bedchange/${state.patient_id}`}>
                                     <Button variant="primary" type="submit" className="searchbarcontainer log">
                                         Change Bed
                                     </Button>
                                 </Link>
-                            </div>
-                            <div className=" col-md-4 col-sm-4 col-4 col-lg-4  pl-5">
-                                <Link to={`/patient/statuschange/${props.id}`}>
+                                <Link  className="p-2" to={`/patient/statuschange/${props.id}`}>
                                     <Button variant="primary" type="submit" className="searchbarcontainer log">
                                         Change Status
                                     </Button>
