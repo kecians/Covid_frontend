@@ -131,7 +131,7 @@ export default function Searchbar() {
         </div>
          
         {state.show ? 
-            <div className="row py-3">
+            <div className="row p-3">
                 <div className="col-md-12 col-sm-12 col-lg-12 col-12 profile">
                    
                     <ReactHTMLTableToExcel

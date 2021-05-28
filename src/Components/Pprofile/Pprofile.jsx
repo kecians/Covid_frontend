@@ -61,8 +61,8 @@ export default function Pprofile(props) {
         <div className="container p-2">
             <Heading  heading="Patient Profile"/>
             <div className="row my-4 px-1">
-                <div className="col-md-6  col-sm-12 col-lg-6 col-12 mb-2">
-                    <div className="card-body card profile">
+                <div className="col-md-6  col-sm-12 col-lg-6 col-12 mb-2 p-0">
+                    <div className="card-body card profile h-100">
                         <HeadingSmall  heading="General Info"/>
                         <p className="card-title pl-3">Patient id: <span className="font-weight-bold">  &ensp; &ensp;{state.patient_id}</span></p>
                         <p className="card-title pl-3">Name: <span className="font-weight-bold">  &ensp; &ensp;{state.name} </span></p>
@@ -104,8 +104,9 @@ export default function Pprofile(props) {
                         }
                     </div>
                 </div>
-                <div className="col-md-6  col-sm-12 col-lg-6 col-12 mb-2">
-                    <div className="card-body card profile">
+                <div className="col-md-1 col-lg-1"></div>
+                <div className="col-md-5  col-sm-12 col-lg-5 col-12 mb-2 p-0">
+                    <div className="card-body card profile h-100">
                         <HeadingSmall  heading="Covid Test Info"/>
                         <p className="card-title pl-3">Covid Tested: <span className="font-weight-bold">  &ensp; &ensp;{test.is_tested===true? "Yes": "No"} </span></p>
                         <p className="card-title pl-3">Covid Test Type: <span className="font-weight-bold">  &ensp; &ensp;{test.type==="1"? "Rapid-Antigen": test.type==="2" ? "RT-PCR" : test.type==="3" ? "TrueNat":"N/A"} </span></p>
@@ -182,18 +183,20 @@ export default function Pprofile(props) {
                     {cookie.load("token")? 
                     <div className="card-body row">
                         <div className=" col-md-3 col-sm-3 col-6 col-lg-3 text-center">
-                            <Link to='/list'>
-                                <Button variant="light" type="submit" className="searchbarcontainer">
+                            
+                            <Link to='/home' className="p-2">
+                                <Button variant="primary" type="submit" className="searchbarcontainer log">
+                                    Home
+                                </Button>
+                            </Link>
+                            <Link to='/list' className="p-2">
+                                <Button variant="primary" type="submit" className="searchbarcontainer log">
                                 Active Patients
                                 </Button>
                             </Link>
                         </div>
                         
-                        <Link to='/home'>
-                            <Button variant="primary" type="submit" className="searchbarcontainer log">
-                                Home
-                            </Button>
-                        </Link>
+                       
                     </div>
                     : 
                 <       Link to='/'>
