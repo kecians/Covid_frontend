@@ -66,10 +66,10 @@ export default function Pprofile(props) {
                         <HeadingSmall  heading="General Info"/>
                         <p className="card-title pl-3">Patient id: <span className="font-weight-bold">  &ensp; &ensp;{state.patient_id}</span></p>
                         <p className="card-title pl-3">Name: <span className="font-weight-bold">  &ensp; &ensp;{state.name} </span></p>
-                        <p className="card-title pl-3">Status: <span className="font-weight-bold">  &ensp; &ensp;{state.patient_status==="A"? "Active": state.patient_status==="R" ? "Recoverd" : state.patient_status==="M" ? "Referred":"Home Isolated"} </span></p>
+                        <p className="card-title pl-3">Status: <span className="font-weight-bold">  &ensp; &ensp;{state.patient_status==="A"? "Active": state.patient_status==="R" ? "Recoverd" : state.patient_status==="M" ? "Referred": state.patient_status==="H" ?"Home Isolated" : "N/A"} </span></p>
                         <p className="card-title pl-3">Gender: <span className="font-weight-bold">  &ensp; &ensp;{state.gender}</span></p>
                         <p className="card-title pl-3">Age: <span className="font-weight-bold">  &ensp; &ensp;{state.age}</span></p>
-                        <p className="card-title pl-3">Patient Condition: <span className="font-weight-bold">  &ensp; &ensp;{state.health_condition==="1"? "Asymptomataic": state.health_condition==="2"? "Mild": state.health_condition==="3"? "Moderate": "Severe"}</span></p>
+                        <p className="card-title pl-3">Patient Condition: <span className="font-weight-bold">  &ensp; &ensp;{state.health_condition==="1"? "Asymptomataic": state.health_condition==="2"? "Mild": state.health_condition==="3"? "Moderate": state.health_condition==="4"? "Severe": "N/A"}</span></p>
                         <p className="card-title pl-3">
                         Bed Number: <span className="font-weight-bold">  &ensp; &ensp;
                                 {state.patient_bed?state.patient_bed.bed_id: null}
@@ -106,15 +106,23 @@ export default function Pprofile(props) {
                 <div className="col-md-5  col-sm-12 col-lg-5 col-12 mb-2 p-0">
                     <div className="card-body card profile h-100">
                         <HeadingSmall  heading="Covid Test Info"/>
-                        <p className="card-title pl-3">Covid Tested: <span className="font-weight-bold">  &ensp; &ensp;{test.is_tested===true? "Yes": "No"} </span></p>
-                        <p className="card-title pl-3">Covid Test Type: <span className="font-weight-bold">  &ensp; &ensp;{test.type==="1"? "Rapid-Antigen": test.type==="2" ? "RT-PCR" : test.type==="3" ? "TrueNat":"N/A"} </span></p>
-                        <p className="card-title pl-3">Covid Test Result: <span className="font-weight-bold">  &ensp; &ensp;{test.result==="1"? "Positive": test.result==="2" ? "Negative" : test.result==="3" ? "Awaited": test.result==="4"? "Rejected":"N/A"} </span></p>
+                        {test!==null? 
+                            <>
+                            <p className="card-title pl-3">Covid Tested: <span className="font-weight-bold">  &ensp; &ensp;{test.is_tested===true? "Yes": "No"} </span></p>
+                            <p className="card-title pl-3">Covid Test Type: <span className="font-weight-bold">  &ensp; &ensp;{test.type==="1"? "Rapid-Antigen": test.type==="2" ? "RT-PCR" : test.type==="3" ? "TrueNat":"N/A"} </span></p>
+                            <p className="card-title pl-3">Covid Test Result: <span className="font-weight-bold">  &ensp; &ensp;{test.result==="1"? "Positive": test.result==="2" ? "Negative" : test.result==="3" ? "Awaited": test.result==="4"? "Rejected":"N/A"} </span></p>
+                        
+                            </>
+                            : "Details not available!"
+                        }
                         <br />
                         <br />
                         <br />
 
                         <HeadingSmall  heading="Covid Vaccine Info"/>
-                        <p className="card-title pl-3">Vaccinated: <span className="font-weight-bold">  &ensp; &ensp;{vaccine.is_vaccinated===true ? "Yes": "No"} </span></p>
+                       { vaccine!==null?
+                        <>
+                             <p className="card-title pl-3">Vaccinated: <span className="font-weight-bold">  &ensp; &ensp;{vaccine.is_vaccinated===true ? "Yes": "No"} </span></p>
                         {vaccine.vaccine_status? vaccine.vaccine_status.map((i,index)=>{
                             return(
                                 <p className="card-title pl-3">Dose {index+1}: <span className="font-weight-bold">  &ensp; &ensp;{i.type==="1" ? `Covishield/${i.vaccinated_on}`: i.type==="2"? `Covaxin/${i.vaccinated_on}`:"N/A"} </span></p>
@@ -122,6 +130,8 @@ export default function Pprofile(props) {
                         })
                         : null
                         }
+                        </>: "Details not available!"
+                       }
                     </div>
                 </div>
             </div>
@@ -180,7 +190,7 @@ export default function Pprofile(props) {
 
                     {cookie.load("token")? 
                     <div className="card-body row">
-                        <div className=" col-md-3 col-sm-3 col-6 col-lg-3 text-center">
+                        <div className=" col-md-12 col-sm-12 col-12 col-lg-12">
                             
                             <Link to='/home' className="p-2">
                                 <Button variant="primary" type="submit" className="searchbarcontainer log">
