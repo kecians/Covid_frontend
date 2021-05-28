@@ -24,12 +24,13 @@ export default function Addpatient() {
         type: '',
         result: '',
         is_vaccinated: '',
+        patient_status: '',
         redirect: false,
 
     }
     const info = {
         1: 'General',
-        2: 'Bed',
+        2: 'Patient Admission',
         3: 'Covid Test',
         4: 'Covid Vaccine'
     }
@@ -156,6 +157,17 @@ export default function Addpatient() {
             state.result='4'
         }
 
+        //  For Patient Status
+
+        if (state.patient_status==="Home Isolation"){
+            state.patient_status='H'
+        }
+        else if(state.patient_status==="Hospitalization"){
+            state.patient_status='A'
+        }
+        else{
+            addToast("Please add a valid choice for patient admission category !", { appearance: 'error' });
+        }
         event.preventDefault();
         const eData={
             name: state.name,
@@ -166,13 +178,13 @@ export default function Addpatient() {
             health_condition: state.patient_condition,
             covid_status: state.covid_status,
             remark: state.remark,
-            patient_bed: 
-                {
-                    bed_number: state.bed_number,
-                    bed_category: state.bed_category,
-                    ward: state.ward,
-                    floor: state.floor
-                },
+            patient_status: state.patient_status,
+            patient_bed: state.patient_status==="H"? {}: {
+                bed_number: state.bed_number,
+                bed_category: state.bed_category,
+                ward: state.ward,
+                floor: state.floor
+            },
             patient_covid_test: 
                 {
                     is_tested: state.is_tested, 
@@ -196,7 +208,7 @@ export default function Addpatient() {
             }else if(state.contact_number.length < 10){
                 return addToast("Phone number must be atleast 10 digit long!", { appearance: 'error' });
             }
-          
+        
         }
         if (typeof state.age !== "undefined") {
             if (!pattern.test(state.age)) {
@@ -207,21 +219,24 @@ export default function Addpatient() {
         if(state.patient_condition === ""){
             return addToast("Please enter valid choice for patient condition!", { appearance: 'error' });
         }
-        if(state.ward === ""){
-            return addToast("Please enter valid choice for ward category!", { appearance: 'error' });
-        }
-        if(state.floor === ""){
-            return addToast("Please enter valid choice for floor category!", { appearance: 'error' });
-        }
         
-        if(state.bed_category === ""){
-            return addToast("Please enter valid choice for bed category!", { appearance: 'error' });
-        }
-        if (typeof state.bed_number !== "undefined" || state.bed_number === "") {
-            if (!pattern.test(state.bed_number)) {
-                return addToast("Please enter valid bed number!", { appearance: 'error' });
+        if (state.patient_status!=="H"){
+            if(state.ward === ""){
+                return addToast("Please enter valid choice for ward category!", { appearance: 'error' });
             }
-          
+            if(state.floor === ""){
+                return addToast("Please enter valid choice for floor category!", { appearance: 'error' });
+            }
+            
+            if(state.bed_category === ""){
+                return addToast("Please enter valid choice for bed category!", { appearance: 'error' });
+            }
+            if (typeof state.bed_number !== "undefined" || state.bed_number === "") {
+                if (!pattern.test(state.bed_number)) {
+                    return addToast("Please enter valid bed number!", { appearance: 'error' });
+                }
+              
+            }
         }
         
           axios({
@@ -238,7 +253,15 @@ export default function Addpatient() {
               setState({ redirect: true});
             }
             else if (res.data.status===400){
-              addToast("Bed Number Already Alloted!!", { appearance: 'error' });
+                addToast("Bed Number Already Alloted!!", { appearance: 'error' });
+
+                if(res.data.data.bed_number){
+                    addToast(res.data.data.bed_number[0], { appearance: 'error' })
+                }
+                
+                if(res.data.data.bed_category) {
+                    addToast("Beds are full in this category!", { appearance: 'error' })
+                }
             }
           })
           .catch(error => {
@@ -256,7 +279,7 @@ export default function Addpatient() {
     if (state.redirect){
         return <Redirect to='/list' />
     }
-    
+
     return (
         <>
 
@@ -366,7 +389,24 @@ export default function Addpatient() {
             {/* For Step 2 */}
             {count===2? 
                 <>
-                    <Form.Group  controlId="ward">
+                    <Form.Group  controlId="patient_status">
+                        <Form.Control
+                                as='select'
+                                name='patient_status'
+                                onChange={handleChange}
+                                value={state.patient_status}
+                                required
+                            >
+                                <option>Select Patient Admission Category</option>
+                                <option>Hospitalization</option>
+                                <option>Home Isolation</option>
+                        </Form.Control>
+                    </Form.Group>
+
+                    {state.patient_status==="Hospitalization"? 
+
+                        <>
+                            <Form.Group  controlId="ward">
                         <Form.Control
                                 as='select'
                                 name='ward'
@@ -418,6 +458,12 @@ export default function Addpatient() {
                             
                         />
                     </Form.Group>
+                        </>
+                    :
+                    null
+                    }
+
+                    
                     
                 
                 </>
@@ -434,6 +480,7 @@ export default function Addpatient() {
                                 as='select'
                                 name='is_tested'
                                 onChange={handleChange}
+                                value={state.is_tested}
                                 required
                             >
                                 <option>Select Test Status</option>
@@ -448,6 +495,7 @@ export default function Addpatient() {
                                         as='select'
                                         name='type'
                                         onChange={handleChange}
+                                        value={state.type}
                                         required
                                     >
                                         <option>Select Test</option>

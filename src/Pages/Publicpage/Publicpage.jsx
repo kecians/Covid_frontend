@@ -90,6 +90,7 @@ export default function Publicpage() {
                                 <th>Recovered</th>
                                 <th>Referred</th>
                                 <th>Deceased </th>
+                                <th>Home Isolated </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -98,6 +99,7 @@ export default function Publicpage() {
                                 <td>{status.recovered}</td>
                                 <td>{status.migrated}</td>                            
                                 <td>{status.death}</td>
+                                <td>{status.home_isolated}</td>
                                 
                                 
                             </tr>

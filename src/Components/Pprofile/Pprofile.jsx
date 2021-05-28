@@ -75,8 +75,8 @@ export default function Pprofile(props) {
                                 {state.patient_bed?state.patient_bed.bed_id: null}
                                 (
                                 {state.patient_bed ? 
-                                    state.patient_bed.bed_category==="1"? "General Bed": state.patient_bed.bed_category==="2"?
-                                            "O2 Bed": state.patient_bed.bed_category==="3"? "ICU": "Vantilator":null
+                                    state.patient_bed.bed_category==="1"? "GEN": state.patient_bed.bed_category==="2"?
+                                            "O2": state.patient_bed.bed_category==="3"? "ICU": "VEN":null
 
                                 })</span>
                         </p>

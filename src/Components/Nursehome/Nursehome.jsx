@@ -94,7 +94,11 @@ export default function Nursehome() {
             </div>
             
             <div className="row py-3">
-                    <div className="col-md-9 col-sm-9 col-lg-9 col-12 profile">
+                    <div className="col-md-3 col-sm-3 col-lg-3 col-12 mt-2 order-md-last  order-sm-last">
+                        <Profile />
+                    </div>
+                    
+                    <div className="col-md-9 col-sm-9 col-lg-9 col-12 mt-2 profile" style={{overflowX: "scroll"}}>
                     <HeadingSmall heading="Today's Bed Status"/>
                     <Table responsive="md" className="">
                         <thead>
@@ -118,12 +122,11 @@ export default function Nursehome() {
                        
                         </tbody>
                     </Table>
-                    </div>
-                
-                    <div className="col-md-3 col-sm-3 col-lg-3 col-12">
-                        <Profile />
-                    </div>
-                    <div className="col-md-9 col-sm-9 col-lg-9 col-12 profile mt-2">
+                    </div> 
+                </div>
+            <div className="row">
+
+            <div className="col-md-9 col-sm-9 col-lg-9 col-12 profile mt-2" style={{overflowX: "scroll"}}>
                         <HeadingSmall heading="Today's Patient Status"/>
                         <Table responsive="md" className="font-weight-bold" >
                             <thead>
@@ -132,6 +135,7 @@ export default function Nursehome() {
                                 <th>Recovered</th>
                                 <th>Referred</th>
                                 <th>Deceased </th>
+                                <th>Home Isolated </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -140,6 +144,7 @@ export default function Nursehome() {
                                 <td>{status.recovered}</td>
                                 <td>{status.migrated}</td>                            
                                 <td>{status.death}</td>
+                                <td>{status.home_isolated}</td>
                                 
                                 
                             </tr>
@@ -147,7 +152,7 @@ export default function Nursehome() {
                             </tbody>
                         </Table>
                     </div>
-                </div>
+            </div>
 
         </div>
     )

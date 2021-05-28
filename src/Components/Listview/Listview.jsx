@@ -137,8 +137,8 @@ export default function Listview() {
                         <td>{i.patient_bed?i.patient_bed.bed_id: null}
                         (
                                 {i.patient_bed ? 
-                                    i.patient_bed.bed_category==="1"? "General Bed": i.patient_bed.bed_category==="2"?
-                                            "O2 Bed": i.patient_bed.bed_category==="3"? "ICU": "Vantilator":null
+                                    i.patient_bed.bed_category==="1"? "GEN": i.patient_bed.bed_category==="2"?
+                                            "O2": i.patient_bed.bed_category==="3"? "ICU": "VEN":null
 
                                 })
                                 

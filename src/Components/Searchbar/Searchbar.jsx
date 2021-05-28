@@ -65,7 +65,7 @@ export default function Searchbar() {
                     </Button>
                     
                 </Form>
-                {cookie.load("staff")!=="NURSE"? 
+                
                     <div className="filter mt-4 row">
                     <Form onSubmit={handleSubmit} className=" mx-3  d-none d-md-block d-lg-block d-sm-block">
                         
@@ -122,8 +122,6 @@ export default function Searchbar() {
                         </Button>
                     </Form>
                 </div>   
-                : null
-                }
             </div>
             {/* <div className="col-md-1 col-3 col-sm-12"> 
                 <Logout />
@@ -158,7 +156,7 @@ export default function Searchbar() {
                             <th>Migrated To</th>
                             :null
                         }
-                        {state.query!=="recovered"? 
+                        {state.query!=="recovered" && state.query!=="home_isolated"? 
                             <th>Reason</th>
                             :null
                         }
@@ -195,7 +193,7 @@ export default function Searchbar() {
                             <td>{i.patient_migrate? i.patient_migrate.migrated_to: "N/A"}</td>
                             :null
                         }
-                        {state.query!=="recovered"? 
+                        {state.query!=="recovered" && state.query!=="home_isolated"? 
                             <td>{state.query==="death"? 
                             i.patient_death? i.patient_death.reason: "N/A": i.patient_migrate? i.patient_migrate.reason: "N/A" }</td>
                             :null
