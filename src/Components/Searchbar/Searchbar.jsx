@@ -46,7 +46,7 @@ export default function Searchbar() {
     return (
         <>
         <div className="row">
-            <div className="col-md-9 col-9 col-sm-12">
+            <div className="col-md-9 col-12 col-sm-12">
                 <Form onSubmit={handleSubmit} id="form4"> {/*onSubmit={handleSubmit}*/}
                         <Form.Group controlId="Patientid" className='searchbarcontainer'>
                         <i className='fa fa-search serachicon'></i>
