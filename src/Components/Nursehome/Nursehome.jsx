@@ -46,7 +46,7 @@ export default function Nursehome() {
         <div className="container pt-3">
             <Heading heading="Goberdhan Tiwari Government Base Hospital, Almora"/>
             <div className="row">
-                <div className="col-md-12 col-12 col-sm-12">
+                <div className="col-md-12 col-12 col-sm-12 col-lg-12 p-0">
                     <Searchbar />
                 </div>
                 {/* <div className="col-md-3 col-3 col-sm-3"> 
@@ -54,8 +54,8 @@ export default function Nursehome() {
                 </div> */}
             </div>
             <hr className="mt-4"/>
-            <div className="row">
-                <div className="col-md-12 col-sm-12 col-12 p-2 col-lg-12">
+            <div className="row" style={{marginLeft:"-22px"}}>
+                <div className="col-md-12 col-sm-12 col-12 p-2 col-lg-12 p-0">
                     
                     <Link to='/home'> 
                         <Button variant="primary" type="submit" className="searchbarcontainer log mt-2" >
@@ -94,7 +94,11 @@ export default function Nursehome() {
             </div>
             
             <div className="row py-3">
-                    <div className="col-md-9 col-sm-9 col-lg-9 col-12 profile">
+                    <div className="col-md-3 col-sm-3 col-lg-3 col-12 mt-2 order-md-last  order-sm-last">
+                        <Profile />
+                    </div>
+                    
+                    <div className="col-md-9 col-sm-9 col-lg-9 col-12 mt-2 profile" style={{overflowX: "scroll"}}>
                     <HeadingSmall heading="Today's Bed Status"/>
                     <Table responsive="md" className="">
                         <thead>
@@ -118,12 +122,11 @@ export default function Nursehome() {
                        
                         </tbody>
                     </Table>
-                    </div>
-                
-                    <div className="col-md-3 col-sm-3 col-lg-3 col-12  p-2">
-                        <Profile />
-                    </div>
-                    <div className="col-md-9 col-sm-9 col-lg-9 col-12 profile mt-2">
+                    </div> 
+                </div>
+            <div className="row">
+
+            <div className="col-md-9 col-sm-9 col-lg-9 col-12 profile mt-2" style={{overflowX: "scroll"}}>
                         <HeadingSmall heading="Today's Patient Status"/>
                         <Table responsive="md" className="font-weight-bold" >
                             <thead>
@@ -132,6 +135,7 @@ export default function Nursehome() {
                                 <th>Recovered</th>
                                 <th>Referred</th>
                                 <th>Deceased </th>
+                                <th>Home Isolated </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -140,6 +144,7 @@ export default function Nursehome() {
                                 <td>{status.recovered}</td>
                                 <td>{status.migrated}</td>                            
                                 <td>{status.death}</td>
+                                <td>{status.home_isolated}</td>
                                 
                                 
                             </tr>
@@ -147,7 +152,7 @@ export default function Nursehome() {
                             </tbody>
                         </Table>
                     </div>
-                </div>
+            </div>
 
         </div>
     )

@@ -42,15 +42,15 @@ export default function Listview() {
         <div className="container pt-3">
             <Heading heading="Goberdhan Tiwari Government Base Hospital, Almora"/>
             <div className="row">
-                <div className="col-md-12 col-12 col-sm-12">
+                <div className="col-md-12 col-12 col-sm-12 p-0">
                     <Searchbar />
                 </div>
             </div>
             <hr className="mt-4"/>
             {/* Cards for Status for patient check */}
             
-            <div className="row">
-            <div className="col-md-12 col-sm-12 col-12 p-2 col-lg-12">
+            <div className="row" style={{marginLeft:"-22px"}}>
+            <div className="col-md-12 col-sm-12 col-12 p-2 col-lg-12 p-0">
                     
                     <Link to='/home'> 
                         <Button variant="primary" type="submit" className="searchbarcontainer log mt-2" >
@@ -137,8 +137,8 @@ export default function Listview() {
                         <td>{i.patient_bed?i.patient_bed.bed_id: null}
                         (
                                 {i.patient_bed ? 
-                                    i.patient_bed.bed_category==="1"? "General Bed": i.patient_bed.bed_category==="2"?
-                                            "O2 Bed": i.patient_bed.bed_category==="3"? "ICU": "Vantilator":null
+                                    i.patient_bed.bed_category==="1"? "GEN": i.patient_bed.bed_category==="2"?
+                                            "O2": i.patient_bed.bed_category==="3"? "ICU": "VEN":null
 
                                 })
                                 

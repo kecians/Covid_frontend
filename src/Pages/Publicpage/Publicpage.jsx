@@ -43,7 +43,7 @@ export default function Publicpage() {
             <hr className="mt-4"/>
             <div className="container">
                 <div className="row">
-                    <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2">
+                    <div className="col-md-4 col-sm-4 col-12 col-lg-4 p-2" style={{marginLeft:"-16px"}}>
                         <span className="p-1"></span>
                         <Link to='/login'> 
                             <Button variant="primary" type="submit" className="searchbarcontainer log " >
@@ -90,6 +90,7 @@ export default function Publicpage() {
                                 <th>Recovered</th>
                                 <th>Referred</th>
                                 <th>Deceased </th>
+                                <th>Home Isolated </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -98,6 +99,7 @@ export default function Publicpage() {
                                 <td>{status.recovered}</td>
                                 <td>{status.migrated}</td>                            
                                 <td>{status.death}</td>
+                                <td>{status.home_isolated}</td>
                                 
                                 
                             </tr>
