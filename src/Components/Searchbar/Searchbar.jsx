@@ -66,8 +66,8 @@ export default function Searchbar() {
                     
                 </Form>
                 
-                    <div className="filter mt-4 row">
-                    <Form onSubmit={handleSubmit} className=" mx-3  d-none d-md-block d-lg-block d-sm-block">
+                    <div className="filter mt-4 row" style={{marginLeft: "-6px"}}>
+                    <Form onSubmit={handleSubmit} className=" p-1">
                         
                         <Button 
                             variant="outline-primary" 
@@ -82,7 +82,7 @@ export default function Searchbar() {
                         </Button>
                     </Form>
                     
-                    <Form onSubmit={handleSubmit} className="mx-3  d-none d-md-block d-lg-block d-sm-block">
+                    <Form onSubmit={handleSubmit} className="p-1">
                         <Button 
                             variant="outline-primary" 
                             type="submit" 
@@ -95,7 +95,7 @@ export default function Searchbar() {
                             Deceased
                         </Button>
                     </Form> 
-                    <Form onSubmit={handleSubmit} className="mx-3  d-none d-md-block d-lg-block d-sm-block">
+                    <Form onSubmit={handleSubmit} className="p-1">
                         <Button 
                             variant="outline-primary" 
                             type="submit" 
@@ -108,7 +108,7 @@ export default function Searchbar() {
                             Recovered
                         </Button>
                     </Form>
-                    <Form onSubmit={handleSubmit} className="mx-3  d-none d-md-block d-lg-block d-sm-block">
+                    <Form onSubmit={handleSubmit} className="p-1">
                         <Button 
                             variant="outline-primary" 
                             type="submit" 
