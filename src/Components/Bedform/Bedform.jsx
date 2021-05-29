@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import {useToasts} from 'react-toast-notifications'
-import { Form, Button} from 'react-bootstrap' 
+import { Form, Button, Spinner} from 'react-bootstrap' 
 import {patientBedalloatment} from '../../Api/patient.api'
 import axios from 'axios'
 import {Redirect} from 'react-router-dom'
@@ -17,6 +17,7 @@ export default function Bedform(props) {
 
     }
     const [state, setState] = useState(initialState)
+    const [loading, setLoading] = useState(false)
     const handleSubmit = event => {
         if (state.bed_category==="General Bed"){
             state.bed_category="1"
@@ -27,8 +28,11 @@ export default function Bedform(props) {
         else if (state.bed_category==="ICU Bed"){
             state.bed_category="3"
         }
-        else{
+        else if(state.bed_category==="Ventilators"){
             state.bed_category="4"
+        }
+        else{
+            state.bed_category=""
         }
         event.preventDefault();
         const eData={
@@ -38,6 +42,7 @@ export default function Bedform(props) {
             ward: state.ward,
             floor: state.floor
         }
+        setLoading(true)
         axios({
             url: patientBedalloatment,
             method: 'POST',
@@ -51,8 +56,10 @@ export default function Bedform(props) {
               addToast(res.data.msg, { appearance: 'success' });
               document.getElementById("form1").reset();
               setState({ redirect: true});
+              setLoading(false)
             }
             else if (res.data.status===400){
+                setLoading(false)
                 if(res.data.data.bed_number){
                     addToast(res.data.data.bed_number[0], { appearance: 'error' })
                 }
@@ -64,6 +71,7 @@ export default function Bedform(props) {
           })
           .catch(error => {
             setState({ redirect: false});
+            setLoading(false)
             console.log(error)
             addToast('The server is not excepting any request at this moment!! Try again later', { appearance: 'error' });
           });
@@ -146,7 +154,12 @@ export default function Bedform(props) {
                 </Form.Control>
             </Form.Group>
             <Button variant="primary" type="submit" className="button my-2 p-2">
-                Submit
+            {loading ? 
+                    <>
+                    <span>Loading.....</span>
+                    <Spinner animation="border" size="lg" className=""/>
+                    </>: "Submit"
+                  }
             </Button>
         </Form>
     )

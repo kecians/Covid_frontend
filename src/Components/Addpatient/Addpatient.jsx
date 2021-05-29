@@ -253,8 +253,6 @@ export default function Addpatient() {
               setState({ redirect: true});
             }
             else if (res.data.status===400){
-                addToast("Bed Number Already Alloted!!", { appearance: 'error' });
-
                 if(res.data.data.bed_number){
                     addToast(res.data.data.bed_number[0], { appearance: 'error' })
                 }
@@ -322,6 +320,7 @@ export default function Addpatient() {
                             as='select'
                             name='gender'
                             onChange={handleChange}
+                            value = {state.gender}
                             required
                         >
                             <option>Select Gender</option>
@@ -348,6 +347,7 @@ export default function Addpatient() {
                             as='select'
                             name='patient_condition'
                             required
+                            value = {state.patient_condition}
                             onChange= { handleChange }
                         >
                             <option>Select Patient Condition</option>
@@ -411,6 +411,7 @@ export default function Addpatient() {
                                 as='select'
                                 name='ward'
                                 onChange={handleChange}
+                                value = {state.ward}
                                 required
                             >
                                 <option>Select Ward</option>
@@ -424,6 +425,7 @@ export default function Addpatient() {
                                 as='select'
                                 name='floor'
                                 onChange={handleChange}
+                                value = {state.floor}
                                 required
                             >
                                 <option>Select Floor</option>
@@ -438,6 +440,7 @@ export default function Addpatient() {
                                 as='select'
                                 name='bed_category'
                                 onChange={handleChange}
+                                value = {state.bed_category}
                                 required
                             >
                                 <option>Select Bed Category</option>
@@ -580,6 +583,7 @@ export default function Addpatient() {
                                         as='select'
                                         name='type'
                                         onChange={handleVaccineChange}
+                                        value = {vaccine.type}
                                         required
                                     >
                                         <option>Select Vaccine Type</option>
@@ -591,6 +595,7 @@ export default function Addpatient() {
                                 <Form.Control
                                        type="date"
                                         name='vaccinated_on'
+                                        value = {vaccine.vaccinated_on}
                                         onChange={handleVaccineChange}
                                         placeholder= "YYYY-MM-DD"
                                         required

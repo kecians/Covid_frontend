@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import { Form, Col, Button} from 'react-bootstrap' 
+import { Form, Col, Button, Spinner} from 'react-bootstrap' 
 import {Redirect} from 'react-router-dom'
 import {patientHealth} from '../../Api/health.api'
 import axios from 'axios'
@@ -15,10 +15,12 @@ export default function Hform(props) {
         temperature: '',
         patient_condition: '',
         pulse_rate: '',
+        respiration_rate: '',
         redirect: false
 
     }
     const [state, setState] = useState(initialState)
+    const [loading, setLoading] = useState(false)
     const handleSubmit = event => {
         event.preventDefault();
         if (state.patient_condition==="Asymptomataic"){
@@ -41,9 +43,11 @@ export default function Hform(props) {
             blood_pres_diastolic: state.blood_pres_systolic.split('/')[1],
             temperature: state.temperature,
             patient_condition: state.patient_condition,
-            pulse_rate: state.pulse_rate
+            pulse_rate: state.pulse_rate,
+            respiration_rate: state.respiration_rate
             
           }
+        setLoading(true)
         axios({
             url: patientHealth,
             method: 'POST',
@@ -54,16 +58,25 @@ export default function Hform(props) {
           })
           .then(res=>{
             if (res.data.status===201){
-              addToast(res.data.msg, { appearance: 'success' });
-              document.getElementById("form").reset();
-              setState({ redirect: true});
+                setLoading(false)
+                addToast(res.data.msg, { appearance: 'success' });
+                document.getElementById("form").reset();
+                setState({ redirect: true});
             }
             else if (res.data.status===400){
-              setState({ redirect: false});
-              addToast("Error occurred try again!!", { appearance: 'error' });
+                setState({ redirect: false});
+                setLoading(false)
+                if(res.data.data.blood_pres_diastolic){
+                    addToast("Please fill Blood Pressure correctly!", { appearance: 'error' })
+                }   
+                else{
+                    addToast("Please check your form correctly before submitting!", { appearance: 'error' });
+                }
+                
             }
           })
           .catch(error => {
+            setLoading(false)
             setState({ redirect: false});
             addToast('The server is not excepting any request at this moment!! Try again later', { appearance: 'error' });
           });
@@ -88,6 +101,7 @@ export default function Hform(props) {
                             placeholder="Name" 
                             value = {state.name}
                             name = 'name'
+                            readOnly
                             required/>
                     </Form.Group>
 
@@ -96,6 +110,7 @@ export default function Hform(props) {
                             type="text" 
                             placeholder="Patient id" 
                             value = {state.id}
+                            readOnly
                             name = 'username'
                             required/>
                     </Form.Group>
@@ -107,6 +122,7 @@ export default function Hform(props) {
                             type='number'				                        
                             placeholder='SPO2 Level'                             
                             name='oxy_level'
+                            value = {state.oxy_level}
                             onChange= { handleChange }
                             required
                         />
@@ -117,6 +133,7 @@ export default function Hform(props) {
                             type='number'				                        
                             placeholder='Pulse Rate'                             
                             name='pulse_rate'
+                            value = {state.pulse_rate}
                             onChange= { handleChange }
                             required
                         />
@@ -154,13 +171,30 @@ export default function Hform(props) {
                     <Form.Control
                             type='number'
                             name='temperature'
+                            value={state.temperature}
                             placeholder='Temperature'
                             onChange= { handleChange }
                             required
                         />
                 </Form.Group>
+
+                <Form.Group controlId='respiration_rate'>
+                    <Form.Control
+                            type='number'
+                            name='respiration_rate'
+                            placeholder='Respiratory Rate'
+                            value={state.respiration_rate}
+                            onChange= { handleChange }
+                            required
+                        />
+                </Form.Group>
                 <Button variant="primary" type="submit" className="button my-2 p-2">
-                    Submit
+                {loading ? 
+                    <>
+                    <span>Loading.....</span>
+                    <Spinner animation="border" size="lg" className=""/>
+                    </>: "Submit"
+                  }
                 </Button>
             </Form>
         </div>
