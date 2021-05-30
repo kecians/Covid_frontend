@@ -131,6 +131,7 @@ export default function Nursehome() {
                         <Table responsive="md" className="font-weight-bold" >
                             <thead>
                             <tr>
+                                <th>Total Patient</th>
                                 <th>Active</th>
                                 <th>Recovered</th>
                                 <th>Referred</th>
@@ -140,11 +141,12 @@ export default function Nursehome() {
                             </thead>
                             <tbody>
                             <tr>
-                                <td>{count}</td>
-                                <td>{status.recovered}</td>
-                                <td>{status.migrated}</td>                            
-                                <td>{status.death}</td>
-                                <td>{status.home_isolated}</td>
+                                <td>{count? count+status.home_isolated: "N/A"}</td>
+                                <td>{count? count: "N/A"}</td>
+                                <td>{status.recovered? status.recovered: "N/A"}</td>
+                                <td>{status.migrated? status.migrated: "N/A"}</td>                            
+                                <td>{status.death? status.death: "N/A"}</td>
+                                <td>{status.home_isolated? status.home_isolated: "N/A"}</td>
                                 
                                 
                             </tr>

@@ -26,7 +26,6 @@ export default function Pprofile(props) {
             if (res.data.status === 404) {
                 addToast("Details Not Found!!", {appearance: "error"})
             } else {
-                setLoading(false)
                 setState(res.data.data)
                 setTest(res.data.data.patient_covid_test)
                 setVaccine(res.data.data.patient_vaccine_status)
@@ -37,8 +36,10 @@ export default function Pprofile(props) {
                     })
                     .then((res) => {
                     if (res.data.status === 404) {
+                        setLoading(false)
                         setData(res.data.data)
                     } else {
+                        setLoading(false)
                         setData(res.data.data)
                         
                     }
@@ -149,6 +150,7 @@ export default function Pprofile(props) {
                             <th>Blood Pressure</th>
                             <th>Temperature (F)</th>
                             <th>Pulse Rate (BPM)</th>
+                            <th>Respiratory Rate (BPM)</th>
                             
                         </tr>
                         </thead>
@@ -177,6 +179,7 @@ export default function Pprofile(props) {
                             <td>{i.blood_pres_systolic}/{i.blood_pres_diastolic}(mm hg)</td>
                             <td>{i.temperature}(F)</td>
                             <td>{i.pulse_rate}(BPM)</td>
+                            <td>{i.respiration_rate}(BPM)</td>
                             
                             
                         </tr>

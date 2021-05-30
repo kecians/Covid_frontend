@@ -34,6 +34,12 @@ export default function Addpatient() {
         3: 'Covid Test',
         4: 'Covid Vaccine'
     }
+    const info2 = {
+        "Paediatric": "P",
+        "Obs & Gynae": "OG",
+        "A": "A",
+        "B": "B"
+    }
     const vac = {
        "Covishield": "1",
        "Covaxin": "2"
@@ -182,7 +188,7 @@ export default function Addpatient() {
             patient_bed: state.patient_status==="H"? {}: {
                 bed_number: state.bed_number,
                 bed_category: state.bed_category,
-                ward: state.ward,
+                ward: info2[state.ward],
                 floor: state.floor
             },
             patient_covid_test: 
@@ -253,8 +259,6 @@ export default function Addpatient() {
               setState({ redirect: true});
             }
             else if (res.data.status===400){
-                addToast("Bed Number Already Alloted!!", { appearance: 'error' });
-
                 if(res.data.data.bed_number){
                     addToast(res.data.data.bed_number[0], { appearance: 'error' })
                 }
@@ -322,6 +326,7 @@ export default function Addpatient() {
                             as='select'
                             name='gender'
                             onChange={handleChange}
+                            value = {state.gender}
                             required
                         >
                             <option>Select Gender</option>
@@ -348,6 +353,7 @@ export default function Addpatient() {
                             as='select'
                             name='patient_condition'
                             required
+                            value = {state.patient_condition}
                             onChange= { handleChange }
                         >
                             <option>Select Patient Condition</option>
@@ -411,11 +417,14 @@ export default function Addpatient() {
                                 as='select'
                                 name='ward'
                                 onChange={handleChange}
+                                value = {state.ward}
                                 required
                             >
                                 <option>Select Ward</option>
                                 <option>A</option>
                                 <option>B</option>
+                                <option>Obs & Gynae</option>
+                                <option>Paediatric</option>
                                 
                         </Form.Control>
                     </Form.Group>
@@ -424,6 +433,7 @@ export default function Addpatient() {
                                 as='select'
                                 name='floor'
                                 onChange={handleChange}
+                                value = {state.floor}
                                 required
                             >
                                 <option>Select Floor</option>
@@ -438,6 +448,7 @@ export default function Addpatient() {
                                 as='select'
                                 name='bed_category'
                                 onChange={handleChange}
+                                value = {state.bed_category}
                                 required
                             >
                                 <option>Select Bed Category</option>
@@ -580,6 +591,7 @@ export default function Addpatient() {
                                         as='select'
                                         name='type'
                                         onChange={handleVaccineChange}
+                                        value = {vaccine.type}
                                         required
                                     >
                                         <option>Select Vaccine Type</option>
@@ -591,6 +603,7 @@ export default function Addpatient() {
                                 <Form.Control
                                        type="date"
                                         name='vaccinated_on'
+                                        value = {vaccine.vaccinated_on}
                                         onChange={handleVaccineChange}
                                         placeholder= "YYYY-MM-DD"
                                         required
