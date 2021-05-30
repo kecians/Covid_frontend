@@ -16,6 +16,12 @@ export default function Bedform(props) {
         redirect: false
 
     }
+    const info2 = {
+        "Paediatric": "P",
+        "Obs & Gynae": "OG",
+        "A": "A",
+        "B": "B"
+    }
     const [state, setState] = useState(initialState)
     const [loading, setLoading] = useState(false)
     const handleSubmit = event => {
@@ -39,7 +45,7 @@ export default function Bedform(props) {
             patient_id: state.patient_id,
             bed_number: state.bed_number,
             bed_category: state.bed_category,
-            ward: state.ward,
+            ward: info2[state.ward],
             floor: state.floor
         }
         setLoading(true)
@@ -109,6 +115,8 @@ export default function Bedform(props) {
                         <option>Select Ward</option>
                         <option>A</option>
                         <option>B</option>
+                        <option>Obs & Gynae</option>
+                        <option>Paediatric</option>
                        
                 </Form.Control>
             </Form.Group>

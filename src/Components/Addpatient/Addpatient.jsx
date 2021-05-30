@@ -34,6 +34,12 @@ export default function Addpatient() {
         3: 'Covid Test',
         4: 'Covid Vaccine'
     }
+    const info2 = {
+        "Paediatric": "P",
+        "Obs & Gynae": "OG",
+        "A": "A",
+        "B": "B"
+    }
     const vac = {
        "Covishield": "1",
        "Covaxin": "2"
@@ -182,7 +188,7 @@ export default function Addpatient() {
             patient_bed: state.patient_status==="H"? {}: {
                 bed_number: state.bed_number,
                 bed_category: state.bed_category,
-                ward: state.ward,
+                ward: info2[state.ward],
                 floor: state.floor
             },
             patient_covid_test: 
@@ -417,6 +423,8 @@ export default function Addpatient() {
                                 <option>Select Ward</option>
                                 <option>A</option>
                                 <option>B</option>
+                                <option>Obs & Gynae</option>
+                                <option>Paediatric</option>
                                 
                         </Form.Control>
                     </Form.Group>

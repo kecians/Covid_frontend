@@ -146,6 +146,12 @@ export default function Statusform(props) {
           else if (res.data.status===400){
             setLoading(false)
             setState({ redirect: false});
+            if(res.data.data.bed_number){
+              addToast(res.data.data.bed_number[0], { appearance: 'error' })
+            }
+            if(res.data.data.bed_category) {
+                addToast("Beds are full in this category!", { appearance: 'error' })
+            }
             addToast("Error occurred try again!!", { appearance: 'error' });
           }
         })
