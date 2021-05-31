@@ -186,7 +186,7 @@ export default function Searchbar() {
                             <td> <Link to={`/patient/healthcheck/${i.patient_id}/${i.name}`} className="text-primary text-center">Health Checkup</Link></td>
                                     :null
                         }
-                        <td>{i.created_on? i.created_on.split("T")[0]: "N/A"}</td>
+                        <td>{i.admitted_on}</td>
                         <td>{state.query!=="death"? i.updated_on? i.updated_on.split("T")[0]: "N/A" : i.patient_death? i.patient_death.expired_on: "N/A"}</td>
 
                         {state.query==="migrated"? 

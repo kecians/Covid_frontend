@@ -118,7 +118,7 @@ export default function Addpatient() {
             state.bed_category="4"
         }
         else{
-            state.bed_category=""
+            state.bed_category="Select Bed Category"
         }
         //
 
@@ -256,7 +256,7 @@ export default function Addpatient() {
           .then(res=>{
             if (res.data.status===201){
               addToast(res.data.msg, { appearance: 'success' });
-              setState({ redirect: true});
+              setState({...state, redirect: true});
             }
             else if (res.data.status===400){
                 if(res.data.data.bed_number){
@@ -264,12 +264,12 @@ export default function Addpatient() {
                 }
                 
                 if(res.data.data.bed_category) {
-                    addToast("Beds are full in this category!", { appearance: 'error' })
+                    addToast(res.data.data.bed_category[0], { appearance: 'error' })
                 }
             }
           })
           .catch(error => {
-            setState({ redirect: false});
+            setState({...state, redirect: false});
             addToast('The server is not excepting any request at this moment!! Try again later', { appearance: 'error' });
           });
         

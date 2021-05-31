@@ -38,7 +38,7 @@ export default function Bedform(props) {
             state.bed_category="4"
         }
         else{
-            state.bed_category=""
+            state.bed_category="Select Bed Category"
         }
         event.preventDefault();
         const eData={
@@ -70,7 +70,7 @@ export default function Bedform(props) {
                     addToast(res.data.data.bed_number[0], { appearance: 'error' })
                 }
                 if(res.data.data.bed_category) {
-                    addToast("Beds are full in this category!", { appearance: 'error' })
+                    addToast(res.data.data.bed_category[0], { appearance: 'error' })
                 }
               
             }

@@ -133,17 +133,17 @@ export default function Listview() {
                             <td> <Link to={`/patient/healthcheck/${i.patient_id}/${i.name}`} className="text-primary text-center">Health Checkup</Link></td>
                                     :null
                         }
-                        <td>{i.health_condition==="1"? "Asymptomatic": i.health_condition==="2"? "Mild": i.health_condition==="3"? "Moderate": "Severe"}</td>
+                        <td>{i.health_condition==="1"? "Asymptomatic": i.health_condition==="2"? "Mild": i.health_condition==="3"? "Moderate": i.health_condition==="4"?"Severe":"N/A"}</td>
                         <td>{i.patient_bed?i.patient_bed.bed_id: null}
                         (
                                 {i.patient_bed ? 
                                     i.patient_bed.bed_category==="1"? "GEN": i.patient_bed.bed_category==="2"?
-                                            "O2": i.patient_bed.bed_category==="3"? "ICU": "VEN":null
+                                            "O2": i.patient_bed.bed_category==="3"? "ICU":  i.patient_bed.bed_category==="4"?"VEN":"N/A":null
 
                                 })
                                 
                         </td>
-                        <td>{i.created_on? i.created_on.split("T")[0]: "N/A"}</td>
+                        <td>{i.admitted_on}</td>
                         <td>{i.covid_status==="P" ? "Positive": i.covid_status==="S"? "Suspect": i.covid_status==="N" ? "Negative": "N/A"}</td>
                         <td>{i.patient_vaccine_status?i.patient_vaccine_status.is_vaccinated? "Yes":"No": "N/A" }</td>
                         <td>
