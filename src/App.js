@@ -25,14 +25,14 @@ import Page404 from './Pages/Page404/Page404'
 function App() {
   return (
     <BrowserRouter>
-        <Switch>
         <ToastProvider
           autoDismiss
           autoDismissTimeout={6000}
           placement="bottom-center"
-          >
+        >
           <Loader />
           <Toastify />
+        <Switch>
           <LockRoute exact path="/" component={Publicpage} />  
           <LockRoute exact path="/login" component={Home} />  
           {/* <LockRoute exact path="/signup" component={Signup} /> */}
@@ -45,9 +45,8 @@ function App() {
           <PrivateRoute exact path="/patient/statuschange/:id" component={Statuschange} />
           <LockRoute exact path="/patient/profile/" component={Publicpatientprofile} />
           <Route path="*" component={Page404}/>
-          </ToastProvider>  
-          
         </Switch>
+      </ToastProvider>
       </BrowserRouter>
   );
 }

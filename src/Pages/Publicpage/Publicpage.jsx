@@ -96,7 +96,7 @@ export default function Publicpage() {
                             </thead>
                             <tbody>
                             <tr>
-                                <td>{count? count+status.home_isolated: "N/A"}</td>
+                                <td>{count || status.home_isolated? count+status.home_isolated: "N/A"}</td>
                                 <td>{count? count: "N/A"}</td>
                                 <td>{status.recovered? status.recovered: "N/A"}</td>
                                 <td>{status.migrated? status.migrated: "N/A"}</td>                            
