@@ -35,7 +35,7 @@ function App() {
           <Toastify />
           <LockRoute exact path="/" component={Publicpage} />  
           <LockRoute exact path="/login" component={Home} />  
-          <LockRoute exact path="/signup" component={Signup} />
+          {/* <LockRoute exact path="/signup" component={Signup} /> */}
           <PrivateRoute exact path="/list" component={Plist} />
           <PrivateRoute exaact path="/home" component={Searchbar} />
           <PrivateRoute exact path="/patient/admit" component={Admitpatient} />
