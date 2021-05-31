@@ -111,7 +111,7 @@ export default function Addpatient() {
         else if (state.bed_category==="Oxygen Bed"){
             state.bed_category="2"
         }
-        else if (state.bed_category==="ICU"){
+        else if (state.bed_category==="ICU Bed"){
             state.bed_category="3"
         }
         else if(state.bed_category==="Ventilators"){

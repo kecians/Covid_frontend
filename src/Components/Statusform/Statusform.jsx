@@ -20,6 +20,12 @@ export default function Statusform(props) {
     floor: '',
     ward: '',
   }
+  const info2 = {
+    "Paediatric": "P",
+    "Obs & Gynae": "OG",
+    "A": "A",
+    "B": "B"
+}
   const [state, setState] = useState(initialState)
   const [loading, setLoading] = useState(false)
   const [bed, setBed] = useState(initialState1)
@@ -63,6 +69,7 @@ export default function Statusform(props) {
           bed.bed_category=""
       }
 
+      bed.ward=info2[bed.ward]
       event.preventDefault();
       const eData = { 
           patient_status: state.status,
@@ -149,6 +156,7 @@ export default function Statusform(props) {
             if(res.data.data.bed_number){
               addToast(res.data.data.bed_number[0], { appearance: 'error' })
             }
+            console.log(res.data)
             if(res.data.data.bed_category) {
                 addToast("Beds are full in this category!", { appearance: 'error' })
             }
@@ -156,6 +164,7 @@ export default function Statusform(props) {
           }
         })
         .catch(error => {
+          
           setLoading(false)
           setState({ redirect: false});
           console.log(error)
@@ -266,6 +275,8 @@ export default function Statusform(props) {
                                 <option>Select Ward</option>
                                 <option>A</option>
                                 <option>B</option>
+                                <option>Obs & Gynae</option>
+                                <option>Paediatric</option>
                               
                         </Form.Control>
                     </Form.Group>
