@@ -7,6 +7,7 @@ import {useToasts} from 'react-toast-notifications'
 import cookie from 'react-cookies'
 export default function Statusform(props) {
   const {addToast} = useToasts()
+  console.log(props)
   const initialState = {
       id: props.id,
       status: '',
@@ -30,6 +31,7 @@ export default function Statusform(props) {
   const [loading, setLoading] = useState(false)
   const [bed, setBed] = useState(initialState1)
   const handleSubmit = event => {
+    event.preventDefault();
 
       // For Patient Condition 
 
@@ -70,14 +72,12 @@ export default function Statusform(props) {
       }
 
       bed.ward=info2[bed.ward]
-      event.preventDefault();
       const eData = { 
           patient_status: state.status,
-          patient_bed: state.status!=="A"? {}: bed
-        }
+      }
       setLoading(true)
       axios({
-          url: patientStatus+`${state.id}/`,
+          url: patientStatus+`${props.id}/`,
           method: 'PATCH',
           data: eData,
           headers: {
@@ -88,11 +88,11 @@ export default function Statusform(props) {
           if (res.data.status===200){
             setLoading(false)
             addToast(res.data.msg, { appearance: 'success' });
-            setState({ redirect: true});
+            setState({...state, redirect: true});
             if (state.status==="D" && state.reason.length!==0){
               const eda = { 
                 reason: state.reason,
-                patient_id: state.id,
+                patient_id: props.id,
                 expired_on: state.expired_on
               }
               axios({
@@ -106,15 +106,15 @@ export default function Statusform(props) {
               .then(res=>{
                 if (res.data.status===200){
                   addToast(res.data.msg, { appearance: 'success' });
-                  setState({ redirect: true});
+                  setState({...state, redirect: true});
                 }
                 else if (res.data.status===400){
-                  setState({ redirect: false});
+                  setState({...state, redirect: true});
                   addToast("Error occurred try again!!", { appearance: 'error' });
                 }
               })
               .catch(error => {
-                setState({ redirect: false});
+                setState({...state, redirect: true});
                 console.log(error)
                 addToast('The server is not excepting any request at this moment!! Try again later', { appearance: 'error' });
               });
@@ -123,7 +123,7 @@ export default function Statusform(props) {
               const eda = { 
                 migrated_to: state.migrated_to,
                 reason: state.reason,
-                patient_id: state.id
+                patient_id: props.id
               }
               axios({
                 url: patientMigration,
@@ -136,15 +136,15 @@ export default function Statusform(props) {
               .then(res=>{
                 if (res.data.status===200){
                   addToast(res.data.msg, { appearance: 'success' });
-                  setState({ redirect: true});
+                  setState({...state, redirect: true});
                 }
                 else if (res.data.status===400){
-                  setState({ redirect: false});
+                  setState({...state, redirect: false});
                   addToast("Error occurred try again!!", { appearance: 'error' });
                 }
               })
               .catch(error => {
-                setState({ redirect: false});
+                setState({...state, redirect: false});
                 console.log(error)
                 addToast('The server is not excepting any request at this moment!! Try again later', { appearance: 'error' });
               });
@@ -152,25 +152,30 @@ export default function Statusform(props) {
           }
           else if (res.data.status===400){
             setLoading(false)
-            setState({ redirect: false});
+            setState({...state, redirect: false});
             if(res.data.data.bed_number){
               addToast(res.data.data.bed_number[0], { appearance: 'error' })
-            }
-            console.log(res.data)
-            if(res.data.data.bed_category) {
-                addToast("Beds are full in this category!", { appearance: 'error' })
             }
             addToast("Error occurred try again!!", { appearance: 'error' });
           }
         })
         .catch(error => {
-          
+          if(error.response.data.bed_category) {
+            addToast("Beds are full in this category!", { appearance: 'error' })
+           
+          }
+          else if(error.response.data.bed_number) {
+            addToast("Bed is already allotted!", { appearance: 'error' })
+           
+          }
+          else{
+            addToast('The server is not excepting any request at this moment!! Try again later', { appearance: 'error' });
+          }
           setLoading(false)
-          setState({ redirect: false});
-          console.log(error)
-          addToast('The server is not excepting any request at this moment!! Try again later', { appearance: 'error' });
+          setState({...state, redirect: false});
+          
         });
-        //  Facility change api
+          
         
         
         
@@ -188,6 +193,8 @@ export default function Statusform(props) {
     if (state.redirect){
         return <Redirect to='/list' />
     }
+    console.log(state)
+    console.log(bed)
     return (
         <div className="container">
             <Form className="loginform" onSubmit={handleSubmit} id="form">
@@ -208,7 +215,7 @@ export default function Statusform(props) {
                         
                     </Form.Control>
                 </Form.Group>
-                {state.status==="Referred"?
+                {state.status==="Referred" || state.status==="R"?
                     <>
                     <Form.Group controlId='reason'>
                       <Form.Control
@@ -236,7 +243,7 @@ export default function Statusform(props) {
                     </>
                     : null
                 }
-                {state.status==="Death"?
+                {state.status==="Death"|| state.status==="D"?
                     <>
                     <Form.Group controlId='ex'>
                       <Form.Control
@@ -263,7 +270,7 @@ export default function Statusform(props) {
                     : null
                 }
 
-                {state.status==="Hospitalized"?
+                {state.status==="Hospitalized" || state.status==="A"?
                   <>
                     <Form.Group  controlId="ward">
                         <Form.Control

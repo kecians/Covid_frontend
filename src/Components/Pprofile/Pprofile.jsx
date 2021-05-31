@@ -77,7 +77,7 @@ export default function Pprofile(props) {
                                 (
                                 {state.patient_bed ? 
                                     state.patient_bed.bed_category==="1"? "GEN": state.patient_bed.bed_category==="2"?
-                                            "O2": state.patient_bed.bed_category==="3"? "ICU": "VEN":null
+                                            "O2": state.patient_bed.bed_category==="3"? "ICU": state.patient_bed.bed_category==="4"?"VEN":"N/A":null
 
                                 })</span>
                         </p>
@@ -174,7 +174,7 @@ export default function Pprofile(props) {
                                 {i.created_on? i.created_on.split("T")[0]: "N/A"}
                                 ({i.created_on? i.created_on.split("T")[1].split(":")[0]: "N/A"}: {i.created_on? i.created_on.split("T")[1].split(":")[1]: "N/A"})
                              </td>
-                            <td>{i.patient_condition==="1"? "Asymptomataic" : i.patient_condition==="2" ? "Mild" : i.patient_condition==="3" ? "Moderate" : "Severe" }</td>
+                            <td>{i.patient_condition==="1"? "Asymptomataic" : i.patient_condition==="2" ? "Mild" : i.patient_condition==="3" ? "Moderate" : i.patient_condition==="4"?"Severe":"N/A" }</td>
                             <td>{i.oxy_level}%</td>
                             <td>{i.blood_pres_systolic}/{i.blood_pres_diastolic}(mm hg)</td>
                             <td>{i.temperature}(F)</td>
