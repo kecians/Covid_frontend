@@ -74,7 +74,8 @@ export default function Statusform(props) {
       bed.ward=info2[bed.ward]
       const eData = { 
           patient_status: state.status,
-      }
+          patient_bed: state.status!=="A"? {}: bed
+        }
       setLoading(true)
       axios({
           url: patientStatus+`${props.id}/`,
@@ -175,7 +176,7 @@ export default function Statusform(props) {
           setState({...state, redirect: false});
           
         });
-          
+        //  Facility change api
         
         
         
@@ -193,8 +194,6 @@ export default function Statusform(props) {
     if (state.redirect){
         return <Redirect to='/list' />
     }
-    console.log(state)
-    console.log(bed)
     return (
         <div className="container">
             <Form className="loginform" onSubmit={handleSubmit} id="form">
@@ -215,7 +214,7 @@ export default function Statusform(props) {
                         
                     </Form.Control>
                 </Form.Group>
-                {state.status==="Referred" || state.status==="R"?
+                {state.status==="Referred" || state.status==="M"?
                     <>
                     <Form.Group controlId='reason'>
                       <Form.Control
