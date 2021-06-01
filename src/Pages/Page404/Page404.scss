@@ -54,7 +54,7 @@
     letter-spacing: 13px;
     margin: 0;
 }
-@media (max-width : 500px) {
+@media (max-width : 574px) {
 
     .notfound .notfound-404 .h1{
        font-size: 40px;
@@ -65,4 +65,7 @@
        font-size: 20px;
    }
     
-  }
+   .profile1{
+        padding: 0px;
+    }
+}

@@ -86,7 +86,7 @@ export default function Nursehome() {
             </div>
             
             <div className="row py-3">
-                    <div className="col-md-3 col-sm-3 col-lg-3 col-12 mt-2 order-md-last  order-sm-last">
+                    <div className="col-md-3 col-sm-3 col-lg-3 col-12 mt-2 order-md-last  order-sm-last profile1">
                         <Profile />
                     </div>
                     
