@@ -96,12 +96,12 @@ export default function Publicpage() {
                             </thead>
                             <tbody>
                             <tr>
-                                <td>{count || status.home_isolated? count+status.home_isolated: "N/A"}</td>
-                                <td>{count? count: "N/A"}</td>
-                                <td>{status.recovered? status.recovered: "N/A"}</td>
-                                <td>{status.migrated? status.migrated: "N/A"}</td>                            
-                                <td>{status.death? status.death: "N/A"}</td>
-                                <td>{status.home_isolated? status.home_isolated: "N/A"}</td>
+                                <td>{count || status.home_isolated? count+status.home_isolated: 0}</td>
+                                <td>{count? count: 0}</td>
+                                <td>{status.recovered? status.recovered: 0}</td>
+                                <td>{status.migrated? status.migrated: 0}</td>                            
+                                <td>{status.death? status.death: 0}</td>
+                                <td>{status.home_isolated? status.home_isolated: 0}</td>
                                 
                                 
                                 

@@ -67,31 +67,41 @@ export default function Pprofile(props) {
                         <HeadingSmall  heading="General Info"/>
                         <p className="card-title pl-3">Patient id: <span className="font-weight-bold">  &ensp; &ensp;{state.patient_id}</span></p>
                         <p className="card-title pl-3">Name: <span className="font-weight-bold">  &ensp; &ensp;{state.name} </span></p>
-                        <p className="card-title pl-3">Status: <span className="font-weight-bold">  &ensp; &ensp;{state.patient_status==="A"? "Active": state.patient_status==="R" ? "Recoverd" : state.patient_status==="M" ? "Referred": state.patient_status==="H" ?"Home Isolated" : "N/A"} </span></p>
+                        <p className="card-title pl-3">Status: <span className="font-weight-bold">  &ensp; &ensp;{state.patient_status==="A"? "Hospitalized": state.patient_status==="R" ? "Recoverd" : state.patient_status==="M" ? "Referred": state.patient_status==="H" ?"Home Isolated" : "N/A"} </span></p>
                         <p className="card-title pl-3">Gender: <span className="font-weight-bold">  &ensp; &ensp;{state.gender}</span></p>
                         <p className="card-title pl-3">Age: <span className="font-weight-bold">  &ensp; &ensp;{state.age}</span></p>
                         <p className="card-title pl-3">Patient Condition: <span className="font-weight-bold">  &ensp; &ensp;{state.health_condition==="1"? "Asymptomataic": state.health_condition==="2"? "Mild": state.health_condition==="3"? "Moderate": state.health_condition==="4"? "Severe": "N/A"}</span></p>
-                        <p className="card-title pl-3">
-                        Bed Number: <span className="font-weight-bold">  &ensp; &ensp;
-                                {state.patient_bed?state.patient_bed.bed_id: null}
-                                (
-                                {state.patient_bed ? 
-                                    state.patient_bed.bed_category==="1"? "GEN": state.patient_bed.bed_category==="2"?
-                                            "O2": state.patient_bed.bed_category==="3"? "ICU": state.patient_bed.bed_category==="4"?"VEN":"N/A":null
+                        {state.patient_status==="A"?
+                            <p className="card-title pl-3">
+                            Bed Number: <span className="font-weight-bold">  &ensp; &ensp;
+                                    {state.patient_bed?state.patient_bed.bed_id: null}
+                                    (
+                                    {state.patient_bed ? 
+                                        state.patient_bed.bed_category==="1"? "GEN": state.patient_bed.bed_category==="2"?
+                                                "O2": state.patient_bed.bed_category==="3"? "ICU": state.patient_bed.bed_category==="4"?"VEN":"N/A":null
 
-                                })</span>
-                        </p>
+                                    })</span>
+                            </p>  
+                            : 
+                            null  
+                        }
+                        
                         <p className="card-title pl-3">Contact Number: <span className="font-weight-bold">  &ensp; &ensp;{state.contact_number}</span></p>
                         <p className="card-title pl-3">Address: <span className="font-weight-bold">  &ensp; &ensp;{state.address}</span></p>
                         <br />
                         {cookie.load("staff")==="DOCTOR"? 
                             <div className="row">
                             <div className=" col-md-12 col-sm-12 col-12 col-lg-12">
-                                <Link  className="p-2" to={`/patient/bedchange/${state.patient_id}`}>
-                                    <Button variant="primary" type="submit" className="searchbarcontainer log">
-                                        Change Bed
-                                    </Button>
-                                </Link>
+                                {state.patient_status==="A"?
+                                    <Link  className="p-2" to={`/patient/bedchange/${state.patient_id}`}>
+                                        <Button variant="primary" type="submit" className="searchbarcontainer log">
+                                            Change Bed
+                                        </Button>
+                                    </Link>
+                                    :
+                                    null
+                                }
+                                
                                 <Link  className="p-2" to={`/patient/statuschange/${props.id}`}>
                                     <Button variant="primary" type="submit" className="searchbarcontainer log">
                                         Change Status
@@ -202,7 +212,7 @@ export default function Pprofile(props) {
                             </Link>
                             <Link to='/list' className="p-2">
                                 <Button variant="primary" type="submit" className="searchbarcontainer log">
-                                Active Patients
+                                Hospitalized Patients
                                 </Button>
                             </Link>
                         </div>

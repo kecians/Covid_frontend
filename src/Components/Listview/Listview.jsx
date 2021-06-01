@@ -60,12 +60,13 @@ export default function Listview() {
                     <span className="p-1"></span>
                     <Link to='/list'> 
                         <Button variant="primary" type="submit" className="searchbarcontainer log mt-2" >
-                            Active Patients 
+                        Hospitalized Patients 
                         </Button>
                     </Link>
-                    <span className="p-1"></span>
+                    
                     {cookie.load("staff")==="NURSE" ?
                     <>
+                    <span className="p-1"></span>
                     <Link to="/patient/admit">
                         <Button variant="primary" type="submit" className="searchbarcontainer log mt-2">
                             Add Patient
@@ -74,15 +75,6 @@ export default function Listview() {
                      </>
                      : 
                     null}
-                    <span className="p-1"></span>
-                    <ReactHTMLTableToExcel
-                        id="test-table-xls-button"
-                        className="searchbarcontainer btn btn-primary mt-2 log"
-                        table="activetable"
-                        filename="Activepatientlist"
-                        sheet="Activepatient"
-                        buttonText="Download as XLS"
-                    />
                     <span className="p-1"></span>
                     <Logout />
                     

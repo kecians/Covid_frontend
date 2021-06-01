@@ -65,12 +65,13 @@ export default function Nursehome() {
                     <span className="p-1"></span>
                     <Link to='/list'> 
                         <Button variant="primary" type="submit" className="searchbarcontainer log mt-2" >
-                                Active Patients 
+                                Hospitalized Patients 
                         </Button>
                     </Link>
-                    <span className="p-1"></span>
+                    
                     {cookie.load("staff")==="NURSE" ?
                     <>
+                    <span className="p-1"></span>
                     <Link to="/patient/admit">
                         <Button variant="primary" type="submit" className="searchbarcontainer log mt-2">
                             Add Patient
@@ -79,15 +80,6 @@ export default function Nursehome() {
                      </>
                      : 
                     null}
-                    <span className="p-1"></span>
-                    <ReactHTMLTableToExcel
-                        id="test-table-xls-button"
-                        className="searchbarcontainer btn btn-primary mt-2 log"
-                        table="totalbedinfo"
-                        filename="Bedinfo"
-                        sheet="Bedinfo"
-                        buttonText="Download as XLS"
-                    />
                     <span className="p-1"></span>
                     <Logout />
                 </div>
@@ -141,12 +133,12 @@ export default function Nursehome() {
                             </thead>
                             <tbody>
                             <tr>
-                                <td>{count || status.home_isolated? count+status.home_isolated: "N/A"}</td>
-                                <td>{count? count: "N/A"}</td>
-                                <td>{status.recovered? status.recovered: "N/A"}</td>
-                                <td>{status.migrated? status.migrated: "N/A"}</td>                            
-                                <td>{status.death? status.death: "N/A"}</td>
-                                <td>{status.home_isolated? status.home_isolated: "N/A"}</td>
+                                <td>{count || status.home_isolated? count+status.home_isolated: 0}</td>
+                                <td>{count? count: 0}</td>
+                                <td>{status.recovered? status.recovered: 0}</td>
+                                <td>{status.migrated? status.migrated: 0}</td>                            
+                                <td>{status.death? status.death: 0}</td>
+                                <td>{status.home_isolated? status.home_isolated: 0}</td>
                                 
                                 
                             </tr>
