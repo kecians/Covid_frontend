@@ -17,7 +17,7 @@ export default function Publicpatientprofile() {
     return (
         <>
         <div className="container-fluid bg-silver p-4">
-            <Heading heading="Goberdhan Tiwari Government Base Hospital, Almora"/>
+            <Heading heading="Goverdhan Tiwari Government Base Hospital, Almora"/>
             <hr className="mt-4"/>
             <div className="container">
             <Heading heading="Patient Profile"/>

@@ -38,7 +38,7 @@ export default function Publicpage() {
     return (
         <>
         <div className="container-fluid pt-3 bg-silver">
-            <Heading heading="Goberdhan Tiwari Government Base Hospital, Almora"/>
+            <Heading heading="Goverdhan Tiwari Government Base Hospital, Almora"/>
             
             <hr className="mt-4"/>
             <div className="container">

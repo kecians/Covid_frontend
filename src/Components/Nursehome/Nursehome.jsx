@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import Searchbar from '../Searchbar/Searchbar'
 import { Button, Table } from 'react-bootstrap' 
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+// import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 // import Profile from '../Profile/Profile'
 // import Infocard from '../Infocard/Infocard'
 import Logout from '../Logout/Logout'
@@ -44,7 +44,7 @@ export default function Nursehome() {
     // console.log(state, data)
     return (
         <div className="container pt-3">
-            <Heading heading="Goberdhan Tiwari Government Base Hospital, Almora"/>
+            <Heading heading="Goverdhan Tiwari Government Base Hospital, Almora"/>
             <div className="row">
                 <div className="col-md-12 col-12 col-sm-12 col-lg-12 p-0">
                     <Searchbar />

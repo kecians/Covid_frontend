@@ -9,7 +9,7 @@ import cookie from 'react-cookies'
 import {patientAdmit} from '../../Api/patient.api'
 import axios from 'axios'
 import Heading from '../Heading/Heading'
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+// import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 export default function Listview() {
     const [loading, setLoading] = useState(false)
     const [state, setState] = useState([])
@@ -40,7 +40,7 @@ export default function Listview() {
     return (
         
         <div className="container pt-3">
-            <Heading heading="Goberdhan Tiwari Government Base Hospital, Almora"/>
+            <Heading heading="Goverdhan Tiwari Government Base Hospital, Almora"/>
             <div className="row">
                 <div className="col-md-12 col-12 col-sm-12 p-0">
                     <Searchbar />
