@@ -10,6 +10,8 @@ import cookie from 'react-cookies'
 import {patientListPagination} from '../../Api/patient.api'
 import axios from 'axios'
 import Heading from '../Heading/Heading'
+import Load from './Load'
+
 // import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 export default function Listview() {
     const [loading, setLoading] = useState(false)
@@ -63,6 +65,8 @@ export default function Listview() {
           });
     }
     return (
+        <>
+        {loading?<Load />:null}
         <div className="container pt-3">
             <Heading heading="Goverdhan Tiwari Government Base Hospital, Almora"/>
             <div className="row">
@@ -191,7 +195,7 @@ export default function Listview() {
             <div className="row">
                 <div className="col-md-12 col-sm-12 col-lg-12 col-12 p-4  searchbarcontainer">
                     <ReactPaginate
-                        previousLabel={" ← Previous"}
+                        previousLabel={" ← Prev"}
                         nextLabel={"Next →"}
                         pageCount={pageCount}
                         onPageChange={handlePageClick}
@@ -208,5 +212,6 @@ export default function Listview() {
             </div>
            
         </div>
+        </>
     )
 }
