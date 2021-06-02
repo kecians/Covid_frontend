@@ -13,4 +13,6 @@ export const patientMigration = `${server}/api/patient/patient_migrate_status/`
 export const patientDeath = `${server}/api/patient/patient_death_status/`
 
 export const patientSearch = `${server}/api/patient/get_searched_patients/` // <str:query>/`
+export const patientListPagination = `${server}/api/patient/patient_list/` // pagination api
+
 // /For Getting all the lists of patient and if need to register new patient then admit using same link

@@ -1,22 +1,24 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import { Button, Table, Spinner } from 'react-bootstrap'
+import ReactPaginate from 'react-paginate'
 import './Listview.scss'
 // import Profile from '../Profile/Profile'
 import Searchbar from '../Searchbar/Searchbar'
 import Logout from '../Logout/Logout'
 import cookie from 'react-cookies'
-import {patientAdmit} from '../../Api/patient.api'
+import {patientListPagination} from '../../Api/patient.api'
 import axios from 'axios'
 import Heading from '../Heading/Heading'
 // import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 export default function Listview() {
     const [loading, setLoading] = useState(false)
     const [state, setState] = useState([])
+    const [pageCount, setPageCount] = useState(0)
     useEffect(() => {
         setLoading(true)
         axios({
-            url: patientAdmit,
+            url: patientListPagination,
             method: 'GET',
             headers: {
               Authorization: `Token ${cookie.load('token')}`,
@@ -25,11 +27,12 @@ export default function Listview() {
           .then((res) => {
             if (res.data.status === 404) {
                 setLoading(false)
-                setState(res.data.data)
+                // setState(res.data.data)
                 // setvaccine
             } else {
                 setLoading(false)
-                setState(res.data.data)
+                setPageCount(res.data.total_pages)
+                setState(res.data.results)
             }
           })
           .catch((err) => {
@@ -37,8 +40,29 @@ export default function Listview() {
           });
     }, [])
     // console.log(state)
+    const handlePageClick= (e)=>{
+        setLoading(true)
+        axios({
+            url: patientListPagination+`?page=${e.selected+1}`,
+            method: 'GET',
+            headers: {
+              Authorization: `Token ${cookie.load('token')}`,
+            },
+          })
+          .then((res) => {
+            if (res.data.status === 404) {
+                setLoading(false)
+            } else {
+                setLoading(false)
+                setPageCount(res.data.total_pages)
+                setState(res.data.results)
+            }
+          })
+          .catch((err) => {
+            console.log(err.response);
+          });
+    }
     return (
-        
         <div className="container pt-3">
             <Heading heading="Goverdhan Tiwari Government Base Hospital, Almora"/>
             <div className="row">
@@ -156,11 +180,31 @@ export default function Listview() {
                     }
                     </tbody>
                 </Table>
+                
                 </div>
+
                 {/* <div className="col-md-2 p-2  col-sm-12 col-lg-2 col-12">
                     <Profile/>
                     
                 </div> */}
+            </div>
+            <div className="row">
+                <div className="col-md-12 col-sm-12 col-lg-12 col-12 p-4  searchbarcontainer">
+                    <ReactPaginate
+                        previousLabel={" ← Previous"}
+                        nextLabel={"Next →"}
+                        pageCount={pageCount}
+                        onPageChange={handlePageClick}
+                        containerClassName={"pagination flex-wrap justify-content-center"}
+                        pageClassName={"page-item"}
+                        pageLinkClassName={"page-link radius mx-1 mt-1"}
+                        previousLinkClassName={"page-link radius mx-1 mt-1 mx-5 border-0"}
+                        nextLinkClassName={"page-link radius mx-1 mt-1 mx-5 border-0"}
+                        breakClassName={"page-link radius mx-1 mt-1"}
+                        activeClassName={"active"}
+                        disabledClassName={"disabled"}
+                    />
+                </div>
             </div>
            
         </div>
