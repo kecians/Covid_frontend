@@ -99,7 +99,7 @@ export default function Addpatient() {
             state.patient_condition=4   
         }
         else{
-            state.patient_condition=""
+            state.patient_condition="Select Patient Condition"
         }
         //
         
@@ -222,7 +222,7 @@ export default function Addpatient() {
             }
           
         }
-        if(state.patient_condition === ""){
+        if(state.patient_condition === "Select Patient Condition"){
             return addToast("Please enter valid choice for patient condition!", { appearance: 'error' });
         }
         
@@ -234,7 +234,7 @@ export default function Addpatient() {
                 return addToast("Please enter valid choice for floor category!", { appearance: 'error' });
             }
             
-            if(state.bed_category === ""){
+            if(state.bed_category === "Select Bed Category"){
                 return addToast("Please enter valid choice for bed category!", { appearance: 'error' });
             }
             if (typeof state.bed_number !== "undefined" || state.bed_number === "") {
