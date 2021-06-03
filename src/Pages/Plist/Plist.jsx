@@ -5,7 +5,7 @@ import Listview from '../../Components/Listview/Listview'
 export default function Plist() {
     return (
         <>
-        <div className=" container-fluid bg-silver p-0">
+        <div className=" container-fluid bg-silver">
             <Listview />
         </div>
         <div className="container-fluid p-0 m-0">
