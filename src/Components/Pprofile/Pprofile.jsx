@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import { Button, Table, Spinner } from 'react-bootstrap'
 import Heading from '../Heading/Heading'
 import HeadingSmall from '../HeadingSmall/HeadingSmall'
@@ -8,6 +8,7 @@ import { patientProfile } from '../../Api/patient.api'
 import axios from 'axios'
 import cookie from 'react-cookies'
 import {useToasts} from 'react-toast-notifications'
+import Logout from '../Logout/Logout'
 export default function Pprofile(props) {
     const {addToast} = useToasts()
     const [state, setState] = useState({})
@@ -15,6 +16,7 @@ export default function Pprofile(props) {
     const [loading, setLoading] = useState(false)
     const [test, setTest] = useState({})
     const [vaccine, setVaccine] = useState({})
+    const [redirect, setRedirect] = useState(false)
     useEffect(() => {
         setLoading(true)
         axios({
@@ -25,7 +27,9 @@ export default function Pprofile(props) {
           .then((res) => {
             if (res.data.status === 404) {
                 addToast("Details Not Found!!", {appearance: "error"})
+                setRedirect(true)
             } else {
+                setRedirect(false)
                 setState(res.data.data)
                 setTest(res.data.data.patient_covid_test)
                 setVaccine(res.data.data.patient_vaccine_status)
@@ -51,16 +55,46 @@ export default function Pprofile(props) {
           })
           .catch((err) => {
             addToast("Details Not Found!!", {appearance: "error"})
+            setRedirect(true)
             // console.log(err.response);
           });
 
     }, [props.id, addToast, props.contact])
 
-    // console.log(test.is_tested)
-    // console.log(vaccine)
+    if (redirect){
+        return <Redirect to = '/'/>
+    }
     return (
         <div className="container p-2">
             <Heading  heading="Patient Profile"/>
+            {cookie.load("token")? 
+                    <div className="card-body row p-0" style={{marginLeft:"-30px"}}>
+                        <div className=" col-md-12 col-sm-12 col-12 col-lg-12">
+                            
+                            <Link to='/home'> 
+                                <Button variant="primary" type="submit" className="searchbarcontainer log mt-2" >
+                                    Home
+                                </Button>
+                            </Link>
+                            <span className="p-1"></span>
+                            <Link to='/list'> 
+                                <Button variant="primary" type="submit" className="searchbarcontainer log mt-2" >
+                                Hospitalized Patients 
+                                </Button>
+                            </Link>
+                            <span className="p-1"></span>
+                            <Logout />
+                        </div>
+                        
+                       
+                    </div>
+                    : 
+                    <Link to='/'>
+                            <Button variant="primary" type="submit" className="searchbarcontainer log">
+                                Back
+                            </Button>
+                        </Link>
+                    }
             <div className="row my-4 px-1">
                 <div className="col-md-6  col-sm-12 col-lg-6 col-12 mb-2 p-0">
                     <div className="card-body card profile h-100">
@@ -199,33 +233,6 @@ export default function Pprofile(props) {
                         </tbody>
                      </Table>
                     </div>
-
-
-                    {cookie.load("token")? 
-                    <div className="card-body row">
-                        <div className=" col-md-12 col-sm-12 col-12 col-lg-12">
-                            
-                            <Link to='/home' className="p-2">
-                                <Button variant="primary" type="submit" className="searchbarcontainer log">
-                                    Home
-                                </Button>
-                            </Link>
-                            <Link to='/list' className="p-2">
-                                <Button variant="primary" type="submit" className="searchbarcontainer log">
-                                Hospitalized Patients
-                                </Button>
-                            </Link>
-                        </div>
-                        
-                       
-                    </div>
-                    : 
-                <       Link to='/'>
-                            <Button variant="primary" type="submit" className="searchbarcontainer log">
-                                Back
-                            </Button>
-                        </Link>
-                    }
                 </div>
             </div>
         </div>
