@@ -3,12 +3,14 @@ import {Link, Redirect} from 'react-router-dom'
 import { Button, Table, Spinner } from 'react-bootstrap'
 import Heading from '../Heading/Heading'
 import HeadingSmall from '../HeadingSmall/HeadingSmall'
-import { patientHealthProfile } from '../../Api/health.api'
+import { patientHealthPaginateProfile } from '../../Api/health.api'
+import ReactPaginate from 'react-paginate'
 import { patientProfile } from '../../Api/patient.api'
 import axios from 'axios'
 import cookie from 'react-cookies'
 import {useToasts} from 'react-toast-notifications'
 import Logout from '../Logout/Logout'
+import Load from '../Listview/Load'
 export default function Pprofile(props) {
     const {addToast} = useToasts()
     const [state, setState] = useState({})
@@ -17,6 +19,7 @@ export default function Pprofile(props) {
     const [test, setTest] = useState({})
     const [vaccine, setVaccine] = useState({})
     const [redirect, setRedirect] = useState(false)
+    const [pageCount, setPageCount] = useState(0)
     useEffect(() => {
         setLoading(true)
         axios({
@@ -33,10 +36,10 @@ export default function Pprofile(props) {
                 setState(res.data.data)
                 setTest(res.data.data.patient_covid_test)
                 setVaccine(res.data.data.patient_vaccine_status)
+                
                 axios({
-                    url: patientHealthProfile+`${props.id}/`,
+                    url: patientHealthPaginateProfile+`${props.id}/`,
                     method: 'GET',
-                   
                     })
                     .then((res) => {
                     if (res.data.status === 404) {
@@ -44,8 +47,8 @@ export default function Pprofile(props) {
                         setData(res.data.data)
                     } else {
                         setLoading(false)
-                        setData(res.data.data)
-                        
+                        setData(res.data.results)
+                        setPageCount(res.data.total_pages)
                     }
                     })
                     .catch((err) => {
@@ -61,10 +64,34 @@ export default function Pprofile(props) {
 
     }, [props.id, addToast, props.contact])
 
+    const handlePageClick= (e)=>{
+        setLoading(true)
+        axios({
+            url: patientHealthPaginateProfile+`${props.id}/?page=${e.selected+1}`,
+            method: 'GET',
+            })
+            .then((res) => {
+            if (res.data.status === 404) {
+                setLoading(false)
+                setData(res.data.data)
+            } else {
+                setLoading(false)
+                setData(res.data.results)
+                setPageCount(res.data.totalpages)
+                
+            }
+            })
+            .catch((err) => {
+            // console.log(err.response);
+            });
+    }
+
     if (redirect){
         return <Redirect to = '/'/>
     }
     return (
+        <>
+        {loading? <Load />: null}
         <div className="container p-2">
             <Heading  heading="Patient Profile"/>
             {cookie.load("token")? 
@@ -184,8 +211,8 @@ export default function Pprofile(props) {
                 <div className="col-md-12 col-sm-12 col-lg-12 col-12 p-2 profile">
                 
                     <div className="pt-2">
-                        <HeadingSmall  heading="Health Info"/>
-                        <Table responsive="md" className="">
+                    <HeadingSmall  heading="Health Info"/>
+                    <Table responsive="md" className="">
                         <thead>
                         <tr>
                             <th>Updated At (Date(Time))</th>
@@ -210,7 +237,7 @@ export default function Pprofile(props) {
                             :
                         null
                         }
-                        {typeof(data)==="string"? data: 
+                        {data.length===0? "Patient Health history doesn't exits": 
                             <>
                             {data.map((i,index) => (
                         <tr>
@@ -235,6 +262,25 @@ export default function Pprofile(props) {
                     </div>
                 </div>
             </div>
+            <div className="row mt-2">
+                <div className="col-md-12 col-sm-12 col-lg-12 col-12 p-4  searchbarcontainer">
+                    <ReactPaginate
+                        previousLabel={" ← Prev"}
+                        nextLabel={"Next →"}
+                        pageCount={pageCount}
+                        onPageChange={handlePageClick}
+                        containerClassName={"pagination flex-wrap justify-content-center"}
+                        pageClassName={"page-item"}
+                        pageLinkClassName={"page-link radius mx-1 mt-1"}
+                        previousLinkClassName={"page-link radius mx-1 mt-1 mx-2 border-0"}
+                        nextLinkClassName={"page-link radius mx-1 mt-1 mx-2 border-0"}
+                        breakClassName={"page-link radius mx-1 mt-1"}
+                        activeClassName={"active"}
+                        disabledClassName={"disabled"}
+                    />
+                </div>
+            </div>
         </div>
+        </>
     )
 }
