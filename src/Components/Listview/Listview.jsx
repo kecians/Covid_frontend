@@ -66,6 +66,7 @@ export default function Listview() {
     }
     return (
         <>
+        
         {loading?<Load />:null}
         <div className="container pt-3">
             <Heading heading="Goverdhan Tiwari Government Base Hospital, Almora"/>
