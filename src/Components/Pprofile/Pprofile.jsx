@@ -71,16 +71,15 @@ export default function Pprofile(props) {
             method: 'GET',
             })
             .then((res) => {
-            if (res.data.status === 404) {
-                setLoading(false)
-                setData(res.data.data)
-            } else {
-                setLoading(false)
-                setData(res.data.results)
-                setPageCount(res.data.totalpages)
-                
-            }
-            })
+                if (res.data.status === 404) {
+                    setLoading(false)
+                    setData(res.data.data)
+                } else {
+                    setLoading(false)
+                    setData(res.data.results)
+                    setPageCount(res.data.total_pages)
+                }
+                })
             .catch((err) => {
             // console.log(err.response);
             });
