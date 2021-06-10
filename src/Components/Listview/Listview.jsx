@@ -142,7 +142,7 @@ export default function Listview() {
                         :
                     null
                     }
-                    {typeof(state)==="string"? 
+                    {state.lenght === 0? 
                     "Patients Doesn't Exist!!"
                     :
                     <>
