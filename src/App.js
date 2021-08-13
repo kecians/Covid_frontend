@@ -12,7 +12,7 @@ import Searchbar  from './Pages/Info/Info'
 import Admitpatient from './Pages/Admitpatient/Admitpatient'
 import Patientprofile from './Pages/Patientprofile/Patientprofile'
 import Healthform from './Pages/Healthform/Healthform'
-// import Signup from './Pages/Signup/Signup'
+import Signup from './Pages/Signup/Signup'
 import Loader from './Components/Loader/Loader'
 import Toastify from './Components/Toastify/Toastify'
 import { ToastProvider } from 'react-toast-notifications';
@@ -35,7 +35,7 @@ function App() {
         <Switch>
           <LockRoute exact path="/" component={Publicpage} />  
           <LockRoute exact path="/login" component={Home} />  
-          {/* <LockRoute exact path="/signup" component={Signup} /> */}
+          <LockRoute exact path="/signup" component={Signup} />
           <PrivateRoute exact path="/list" component={Plist} />
           <PrivateRoute exaact path="/home" component={Searchbar} />
           <PrivateRoute exact path="/patient/admit" component={Admitpatient} />
