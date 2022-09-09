@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import { Redirect } from 'react-router-dom'
 // import components
 import { Form, Button} from 'react-bootstrap'
-import './Login.scss'
+import './Login.css'
 import cookie from 'react-cookies'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";

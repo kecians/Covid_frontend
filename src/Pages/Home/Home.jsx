@@ -9,7 +9,7 @@ import Footer from '../../Components/Footer/Footer'
 import Covid from '../../Components/Covid/Covid'
 // import styles
 
-import './Home.scss'
+import './Home.css'
 
 export default function Home() {
     return (

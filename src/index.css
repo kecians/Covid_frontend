@@ -19,10 +19,14 @@ code {
 
   --font-size-h : 40px ;
   --font-size-p : 16px;
+  padding : 0px;
+  margin : 0px;
+  box-sizing: border-box;
+  font-size: 18px;
 }
 
 
-h1{
+/* h1{
   font-size: var(--font-size-h) !important;
   
 }
@@ -30,9 +34,7 @@ h1{
 h2{
   font-size : calc(var(--font-size-h) - 5) !important; 
 }
-/* h3{
-  font-size : calc(var(--font-size-h) - 2) !important; 
-} */
+ 
 
 
 h4{
@@ -58,4 +60,4 @@ p{
     --font-size-p : 10px;
   }
   
-}
+} */

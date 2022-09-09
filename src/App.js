@@ -37,7 +37,7 @@ function App() {
           <LockRoute exact path="/login" component={Home} />  
           {/* <LockRoute exact path="/signup" component={Signup} /> */}
           <PrivateRoute exact path="/list" component={Plist} />
-          <PrivateRoute exaact path="/home" component={Searchbar} />
+          <PrivateRoute exaact path="/dashboard" component={Searchbar} />
           <PrivateRoute exact path="/patient/admit" component={Admitpatient} />
           <Route exact path="/patient/profile/:id/:contact" component={Patientprofile} />
           <PrivateRoute exact path="/patient/healthcheck/:id/:name" component={Healthform} />

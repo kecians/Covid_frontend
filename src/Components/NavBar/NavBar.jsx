@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 // import { HashLink } from 'react-router-hash-link';
 // import styles
 
-import './NavBar.scss'
+import './NavBar.css'
 
 //  import components
 

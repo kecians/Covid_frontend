@@ -1,18 +1,23 @@
 import React, {useEffect, useState} from 'react'
+import Pprofile from '../../../Pprofile/Pprofile';
 import {Link, Redirect} from 'react-router-dom'
-import { Button, Table, Spinner } from 'react-bootstrap'
-import Heading from '../Heading/Heading'
-import HeadingSmall from '../HeadingSmall/HeadingSmall'
-import { patientHealthPaginateProfile } from '../../Api/health.api'
-import ReactPaginate from 'react-paginate'
-import { patientProfile } from '../../Api/patient.api'
 import axios from 'axios'
 import cookie from 'react-cookies'
 import {useToasts} from 'react-toast-notifications'
-import Logout from '../Logout/Logout'
-import Load from '../Listview/Load'
-export default function Pprofile(props) {
-    
+import { patientProfile } from '../../../../Api/patient.api';
+import { Button, Table, Spinner } from 'react-bootstrap'
+import { patientHealthPaginateProfile } from '../../../../Api/health.api';
+import ProfileHeader from './ProfileHeader.jsx';
+import Grid from '@mui/material/Grid';
+import LeftSection from './LeftSection';
+import RightSection from './RightSection';
+
+const PatientProfile = (props) => {
+
+    const{
+        query_params = {}
+    } = props;
+ 
     const {addToast} = useToasts()
     const [state, setState] = useState({})
     const [data, setData] = useState([])
@@ -21,10 +26,6 @@ export default function Pprofile(props) {
     const [vaccine, setVaccine] = useState({})
     const [redirect, setRedirect] = useState(false)
     const [pageCount, setPageCount] = useState(0)
-
-    const{
-        query_params = {}
-    } = props;
 
     useEffect(() => {
         setLoading(true)
@@ -96,10 +97,22 @@ export default function Pprofile(props) {
     }
     return (
         <>
-        {loading? <Load />: null}
+        <ProfileHeader />
+        {/* {loading? <Load />: null} */}
+
+        <Grid container spacing={2}>
+        <Grid item xs={3}>
+            <LeftSection data = {state} />
+        </Grid>
+        <Grid item xs={9}>
+            <RightSection data = {state}  health_status = {data} />
+        </Grid>
+      
+      </Grid>
+
+
         <div className="container p-2">
-            <Heading  heading="Patient Profile"/>
-            {cookie.load("token")? 
+            {/* {cookie.load("token")? 
                     <div className="card-body row p-0" style={{marginLeft:"-30px"}}>
                         <div className=" col-md-12 col-sm-12 col-12 col-lg-12">
                             
@@ -115,7 +128,6 @@ export default function Pprofile(props) {
                                 </Button>
                             </Link>
                             <span className="p-1"></span>
-                            <Logout />
                         </div>
                         
                        
@@ -126,11 +138,12 @@ export default function Pprofile(props) {
                                 Back
                             </Button>
                         </Link>
-                    }
+                    } */}
+
+                    
             <div className="row my-4 px-1">
                 <div className="col-md-6  col-sm-12 col-lg-6 col-12 mb-2 p-0">
                     <div className="card-body card profile h-100">
-                        <HeadingSmall  heading="General Info"/>
                         <p className="card-title pl-3">Patient id: <span className="font-weight-bold">  &ensp; &ensp;{state.patient_id}</span></p>
                         <p className="card-title pl-3">Name: <span className="font-weight-bold">  &ensp; &ensp;{state.name} </span></p>
                         <p className="card-title pl-3">Status: <span className="font-weight-bold">  &ensp; &ensp;{state.patient_status==="A"? "Hospitalized": state.patient_status==="R" ? "Recoverd" : state.patient_status==="M" ? "Referred": state.patient_status==="H" ?"Home Isolated" : "N/A"} </span></p>
@@ -182,7 +195,6 @@ export default function Pprofile(props) {
                 <div className="col-md-1 col-lg-1"></div>
                 <div className="col-md-5  col-sm-12 col-lg-5 col-12 mb-2 p-0">
                     <div className="card-body card profile h-100">
-                        <HeadingSmall  heading="Covid Test Info"/>
                         {test!==null? 
                             <>
                             <p className="card-title pl-3">Covid Tested: <span className="font-weight-bold">  &ensp; &ensp;{test.is_tested===true? "Yes": "No"} </span></p>
@@ -196,7 +208,6 @@ export default function Pprofile(props) {
                         <br />
                         <br />
 
-                        <HeadingSmall  heading="Covid Vaccine Info"/>
                        { vaccine!==null?
                         <>
                              <p className="card-title pl-3">Vaccinated: <span className="font-weight-bold">  &ensp; &ensp;{vaccine.is_vaccinated===true ? "Yes": "No"} </span></p>
@@ -216,7 +227,6 @@ export default function Pprofile(props) {
                 <div className="col-md-12 col-sm-12 col-lg-12 col-12 p-2 profile">
                 
                     <div className="pt-2">
-                    <HeadingSmall  heading="Health Info"/>
                     <Table responsive="md" className="">
                         <thead>
                         <tr>
@@ -269,7 +279,7 @@ export default function Pprofile(props) {
             </div>
             <div className="row mt-2">
                 <div className="col-md-12 col-sm-12 col-lg-12 col-12 p-4  searchbarcontainer">
-                    <ReactPaginate
+                    {/* <ReactPaginate
                         previousLabel={" ← Prev"}
                         nextLabel={"Next →"}
                         pageCount={pageCount}
@@ -282,10 +292,12 @@ export default function Pprofile(props) {
                         breakClassName={"page-link radius mx-1 mt-1"}
                         activeClassName={"active"}
                         disabledClassName={"disabled"}
-                    />
+                    /> */}
                 </div>
             </div>
         </div>
         </>
     )
 }
+
+export default PatientProfile;

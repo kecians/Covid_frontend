@@ -5,10 +5,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    // grid-template-columns: 100px 65%;
 
-    // grid-template-rows: auto;
-    // grid-column-gap: 10px !important;
  
     margin : 20px 10px;
     --sn-size : 80px;
@@ -54,14 +51,12 @@
 .animate5-container{
     position: relative !important;
     display: flex;
-    // justify-content: center;
     align-content: flex-end !important;
     width: 100%;
     height: 427px !important;
     max-height: 100%;
     margin-top : 40px;
      
-    // height: 100% !important;
    
 }
 
@@ -71,8 +66,6 @@
          justify-content: center;
         height: auto;
         margin-top : opx;
-        // top : 0%;
-        // left : 0%; 
     }
 
     

@@ -1,5 +1,5 @@
 import React from 'react';
-import './Covid.scss'
+import './Covid.css'
 import cosvg from './CovidAnimate.svg'
 // import { Table } from 'react-bootstrap'
 // import Animate5  from '../../Components/PetrolAnimations/animation5';
