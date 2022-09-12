@@ -2,12 +2,15 @@ import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import { SecondaryHeading, SMText } from "../../RUCApi/Text";
+import { NativeText, SecondaryHeading, SMText } from "../../RUCApi/Text";
 import Container from "@mui/material/Container";
 import PatientList from "./PatientList";
 import axios from "axios";
 import cookie from "react-cookies";
 import { patientSearch } from "../../../Api/patient.api";
+import { useTheme } from "@mui/material";
+import { getComputedStyle } from "./style";
+import { useEffect } from "react";
 
 const PatientStatus = () => {
   const initialState = {
@@ -17,20 +20,31 @@ const PatientStatus = () => {
     data: [],
   };
   const [state, setState] = React.useState(initialState);
-  const [query_val, setQuery] = React.useState("recovered");
+  const [query_val, setQuery] = React.useState("active");
   // const handleChange = (event, value) =>{
   //     setState({ ...state, [event.target.name]: event.target.value,
   //     });
   //   }
 
+
+  useEffect(( ) => {
+    handleSearch()
+  }, [query_val])
+
+
   const handleChange = (event, value) => {
-    setState({ ...state, query: value });
     setQuery(value);
+  }
+  const theme = useTheme();
+  const styles = getComputedStyle(theme)
 
+  const handleSearch = () => {
+    
+    console.log(query_val)
     setState({ ...state, loading: true });
-
+    
     axios({
-      url: patientSearch + `${value}/`,
+      url: patientSearch + `${query_val}/`,
       method: "GET",
       headers: {
         Authorization: `Token ${cookie.load("token")}`,
@@ -52,36 +66,46 @@ const PatientStatus = () => {
     <Box
       sx={{
         marginTop: "30px",
+        width : "100%",
+        overflow : "hidden",
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <SecondaryHeading
+       <SecondaryHeading
           sx={{
             padding: "10px 20px 10px 0px",
+            fontWeight : "500"
           }}
         >
           Patient Status
         </SecondaryHeading>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          background : theme.palette.v2.primary,
+          borderRadius : "20px",
+          width : "100%"
+
+
+        }}
+      >
+       
         <Tabs
           value={query_val}
           onChange={handleChange}
           variant="scrollable"
           scrollButtons={false}
           aria-label="scrollable prevent tabs example"
+          sx = {styles.tabs}
         >
-          <Tab value="active" icon={<SMText> By order </SMText>} />
-          <Tab value="recovered" icon={<SMText>By status </SMText>} />
-          <Tab value="death" icon={<SMText> By schedule </SMText>} />
+          <Tab  sx = {styles.tab} value="active" label={<NativeText> Active </NativeText>} />
+          <Tab sx = {styles.tab} value="recovered" label={<NativeText>Recovered </NativeText>} />
+          <Tab sx = {styles.tab} value="death" label={<NativeText> Death</NativeText>} />
+          <Tab sx = {styles.tab} value="migrated" label={<NativeText> Migrated</NativeText>} />
+
         </Tabs>
       </Box>
-      <Box>
         <PatientList data={state.data} />
-      </Box>
     </Box>
   );
 };

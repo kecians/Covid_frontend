@@ -1,6 +1,8 @@
 import React from 'react'
 import Heading from '../../Components/Heading/Heading'
 import Statusform from '../../Components/Statusform/Statusform'
+
+
 export default function Healthform(props) {
     const id = props.match.params.id
     

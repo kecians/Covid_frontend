@@ -6,8 +6,10 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import { PrimaryHeading, SecondaryHeading, SMText } from "../../RUCApi/Text";
+import { useTheme } from "@mui/material";
 
 const DashboardHeader = () => {
+  const theme = useTheme()
   return (
     <Box
       sx={{
@@ -16,7 +18,10 @@ const DashboardHeader = () => {
         flexWrap: "nowrap",
         justifyContent: "space-between",
         minHeight : "100px",
-        alignItems : "center"
+        alignItems : "center",
+        borderBottom :  "1px solid " + theme.palette.border.primary,
+        padding : "10px 20px"
+         
       }}
     >
       <Box>

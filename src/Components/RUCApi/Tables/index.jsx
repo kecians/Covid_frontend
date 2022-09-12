@@ -1,4 +1,4 @@
-import {  Link, Skeleton } from '@mui/material';
+import {  Link } from '@mui/material';
 import Button from '@mui/material/Button';
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -19,8 +19,6 @@ import { PrimaryText, SecondaryHeading, SecondaryText, SMHeading, SMText } from 
 import { PrimaryButton } from '../../RUCApi/Button';
 import { NativeCard } from '../../RUCApi/Cards';
 import { useTheme } from "@mui/material";
-import { NativeHeading } from '../../RUCApi/Text';
-import { getDateTimeString } from '../../../assets/scripts';
 
 
 const StatuButton = ({status}) => {
@@ -81,60 +79,55 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const headCells = [
-  {
-    id: 'Patient name',
-    numeric: false,
-    disablePadding: true,
-    label: 'Patient name',
-  },
-  {
-    id: 'Patient ID',
-    numeric: true,
-    disablePadding: false,
-    label: 'Patient ID',
-  },
-  {
-    id: 'Sex',
-    numeric: true,
-    disablePadding: false,
-    label: 'Sex',
-  },
-  {
-    id: 'Alloted Bed',
-    numeric: true,
-    disablePadding: false,
-    label: 'Alloted Bed',
-  },
-  {
-    id: 'Admitted on',
-    numeric: true,
-    disablePadding: false,
-    label: 'Admitted on',
-  },
-  {
-    id: 'status',
-    numeric: true,
-    disablePadding: false,
-    label: 'Status',
-  },
-];
+// const headCells = [
+//   {
+//     id: 'Patient name',
+//     numeric: false,
+//     disablePadding: true,
+//     label: 'Patient name',
+//   },
+//   {
+//     id: 'Patient ID',
+//     numeric: true,
+//     disablePadding: false,
+//     label: 'Patient ID',
+//   },
+//   {
+//     id: 'Sex',
+//     numeric: true,
+//     disablePadding: false,
+//     label: 'Sex',
+//   },
+//   {
+//     id: 'Alloted Bed',
+//     numeric: true,
+//     disablePadding: false,
+//     label: 'Alloted Bed',
+//   },
+//   {
+//     id: 'Admitted on',
+//     numeric: true,
+//     disablePadding: false,
+//     label: 'Admitted on',
+//   },
+//   {
+//     id: 'status',
+//     numeric: true,
+//     disablePadding: false,
+//     label: 'Status',
+//   },
+// ];
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells} =
     props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
-  const theme = useTheme()
 
   return (
     <TableHead>
-      <TableRow
-        sx = {{
-          background : theme.palette.v2.primary
-        }}
-      >
+      <TableRow>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -147,8 +140,10 @@ function EnhancedTableHead(props) {
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
             >
-                  <NativeHeading sx = {{ color : theme.palette.text.ternary, fontSize : theme.size.heading.h4 }} >{headCell.label}</NativeHeading>
+            <SecondaryText>
 
+              {headCell.label}
+            </SecondaryText>
       
             </TableSortLabel>
             
@@ -169,7 +164,7 @@ EnhancedTableHead.propTypes = {
 };
 
 const TableToolbar = (props) => {
-  const { numSelected } = props;
+  const { numSelected, tools } = props;
 
   return (
     <Toolbar
@@ -182,10 +177,7 @@ const TableToolbar = (props) => {
         }),
       }}
     >
-    <SMHeading   >
-    120 Patients
-    </SMHeading>
-    <PatientFilter  />
+   {tools}
       
     </Toolbar>
   );
@@ -200,7 +192,11 @@ const  PatientTable = (props) => {
     const{
         rows = [],
         toggleProfile = () => {}, 
-        setProfile =() => {}
+        setProfile =() => {},
+        headCells = [],
+        rowLabels = [],
+        tools
+
     } = props;
 
   const [order, setOrder] = React.useState('asc');
@@ -252,8 +248,8 @@ const  PatientTable = (props) => {
     <Box sx={{ width: '100%' }} 
     p = {3}
     >
-      <NativeCard sx={{ width: '100%',  padding : "0px" }}   > 
-        <TableToolbar numSelected={selected.length} />
+      <NativeCard sx={{ width: '100%' }}   > 
+        <TableToolbar numSelected={selected.length}   tools  = {tools} />
         <TableContainer
         >
           <Table
@@ -270,10 +266,12 @@ const  PatientTable = (props) => {
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
+              headCells = {headCells}
             />
             <TableBody>
              
-              {rows.length ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              {stableSort(rows, getComparator(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
@@ -293,7 +291,11 @@ const  PatientTable = (props) => {
                         }
                         }}
                     >
-                       
+                    {
+                    
+                        
+                    
+                    }
                       <TableCell
                         align = "center"
                       >
@@ -302,7 +304,7 @@ const  PatientTable = (props) => {
                       <TableCell align="center">{row.patient_id}</TableCell>
                       <TableCell align="center">{row.gender}</TableCell>
                       <TableCell align="center">{ !row.patient_bed ?? row.patient_bed.bed_id}</TableCell>
-                      <TableCell  align="center">{getDateTimeString(row.admitted_on)}</TableCell>
+                      <TableCell align="center">{row.admitted_on}</TableCell>
                       <TableCell align="center">
                         <StatuButton status = {row.patient_status}  />
 
@@ -310,25 +312,7 @@ const  PatientTable = (props) => {
                     
                     </TableRow>
                   );
-                }) :
-                [1,2,3,4,5].map((val => (
-                  <TableRow
-                  >
-                      <TableCell align="center" colSpan = {6}                   
-                      sx = {{
-                        padding : "5px"    
-                      }}
-  >
-                      <Skeleton width = "100%" height = {40} />
-
-                      </TableCell>
-                      
-
-                  </TableRow>                   
-
-                )))
-              
-              }
+                })}
               {emptyRows > 0 && (
                 <TableRow
                   style={{
@@ -358,84 +342,6 @@ const  PatientTable = (props) => {
 
 
 
-// const PatientTable = (props) => {
-//     const{
-//         data = {},
-//     } = props;
-
-//     return (
-//      data.show ? 
-//             <div className="row p-3">
-//                 <div className="col-md-12 col-sm-12 col-lg-12 col-12 profile">
-//                     <Table responsive="md" className="" id="searchtable">
-//                     <thead>
-//                     <tr>
-//                         <th>Patient ID</th>
-//                         <th>Patient Name</th>
-//                         {data.query==="home_isolated"? 
-//                             <th>Health Update</th>
-//                             :null
-//                         }
-                        
-//                         <th>Admitted On</th> 
-//                         <th>{data.query==="migrated"? "Migrated On":data.query==="death"? "Deceased On": data.query==="death"? "Recovered On": "Last Updated on"}</th> 
-//                         {data.query==="migrated"? 
-//                             <th>Migrated To</th>
-//                             :null
-//                         }
-//                         {data.query!=="recovered" && data.query!=="home_isolated"? 
-//                             <th>Reason</th>
-//                             :null
-//                         }
-//                     </tr>
-//                     </thead>
-//                     <tbody>
-//                     {data.loading ? 
-//                         <tr>
-//                             <td>
-//                                 <span>Loading.....</span>
-                            
-//                             </td>
-//                         </tr>
-//                         :
-//                     null
-//                     }
-//                     {typeof(data.data)==="string"? 
-//                     "Patients Doesn't Exist!!"
-//                     :
-//                     <>
-//                         {data.data.map((i,index) => (
-//                     <tr>
-//                         <td>{i.patient_id}</td>
-//                         <td><Link to={`/patient/profile/${i.patient_id}/${i.contact_number}`}className="text-primary text-center">{i.name}</Link></td>
-//                         {data.query==="home_isolated"?      
-//                             <td> <Link to={`/patient/healthcheck/${i.patient_id}/${i.name}`} className="text-primary text-center">Health Checkup</Link></td>
-//                                     :null
-//                         }
-//                         <td>{i.admitted_on}</td>
-//                         <td>{data.query!=="death"? i.updated_on? i.updated_on.split("T")[0]: "N/A" : i.patient_death? i.patient_death.expired_on: "N/A"}</td>
-
-//                         {data.query==="migrated"? 
-//                             <td>{i.patient_migrate? i.patient_migrate.migrated_to: "N/A"}</td>
-//                             :null
-//                         }
-//                         {data.query!=="recovered" && data.query!=="home_isolated"? 
-//                             <td>{data.query==="death"? 
-//                             i.patient_death? i.patient_death.reason: "N/A": i.patient_migrate? i.patient_migrate.reason: "N/A" }</td>
-//                             :null
-//                         }
-//                     </tr>
-//                     ))}
-//                     </>
-//                     }
-//                     </tbody>
-//                 </Table>
-//                 </div>    
-//             </div>
-
-//         : null
-        
-//     );
-// }
+ 
 
 export default PatientTable;

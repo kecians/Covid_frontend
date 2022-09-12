@@ -5,13 +5,13 @@ import PatientInfoCard from './PatientInfoCard';
 import PatientStatus from './PatientStatus';
 
 const PatientFlex = styled(Box)`
-    
     display : flex;
     flex-direction : row;
     flex-wrap : wrap;
     height : auto;
-    padding : 10px;
-    gap : 24px;
+    gap : 20px;
+    overflow : hidden !important;
+    width : 100%;
 
 `
 
@@ -23,7 +23,9 @@ const PatientList = (props) => {
 
 
     return (
-      <PatientFlex>
+      <PatientFlex
+          my = {3}
+      >
 
         { data && data.map((val, ind) => ( <PatientInfoCard info = {val} key = {val.patient_id} /> ) )}
         {data.length == 0 && [1,2,4,4,5,6].map(val => <PatientInfoCard key = {val} />) }

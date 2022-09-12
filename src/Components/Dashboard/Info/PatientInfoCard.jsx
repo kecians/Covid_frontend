@@ -17,10 +17,11 @@ import {
 } from "../../RUCApi/Text";
 import { PatientConditionIndicator } from "../../RUCApi/PatientsUtils";
 import Skeleton from "@mui/material/Skeleton";
+import { useTheme } from "@mui/material";
 
 const PatientInfoCard = (props) => {
   const { info = false } = props;
-
+  const theme = useTheme()
   console.log(info);
   return info ? (
     <NativeCard
@@ -36,6 +37,10 @@ const PatientInfoCard = (props) => {
             justifyContent: "space-between",
             alignItems: "center",
             flexWrap: "nowrap",
+            '& svg' : {
+              color : theme.palette.v2.secondary,
+              fontSize : "22px"
+            }
           }}
           height="40px"
         >
@@ -45,10 +50,15 @@ const PatientInfoCard = (props) => {
               textOverflow: "ellipsis",
               overflow: "hidden",
               whiteSpace: "nowrap",
+              '& svg' : {
+                color : theme.palette.v2.secondary,
+                fontSize : "24px"
+              },
+              fontSize : theme.size.text.p1
             }}
             title={info.name}
           >
-            <IoMdBed /> {info.id} {info.name}
+            {info.id}. {info.name}
           </PrimaryText>
           <IoMdNotifications />
         </Box>
@@ -68,15 +78,19 @@ const PatientInfoCard = (props) => {
         {info.patient_health_status &&
           Object.keys(info.patient_health_status).map((val) => (
             <Box align = "center">
-              <SecondaryText>{val}</SecondaryText>
-              <PrimaryHeading mt={1}>
+              <SecondaryText sx = {{ color : theme.palette.text.dark}} >{val}</SecondaryText>
+              <PrimaryHeading  mt={1} sx = {{ color : theme.palette.text.ternary}} >
                 {info.patient_health_status[val]}
               </PrimaryHeading>
             </Box>
           ))}
       </Box>
-      <SecondaryText align="center">
-        <BsCalendarPlusFill />
+      <SecondaryText align="center"
+        sx = {{
+          fontSize : theme.size.text.p2
+        }}
+      >
+        <BsCalendarPlusFill  />
         &nbsp; Medicine Treatment at
         <SMText>8:00</SMText>
       </SecondaryText>

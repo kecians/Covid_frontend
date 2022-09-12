@@ -1,80 +1,85 @@
 import { ResponsivePie } from '@nivo/pie'
-import { ResponsiveLine } from '@nivo/line'
+import { Line } from '@nivo/line';
+import { useTheme } from '@mui/material';
 
-export const LineChart = ({data}) =>(
- 
-    <ResponsiveLine
-        data={data}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-        xScale={{ type: 'point' }}
-        yScale={{
-            type: 'linear',
-            min: 'auto',
-            max: 'auto',
-            stacked: true,
-            reverse: false
-        }}
-        yFormat=" >-.2f"
-        axisTop={null}
-        axisRight={null}
+const commonProperties = {
+    width: 900,
+    height: 400,
+    margin: { top: 10, right: 20, bottom: 200, left: 80 },
+    animate: true,
+    enableSlices: "x",
+    useMesh : true,
+    enableSlices : 'x',
+    enableSlices :'y'
+  };
+
+export const LineChart = (props) => {
+    const{
+        data,
+        margin = { top: 50, right: 110, bottom: 50, left: 60 }
+    } = props;
+
+
+    return (
+        <Line
+        {...commonProperties}
+        width={600}
+        height={400}
         axisBottom={{
-            orient: 'bottom',
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: 'transportation',
-            legendOffset: 36,
-            legendPosition: 'middle'
+          orient: "bottom",
+          tickSize: 0,
+          tickPadding: 10,
+          tickRotation: 0,
+          tickValues: ["FI", "CM"]
         }}
-        axisLeft={{
-            orient: 'left',
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: 'count',
-            legendOffset: -40,
-            legendPosition: 'middle'
-        }}
-        pointSize={10}
-        pointColor={{ theme: 'background' }}
-        pointBorderWidth={2}
-        pointBorderColor={{ from: 'serieColor' }}
-        pointLabelYOffset={-12}
-        useMesh={true}
-        legends={[
-            {
-                anchor: 'top-right',
-                direction: 'column',
-                justify: false,
-                translateX: 102,
-                translateY: 0,
-                itemsSpacing: 0,
-                itemDirection: 'left-to-right',
-                itemWidth: 80,
-                itemHeight: 20,
-                itemOpacity: 0.75,
-                symbolSize: 12,
-                symbolShape: 'circle',
-                symbolBorderColor: 'rgba(0, 0, 0, .5)',
-                effects: [
-                    {
-                        on: 'hover',
-                        style: {
-                            itemBackground: 'rgba(0, 0, 0, .03)',
-                            itemOpacity: 1
-                        }
-                    }
-                ]
-            }
+        data={[
+          {
+            id: "whatever",
+            data: [
+              {
+                x: "FI",
+                y: 12
+              },
+              {
+                x: "CM",
+                y: 17
+              },
+              {
+                x: "AW",
+                y: 19
+              },
+              {
+                x: "NL",
+                y: 9
+              }
+            ]
+          }
         ]}
-    />
-)
+      /> )
+   
+    }
+    
 
-export const PieChart = ({ data /* see data tab */ }) => (
+export const PieChart = (props) =>  {
+
+    const theme = useTheme();
+
+    const {
+        labelColor,
+        colorScheme = 'green_blue',
+        data = [],  
+        textColor = "white",
+        hoverText = "black",
+
+    } = props;
+
+    return(
+
+
     <ResponsivePie
         data={data}
-        colors={{ datum: 'data.color' }}
-        margin={{ top: 20,right : 30,  bottom: 20, left: 0 }}
+        colors={{ scheme: colorScheme }}
+        margin={{ top: 0,right : 70,  bottom: 0, left: 0 }}
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
@@ -89,26 +94,27 @@ export const PieChart = ({ data /* see data tab */ }) => (
                 ]
             ]
         }}
-        arcLinkLabelsSkipAngle={10}
-        arcLinkLabelsTextColor="#333333"
-        arcLinkLabelsThickness={2}
-        arcLinkLabelsColor={{ from: 'color' }}
-        arcLabelsSkipAngle={10}
-        arcLabelsTextColor={{
-            from: 'color',
-            modifiers: [
-                [
-                    'darker',
-                    2
-                ]
-            ]
-        }}
+        enableArcLinkLabels = {false}
+        // arcLinkLabelsSkipAngle={10}
+        // arcLinkLabelsTextColor= "white"
+        // arcLinkLabelsThickness={2}
+        // arcLinkLabelsColor={{ from: 'color' }}
+        // arcLabelsSkipAngle={10}
+        // arcLabelsTextColor={{
+        //     from: 'color',
+        //     modifiers: [
+        //         [
+        //             'darker',
+        //             2
+        //         ]
+        //     ]
+        // }}
         defs={[
             {
                 id: 'dots',
                 type: 'patternDots',
                 background: 'inherit',
-                color: 'rgba(255, 255, 255, 0.3)',
+                color: 'white',
                 size: 4,
                 padding: 1,
                 stagger: true
@@ -117,7 +123,7 @@ export const PieChart = ({ data /* see data tab */ }) => (
                 id: 'lines',
                 type: 'patternLines',
                 background: 'inherit',
-                color: 'rgba(255, 255, 255, 0.3)',
+                color: 'white',
                 rotation: -45,
                 lineWidth: 6,
                 spacing: 10
@@ -178,12 +184,12 @@ export const PieChart = ({ data /* see data tab */ }) => (
                 anchor: 'top-right',
                 direction: 'column',
                 justify: false,
-                translateX: 70,
-                translateY: 23,
+                translateX: 100,
+                translateY: 3,
                 itemsSpacing: 0,
                 itemWidth: 100,
                 itemHeight: 28,
-                itemTextColor: '#999',
+                itemTextColor: textColor,
                 itemDirection: 'left-to-right',
                 itemOpacity: 1,
                 symbolSize: 18,
@@ -192,11 +198,11 @@ export const PieChart = ({ data /* see data tab */ }) => (
                     {
                         on: 'hover',
                         style: {
-                            itemTextColor: '#000'
+                            itemTextColor: hoverText
                         }
                     }
                 ]
             }
         ]}
     />
-)
+)}

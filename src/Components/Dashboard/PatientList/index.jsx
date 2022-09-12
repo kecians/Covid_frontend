@@ -20,6 +20,9 @@ const PatientList = () => {
             maxWidth = "100%"
             sx = {{
                 height : "auto",
+                paddingLeft : "0px !important",
+                margin : "0px"
+
             }}
         >
             { !profile  ? 

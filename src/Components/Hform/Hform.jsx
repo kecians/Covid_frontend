@@ -19,6 +19,10 @@ export default function Hform(props) {
         redirect: false
 
     }
+
+    const {
+        setUpdate
+    } = props
     const [state, setState] = useState(initialState)
     const [loading, setLoading] = useState(false)
     const handleSubmit = event => {
@@ -61,7 +65,8 @@ export default function Hform(props) {
                 setLoading(false)
                 addToast(res.data.msg, { appearance: 'success' });
                 document.getElementById("form").reset();
-                setState({ redirect: true});
+                // setState({ redirect: true});
+                setUpdate(false)
             }
             else if (res.data.status===400){
                 setState({ redirect: false});

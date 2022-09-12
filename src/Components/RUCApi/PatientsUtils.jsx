@@ -1,6 +1,7 @@
 import * as React from "react";
-import { SecondaryText } from "./Text";
+import { NativeText, SecondaryText } from "./Text";
 import { Box } from "@mui/system";
+import { useTheme } from "@mui/material";
 
 export const PatientConditionIndicator = ({ type }) => {
   const colorOption = {
@@ -14,19 +15,25 @@ export const PatientConditionIndicator = ({ type }) => {
     severe: "#f30035",
   };
 
+  const theme = useTheme()
+
   return (
-    <SecondaryText>
+    <NativeText
+      sx = {{
+        fontSize : theme.size.text.p2
+      }}
+    >
       <Box
         mx={1}
         style={{
-          width: "10px",
-          height: "10px",
+          width: "8px",
+          height: "8px",
           backgroundColor: colorOption[type],
           borderRadius: "100%",
           display: "inline-block",
         }}
       ></Box>
       {type}
-    </SecondaryText>
+    </NativeText>
   );
 };

@@ -10,7 +10,7 @@ import { PatientCategoryStatusCard, BedOccupancyStatusCard } from "../../RUCApi/
 import cookie from 'react-cookies'
 import axios from 'axios'
 import { allotedBeds } from "../../../Api/patient.api";
-
+import { CovidCaseCard } from "../../RUCApi/Cards";
 
 
 
@@ -63,8 +63,10 @@ const ShiftStatus = () => {
   return (
     <Box
       mt = {1}
+      w = "100%"
+      
     >
-      <SecondaryHeading>Shift status</SecondaryHeading>
+      {/* <SecondaryHeading>Shift status</SecondaryHeading> */}
       <Box
         sx={{
           display: "flex",
@@ -72,13 +74,13 @@ const ShiftStatus = () => {
           py: 1,
           overflow: "auto",
           width: "100%",
-          scrollSnapType: "x mandatory",
            
         }}
         mt = {2}
       >
         <BedOccupancyStatusCard data = {data} />
         <PatientCategoryStatusCard data = {status}  />
+        <CovidCaseCard data = {status} />
       </Box>
     </Box>
   );

@@ -1,19 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
 
-body {
-  margin: 0;
-  
-  font-family: 'Lato', sans-serif!important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-
 
 :root{
 
@@ -22,9 +8,25 @@ code {
   padding : 0px;
   margin : 0px;
   box-sizing: border-box;
-  font-size: 18px;
+  font-size: 64.6%;
+
 }
 
+body {
+  margin: 0;
+  
+  font-family: 'Lato', sans-serif!important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 10rem;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+ 
 
 /* h1{
   font-size: var(--font-size-h) !important;

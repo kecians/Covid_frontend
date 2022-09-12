@@ -7,7 +7,10 @@ import {useToasts} from 'react-toast-notifications'
 import cookie from 'react-cookies'
 export default function Statusform(props) {
   const {addToast} = useToasts()
-  console.log(props)
+  const {
+    setUpdate
+} = props;
+
   const initialState = {
       id: props.id,
       status: '',
@@ -108,6 +111,7 @@ export default function Statusform(props) {
                 if (res.data.status===200){
                   addToast(res.data.msg, { appearance: 'success' });
                   setState({...state, redirect: true});
+                  setUpdate("")
                 }
                 else if (res.data.status===400){
                   setState({...state, redirect: true});
@@ -173,7 +177,7 @@ export default function Statusform(props) {
             addToast('The server is not excepting any request at this moment!! Try again later', { appearance: 'error' });
           }
           setLoading(false)
-          setState({...state, redirect: false});
+          // setState({...state, redirect: false});
           
         });
         //  Facility change api

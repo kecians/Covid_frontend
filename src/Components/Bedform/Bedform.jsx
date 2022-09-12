@@ -6,6 +6,11 @@ import axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import cookie from 'react-cookies'
 export default function Bedform(props) {
+
+    const {
+        setUpdate
+    } = props;
+
     const {addToast} = useToasts()
     const initialState = {
         patient_id: props.id,
@@ -61,8 +66,9 @@ export default function Bedform(props) {
             if (res.data.status===201){
               addToast(res.data.msg, { appearance: 'success' });
               document.getElementById("form1").reset();
-              setState({ redirect: true});
+            //   setState({ redirect: true});
               setLoading(false)
+              setUpdate("")
             }
             else if (res.data.status===400){
                 setLoading(false)

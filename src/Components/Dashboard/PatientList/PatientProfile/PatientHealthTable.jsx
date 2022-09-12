@@ -1,4 +1,4 @@
-import { Link } from "@mui/material";
+import {   Skeleton } from "@mui/material";
 import Button from "@mui/material/Button";
 import * as React from "react";
 import PropTypes from "prop-types";
@@ -15,13 +15,23 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Paper from "@mui/material/Paper";
 import PatientFilter from "../Filter";
+import { useTheme } from "@mui/material";
+import { Link } from "react-router-dom";
+
 import {
+  NativeHeading,
+  NativeText,
   PrimaryText,
   SecondaryHeading,
+  SecondaryText,
   SMHeading,
   SMText,
 } from "../../../RUCApi/Text";
 import { PrimaryButton } from "../../../RUCApi/Button";
+import { NativeCard } from "../../../RUCApi/Cards";
+import { Stack } from "@mui/system";
+import { PatientInfoUpdateForm } from "../../../RUCApi/Dialog";
+import { getDateTimeString } from "../../../../assets/scripts";
 
 const StatuButton = ({ status }) => {
   const statusMapper = {
@@ -82,10 +92,10 @@ const headCells = [
     label: "Updated at",
   },
   {
-    id: "Patient condition",
+    id: "Condition",
     numeric: true,
     disablePadding: false,
-    label: "Patient condition",
+    label: "Condition",
   },
   {
     id: "SPO2",
@@ -128,26 +138,37 @@ function EnhancedTableHead(props) {
     rowCount,
     onRequestSort,
   } = props;
+
+  const theme = useTheme()
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
 
   return (
-    <TableHead>
-      <TableRow>
+    <TableHead
+   
+    >
+      <TableRow
+         sx = {{
+          background : theme.palette.v2.primary
+        }}
+      >
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
             align={headCell.numeric ? "center" : "center"}
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
+            sx = {{
+              background : "inherit"
+            }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
-              <SecondaryHeading>{headCell.label}</SecondaryHeading>
+              <NativeHeading sx = {{ color : theme.palette.text.ternary, fontSize : theme.size.heading.h4 }} >{headCell.label}</NativeHeading>
             </TableSortLabel>
           </TableCell>
         ))}
@@ -166,8 +187,8 @@ EnhancedTableHead.propTypes = {
 };
 
 const TableToolbar = (props) => {
-  const { numSelected } = props;
-
+  const { numSelected , info} = props;
+  const [ open, setOpen] = React.useState(false)
   return (
     <Toolbar
       sx={{
@@ -182,8 +203,19 @@ const TableToolbar = (props) => {
         }),
       }}
     >
-      <SMHeading>120 Patients</SMHeading>
+      <Stack 
+        direction = "row"
+        width = "100%"
+        justifyContent = "space-between"
+        
+      >
       <PatientFilter />
+    <PrimaryButton  onClick = { () => setOpen(true)} >
+      Examin Patient
+    </PrimaryButton>
+      <PatientInfoUpdateForm  open = {open} setOpen = {setOpen} id = {info.patient_id} name = {info.name}  />
+      </Stack>
+
     </Toolbar>
   );
 };
@@ -193,14 +225,14 @@ TableToolbar.propTypes = {
 };
 
 const PatientHealthTable = (props) => {
-  const { rows = [], toggleProfile = () => {}, setProfile = () => {} } = props;
+  const { rows = [], toggleProfile = () => {}, setProfile = () => {}, patient_info = {} } = props;
 
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
+  const theme = useTheme();
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -239,11 +271,19 @@ const PatientHealthTable = (props) => {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2, borderRadius: "12px" }}>
-        <TableToolbar numSelected={selected.length} />
-        <TableContainer>
+      <NativeCard sx={{ width: "100%", padding : "0px" }}>
+        <TableToolbar numSelected={selected.length} info = {patient_info} />
+        <TableContainer
+          sx={{
+            minWidth: 750,
+            boxShadow: "none",
+          }}
+        >
           <Table
-            sx={{ minWidth: 750 }}
+            sx={{
+              minWidth: 750,
+              boxShadow: "none",
+            }}
             aria-labelledby="tableTitle"
             size={"medium"}
           >
@@ -256,8 +296,8 @@ const PatientHealthTable = (props) => {
               rowCount={rows.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              { rows.length ? 
+                rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
@@ -271,8 +311,15 @@ const PatientHealthTable = (props) => {
                       role="checkbox"
                       tabIndex={-1}
                       key={row.patient_id}
+                      sx={{
+                        '& td' : {
+                        fontSize: theme.size.text.p2,
+                        color : theme.palette.text.ternary
+
+                        }
+                        }}
                     >
-                      <TableCell align="center">{row.created_on}</TableCell>
+                      <TableCell  align="center">{getDateTimeString(row.created_on)}</TableCell>
                       <TableCell align="center">
                         {row.patient_condition}
                       </TableCell>
@@ -280,17 +327,32 @@ const PatientHealthTable = (props) => {
                       <TableCell align="center">
                         {row.blood_pres_systolic}/{row.blood_pres_diastolic}
                       </TableCell>
-                      <TableCell
-                        align = "center"
-                      >
-                        {row.temperature}
-                      </TableCell>
+                      <TableCell align="center">{row.temperature}</TableCell>
                       <TableCell align="center">{row.pulse_rate}</TableCell>
-                      <TableCell align="center">{row.respiration_rate}</TableCell>
-
+                      <TableCell align="center">
+                        {row.respiration_rate}
+                      </TableCell>
                     </TableRow>
                   );
-                })}
+                }) :
+                [1,2,3,4,5].map((val => (
+                  <TableRow
+                  >
+                      <TableCell align="center" colSpan = {10}                   
+                      sx = {{
+                        padding : "5px"    
+                      }}
+  >
+                      <Skeleton width = "100%" height = {40} />
+                      </TableCell>
+                      
+
+                  </TableRow>                   
+
+                )))
+              
+              
+              }
               {emptyRows > 0 && (
                 <TableRow
                   style={{
@@ -312,7 +374,7 @@ const PatientHealthTable = (props) => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-      </Paper>
+      </NativeCard>
     </Box>
   );
 };

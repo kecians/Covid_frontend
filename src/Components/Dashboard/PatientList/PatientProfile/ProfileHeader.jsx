@@ -3,8 +3,11 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import { PrimaryHeading, SecondaryHeading, SMText } from "../../../RUCApi/Text";
 import { PrimaryButton } from '../../../RUCApi/Button';
+import { useTheme } from "@mui/material";
 
 const ProfileHeader = () => {
+  
+  const theme = useTheme()
     return (
      <Stack
         direction="row"
@@ -13,15 +16,17 @@ const ProfileHeader = () => {
         w = "100%"
         h = {"150px"}
         py = {3}
+        px = {3}
+        sx = {{
+          borderBottom :  "1px solid " + theme.palette.border.primary
+        }}
      >
          <Stack 
             direction="column"
             gap = {2}
          >
         <PrimaryHeading>Ayush Bisht</PrimaryHeading>
-        <PrimaryButton size = "small">
-            Update medical summary
-        </PrimaryButton>
+        
       </Stack>
       <Box
         sx = {{

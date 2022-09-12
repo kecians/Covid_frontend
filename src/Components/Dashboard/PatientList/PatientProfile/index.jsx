@@ -11,6 +11,8 @@ import ProfileHeader from './ProfileHeader.jsx';
 import Grid from '@mui/material/Grid';
 import LeftSection from './LeftSection';
 import RightSection from './RightSection';
+import { useTheme } from "@mui/material";
+import ReactPaginate from 'react-paginate';
 
 const PatientProfile = (props) => {
 
@@ -26,6 +28,8 @@ const PatientProfile = (props) => {
     const [vaccine, setVaccine] = useState({})
     const [redirect, setRedirect] = useState(false)
     const [pageCount, setPageCount] = useState(0)
+
+    const theme = useTheme()
 
     useEffect(() => {
         setLoading(true)
@@ -100,19 +104,23 @@ const PatientProfile = (props) => {
         <ProfileHeader />
         {/* {loading? <Load />: null} */}
 
-        <Grid container spacing={2}>
-        <Grid item xs={3}>
-            <LeftSection data = {state} />
-        </Grid>
+        <Grid container spacing={2} my = {0}>
         <Grid item xs={9}>
             <RightSection data = {state}  health_status = {data} />
         </Grid>
-      
+        <Grid item xs={3}  
+            sx = {{
+                border : "1px solid " + theme.palette.border.primary,
+                background  : theme.palette.v2.primary
+            }}
+        >
+            <LeftSection data = {state} />
+        </Grid>
       </Grid>
 
 
-        <div className="container p-2">
-            {/* {cookie.load("token")? 
+        {/* <div className="container p-2">
+            {cookie.load("token")? 
                     <div className="card-body row p-0" style={{marginLeft:"-30px"}}>
                         <div className=" col-md-12 col-sm-12 col-12 col-lg-12">
                             
@@ -138,7 +146,7 @@ const PatientProfile = (props) => {
                                 Back
                             </Button>
                         </Link>
-                    } */}
+                    }
 
                     
             <div className="row my-4 px-1">
@@ -279,7 +287,7 @@ const PatientProfile = (props) => {
             </div>
             <div className="row mt-2">
                 <div className="col-md-12 col-sm-12 col-lg-12 col-12 p-4  searchbarcontainer">
-                    {/* <ReactPaginate
+                    <ReactPaginate
                         previousLabel={" ← Prev"}
                         nextLabel={"Next →"}
                         pageCount={pageCount}
@@ -292,10 +300,10 @@ const PatientProfile = (props) => {
                         breakClassName={"page-link radius mx-1 mt-1"}
                         activeClassName={"active"}
                         disabledClassName={"disabled"}
-                    /> */}
+                    />
                 </div>
             </div>
-        </div>
+        </div> */}
         </>
     )
 }

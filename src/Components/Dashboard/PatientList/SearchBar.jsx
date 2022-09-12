@@ -10,23 +10,25 @@ import { BsSearch } from "react-icons/bs";
 import Stack from "@mui/material/Stack";
 import { PrimaryButton } from "../../RUCApi/Button";
 import { CgAdd } from "react-icons/cg";
+import { useTheme } from "@mui/material";
+
+
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: "12px",
-  width: "600px",
-  backgroundColor: alpha(theme.palette.common.white, 1),
+  width: "auto",
+  fontSize : theme.size.text.p2,
+  backgroundColor: alpha(theme.palette.v2.primary, 1),
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.85),
+    backgroundColor: alpha(theme.palette.v2.primary, 0.75),
   },
   marginLeft: 0,
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-  },
+   
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
+  width: "40px",
   height: "100%",
   position: "absolute",
   pointerEvents: "none",
@@ -38,14 +40,16 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   width: "100%",
+  minWidth : "300px",
+  fontSize : theme.size.text.p2,
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    paddingLeft: `calc(1em + ${theme.spacing(3)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      width: "12ch",
+      width: "120px",
       "&:focus": {
         width: "20ch",
       },
@@ -57,6 +61,8 @@ export default function Searchbar(props) {
   const { setState = () => {} } = props;
 
   const [search_query, setQuery] = useState("");
+ 
+  const theme = useTheme()
 
   const handleChange = (event) => {
     setQuery(event.target.value);
@@ -108,7 +114,12 @@ export default function Searchbar(props) {
         justifyContent: "space-between",
         minHeight: "100px",
         alignItems: "center",
+        borderBottom :  "1px solid " + theme.palette.border.primary
+
       }}
+
+      px = {3}
+     
     >
       <Box>
         <PrimaryHeading>Patients</PrimaryHeading>
