@@ -15,6 +15,7 @@ import Dialog from '@mui/material/Dialog';
 import Bedform from "../Bedform/Bedform";
 import Statusform from '../../Components/Statusform/Statusform'
 import Hform from "../Hform/Hform";
+import AddPatientForm from "../Dashboard/AddPatient/Form";
 
 export const NativeDialog = styled(Dialog)(( {theme}) => ({
 
@@ -96,18 +97,32 @@ export const BedChangeDialogForm = (props) =>{
         <NativeDialogForms 
             open = {open === "bed change" }
             onClose={ () => setOpen()} 
-
+            
             head = { 
             <NativeHeading  sx = {{
                 color : theme.palette.text.dark,
                 fontSize : theme.size.heading.h3
 
-            }} >
+            }} 
+            
+            
+            >
                 Change Bed
             </NativeHeading>
                 }
         body = {
+            <Box
+            sx = {{
+                '& input, & select, & textarea' : {
+                    minHeight : "40px",
+                    borderRadius : "20px",
+                    fontSize : theme.size.text.p2
+                }
+            }}
+            >
             <Bedform id={id} setUpdate = {setOpen} />
+
+            </Box>
         }
         
         />
@@ -142,7 +157,20 @@ export const StatusUpdateDialogForm = (props) =>{
             </NativeHeading>
         }
         body = {
-            <Statusform setUpdate = {setOpen} id={id}/>
+
+            <Box
+            sx = {{
+                '& input, & select, & textarea' : {
+                    minHeight : "40px",
+                    borderRadius : "20px",
+                    fontSize : theme.size.text.p2
+                }
+            }}
+            >
+                        <Statusform setUpdate = {setOpen} id={id}/>
+
+
+            </Box>
         }
         
         />
@@ -179,7 +207,56 @@ export const PatientInfoUpdateForm = (props) =>{
             </NativeHeading>
         }
         body = {
+            <Box
+            sx = {{
+                '& input, & select, & textarea' : {
+                    minHeight : "40px",
+                    borderRadius : "20px",
+                    fontSize : theme.size.text.p2
+                }
+            }}
+            >
+
             <Hform setUpdate = {setOpen} id={id} name = {name} />
+            </Box>
+
+        }
+        
+        />
+    )
+}
+
+
+export const PatientAdmitDialog = (props) =>{
+
+    const theme = useTheme();
+
+    const{
+        id,
+        open = false, 
+        setOpen = () => {},
+        name
+    } = props;
+
+
+   
+    return (
+        <NativeDialogForms 
+        open = {open }
+        onClose={ () => setOpen()} 
+        height = {"auto"}
+        head = { 
+            <NativeHeading
+            sx = {{
+                color : theme.palette.text.dark,
+                fontSize : theme.size.heading.h3
+            }}
+            >
+                Add Patient
+            </NativeHeading>
+        }
+        body = {
+            <AddPatientForm setUpdate = {setOpen} />
         }
         
         />

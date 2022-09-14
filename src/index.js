@@ -57,6 +57,12 @@ const light =     createTheme({
       h3 : "2rem",
       h4 : "1.4rem",
 
+    },
+    input : {
+      h : "20px",
+      w : "250px",
+      fs : "1.6rem",
+      lfs : "1.4rem"
     }
 
   }

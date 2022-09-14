@@ -17,6 +17,7 @@ export default function Listview() {
     const [loading, setLoading] = useState(false)
     const [state, setState] = useState([])
     const [pageCount, setPageCount] = useState(0)
+    
     useEffect(() => {
         setLoading(true)
         axios({
@@ -69,7 +70,6 @@ export default function Listview() {
         
         {loading?<Load />:null}
         <div className="container pt-3">
-            <Heading heading="Goverdhan Tiwari Government Base Hospital, Almora"/>
             <div className="row">
                 <div className="col-md-12 col-12 col-sm-12 p-0">
                     <Searchbar />

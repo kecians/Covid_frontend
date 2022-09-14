@@ -7,7 +7,7 @@ import './Login.css'
 import cookie from 'react-cookies'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { login, loading } from "../../Redux/auth/auth.actions";
+import { login, loading } from "../../Redux/actions.js/auth.actions";
 export function Login(props) {
     const initialState = {
         username: '',

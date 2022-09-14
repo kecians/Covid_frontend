@@ -5,6 +5,11 @@ import {patientStatus, patientMigration, patientDeath} from '../../Api/patient.a
 import axios from 'axios'
 import {useToasts} from 'react-toast-notifications'
 import cookie from 'react-cookies'
+import { PrimaryButton } from '../RUCApi/Button'
+import { useDispatch } from 'react-redux'
+import { PATIENT_STATUS_CHANGE } from '../../Redux/types/patient'
+
+
 export default function Statusform(props) {
   const {addToast} = useToasts()
   const {
@@ -33,6 +38,10 @@ export default function Statusform(props) {
   const [state, setState] = useState(initialState)
   const [loading, setLoading] = useState(false)
   const [bed, setBed] = useState(initialState1)
+
+  const dispatch = useDispatch()
+
+
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -89,16 +98,20 @@ export default function Statusform(props) {
           },
         })
         .then(res=>{
+
           if (res.data.status===200){
+
             setLoading(false)
             addToast(res.data.msg, { appearance: 'success' });
             setState({...state, redirect: true});
+
             if (state.status==="D" && state.reason.length!==0){
               const eda = { 
                 reason: state.reason,
                 patient_id: props.id,
                 expired_on: state.expired_on
               }
+
               axios({
                 url: patientDeath,
                 method: 'POST',
@@ -108,15 +121,24 @@ export default function Statusform(props) {
                 },
               })
               .then(res=>{
-                if (res.data.status===200){
+
+
+                if (res.data.status===201){
+
+                  dispatch( { type : PATIENT_STATUS_CHANGE, payload : true})
+                  setTimeout(()=> {
+                      dispatch( { type : PATIENT_STATUS_CHANGE, payload : false})
+                      }, 1000 )
                   addToast(res.data.msg, { appearance: 'success' });
-                  setState({...state, redirect: true});
                   setUpdate("")
+                  setState({...state, redirect: true});
+
                 }
                 else if (res.data.status===400){
                   setState({...state, redirect: true});
                   addToast("Error occurred try again!!", { appearance: 'error' });
                 }
+               
               })
               .catch(error => {
                 setState({...state, redirect: true});
@@ -130,6 +152,8 @@ export default function Statusform(props) {
                 reason: state.reason,
                 patient_id: props.id
               }
+              // console.log("dispatch - M", PATIENT_STATUS_CHANGE)
+
               axios({
                 url: patientMigration,
                 method: 'POST',
@@ -139,9 +163,17 @@ export default function Statusform(props) {
                 },
               })
               .then(res=>{
-                if (res.data.status===200){
+                if (res.data.status===201){
+                  dispatch( { type : PATIENT_STATUS_CHANGE, payload : true})
+
+                  setTimeout(()=> {
+                  dispatch( { type : PATIENT_STATUS_CHANGE, payload : false})
+                    }, 1000 )
+
                   addToast(res.data.msg, { appearance: 'success' });
-                  setState({...state, redirect: true});
+                
+            setUpdate("")
+            setState({...state, redirect: false});
                 }
                 else if (res.data.status===400){
                   setState({...state, redirect: false});
@@ -153,7 +185,17 @@ export default function Statusform(props) {
                 console.log(error)
                 addToast('The server is not excepting any request at this moment!! Try again later', { appearance: 'error' });
               });
+            }else{
+              dispatch( { type : PATIENT_STATUS_CHANGE, payload : true})
+
+                setTimeout(()=> {
+                dispatch( { type : PATIENT_STATUS_CHANGE, payload : false})
+                setUpdate("")
+          
+            }, 1000 )
             }
+
+            
           }
           else if (res.data.status===400){
             setLoading(false)
@@ -196,7 +238,7 @@ export default function Statusform(props) {
     }
 
     if (state.redirect){
-        return <Redirect to='/list' />
+      return <Redirect to='/dashboard' />
     }
     return (
         <div className="container">
@@ -334,14 +376,14 @@ export default function Statusform(props) {
                   </>: null
                 }
 
-                <Button variant="primary" type="submit" className="button my-2 p-2">
+                <PrimaryButton variant="primary" type="submit" className="PrimaryButton my-2 p-2">
                   {loading ? 
                     <>
                     <span>Loading.....</span>
                     <Spinner animation="border" size="lg" className=""/>
                     </>: "Submit"
                   }
-                </Button>
+                </PrimaryButton>
             </Form>
         </div>
     )

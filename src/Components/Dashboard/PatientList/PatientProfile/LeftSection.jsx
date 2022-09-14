@@ -21,6 +21,7 @@ import {FaRegEdit} from 'react-icons/fa';
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { BedChangeDialogForm, StatusUpdateDialogForm } from "../../../RUCApi/Dialog";
+import { getDateTimeString } from "../../../../assets/scripts";
 
 
 const InfoCard = styled((props) => <Card {...props} />)(
@@ -62,9 +63,15 @@ const PatientInfo = (props) => {
             alignItems : "center"
           }}
         >
-          <IoMdBed />{info.bed_number}
-          <FaRegEdit onClick={ () => setUpdate("bed change")} title = "change bed"  size = "12px" style = {{ cursor : "pointer"}}  />
-        </PrimaryText>
+          {
+          info.bed_number !== "NA" && (
+          <> 
+            <IoMdBed /> {info.bed_number}
+            <FaRegEdit onClick={ () => setUpdate("bed change")} title = "change bed"  size = "12px" style = {{ cursor : "pointer"}}  />
+          </>
+            )
+          }
+            </PrimaryText>
       }
       info={ info && [
         {
@@ -76,7 +83,7 @@ const PatientInfo = (props) => {
           
             <FaRegEdit onClick={ () => {setUpdate("status change") }} title = "update patient status" size = "10"  style = {{ cursor : "pointer", margin : "0px 5px"}} /> 
           </>,
-          value: <> {info.patient_status} </> ,
+          value: <> {info.patient_status_display} </> ,
         },
         {
           label: "Patient ID",
@@ -90,6 +97,30 @@ const PatientInfo = (props) => {
           label: "Age",
           value: info.age,
         },
+       ...( ( info.patient_status_display == "migrated" && info.patient_migrate ) ? [ 
+            {
+              label : "Migrated on",
+              value : getDateTimeString(info.patient_migrate.migrated_on)
+            }, {
+              label : "Migrated to",
+              value : info.patient_migrate.migrated_to
+            }, {
+              label : "Reason",
+              value : info.patient_migrate.reason
+            },
+         ] : []),
+
+         ...( (info.patient_status_display == "death" && info.patient_death) ? [ 
+          {
+            label : "Expired on",
+            value : getDateTimeString(info.patient_death.expired_on)
+          },  {
+            label : "Reason",
+            value : info.patient_death.reason
+
+          },
+        ] : [])
+
       ]}
       other = {
 
@@ -118,7 +149,7 @@ const VaccineInfo = (props) => {
         info.is_vaccinated &&
         info.vaccine_status.map((val) => ({
           label: val.type,
-          value: val.vaccinated_on,
+          value: getDateTimeString(val.vaccinated_on),
         }))
       }
     />
@@ -144,7 +175,7 @@ const CovidTest = (props) => {
           },
           {
               label : "Tested on",
-              value : info.created_on
+              value : getDateTimeString(info.created_on)
           },
           {
               label : "Tested result",

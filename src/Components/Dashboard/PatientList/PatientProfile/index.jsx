@@ -13,13 +13,21 @@ import LeftSection from './LeftSection';
 import RightSection from './RightSection';
 import { useTheme } from "@mui/material";
 import ReactPaginate from 'react-paginate';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { patientHealthStatusReadings } from '../../../../Api/health.api';
 const PatientProfile = (props) => {
 
     const{
-        query_params = {}
+        query_params = {},
+        closeProfile = () => {},
     } = props;
- 
+    const initialReading = {
+        oxy : [],
+        temperature : [],
+        bp : [],
+        pulse : [],
+        respiratory : []
+    }
     const {addToast} = useToasts()
     const [state, setState] = useState({})
     const [data, setData] = useState([])
@@ -28,10 +36,15 @@ const PatientProfile = (props) => {
     const [vaccine, setVaccine] = useState({})
     const [redirect, setRedirect] = useState(false)
     const [pageCount, setPageCount] = useState(0)
-
+    const [ update_trigger, setUpdateTrigger] = useState(false)
+    const [ reading, setReading] = useState( initialReading)
     const theme = useTheme()
 
-    useEffect(() => {
+    const isProfileUpdated = useSelector((state) => state.patient.profileUpdated )
+    const dispatch = useDispatch()
+
+    const getDetails = () => {
+
         setLoading(true)
         axios({
             url: patientProfile+`${query_params.id}/${query_params.contact}/`,
@@ -42,7 +55,10 @@ const PatientProfile = (props) => {
             if (res.data.status === 404) {
                 addToast("Details Not Found!!", {appearance: "error"})
                 setRedirect(true)
-            } else {
+            } 
+            else 
+            {
+
                 setRedirect(false)
                 setState(res.data.data)
                 setTest(res.data.data.patient_covid_test)
@@ -53,27 +69,73 @@ const PatientProfile = (props) => {
                     method: 'GET',
                     })
                     .then((res) => {
-                    if (res.data.status === 404) {
-                        setLoading(false)
-                        setData(res.data.data)
-                    } else {
-                        setLoading(false)
-                        setData(res.data.results)
-                        setPageCount(res.data.total_pages)
-                    }
-                    })
-                    .catch((err) => {
+                            if (res.data.status === 404) {
+                                setLoading(false)
+                                setData(res.data.data)
+                            } else {
+                                setLoading(false)
+                                setData(res.data.results)
+                                setPageCount(res.data.total_pages)
+                            }
+                            })
+                            .catch((err) => {
+                            console.log(err);
+                            });
+                            }
+            
+                     })
+                .catch((err) => {
+                    addToast("Details Not Found!!", {appearance: "error"})
+                    setRedirect(true)
                     // console.log(err.response);
-                    });
-             }
-          })
-          .catch((err) => {
-            addToast("Details Not Found!!", {appearance: "error"})
-            setRedirect(true)
-            // console.log(err.response);
-          });
+                });
 
-    }, [query_params.id, addToast, query_params.contact])
+    }
+
+    const getReading = () => {
+
+        axios({
+            url: patientHealthStatusReadings+`${query_params.id}/`,
+            method: 'GET',
+            headers: {
+                Authorization: `Token ${cookie.load("token")}`,
+              },
+          })
+          .then((res) => {
+            if (res.data.status === 404) {
+                addToast("Readings Not Found!!", {appearance: "error"})
+            } 
+            else 
+            {
+                console.log("reading", res.data) 
+
+                setReading( { ...res.data.data})
+            }
+            
+                     })
+                .catch((err) => {
+                    addToast("Details Not Found!!", {appearance: "error"})
+                    setRedirect(true)
+                    // console.log(err.response);
+                });
+
+    }
+
+
+    useEffect(() => {
+
+        console.log("units")
+
+        getDetails()
+        getReading()
+        }, [])
+
+     useEffect(( ) => {
+        
+        if(isProfileUpdated === true)
+            getDetails()
+
+     }, [ isProfileUpdated ] )   
 
     const handlePageClick= (e)=>{
         setLoading(true)
@@ -101,12 +163,12 @@ const PatientProfile = (props) => {
     }
     return (
         <>
-        <ProfileHeader />
+        <ProfileHeader  closeProfile = {closeProfile} info = {state}  />
         {/* {loading? <Load />: null} */}
 
         <Grid container spacing={2} my = {0}>
         <Grid item xs={9}>
-            <RightSection data = {state}  health_status = {data} />
+            <RightSection data = {state}  health_status = {data} reading = {reading} />
         </Grid>
         <Grid item xs={3}  
             sx = {{

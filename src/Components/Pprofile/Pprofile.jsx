@@ -23,7 +23,8 @@ export default function Pprofile(props) {
     const [pageCount, setPageCount] = useState(0)
 
     const{
-        query_params = {}
+        query_params = {},
+       
     } = props;
 
     useEffect(() => {

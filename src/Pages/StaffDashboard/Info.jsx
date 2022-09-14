@@ -33,7 +33,9 @@ import {TbHeartRateMonitor} from 'react-icons/tb';
 import Searchbar from "../../Components/Searchbar/Searchbar";
 import PatientList from "../../Components/Dashboard/PatientList";
 import { getComputedStyle } from "./style.js";
-
+import { CgLogOut } from "react-icons/cg";
+import { Logout } from "../../Components/Logout/Logout";
+import AddPatient from "../../Components/Dashboard/AddPatient";
 function a11yProps(index) {
   return {
     id: `vertical-tab-${index}`,
@@ -45,11 +47,11 @@ function a11yProps(index) {
 
 
 
-export default function Info() {
+export default function Dashboard() {
 
   const theme = useTheme();
 
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState("dashboard");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -79,15 +81,15 @@ export default function Info() {
             aria-label="Vertical tabs example"
             indicatorColor  = "primary"
             sx={styles.tabs}
-        
-          
           >
-            <Tab sx = {styles.tab}  iconPosition="top" icon= {<MdSpaceDashboard size = "2rem" />} label = "Dashboard" {...a11yProps(0)} />
-            <Tab sx = {styles.tab}  iconPosition="top" icon= {<BsCalendarPlusFill  size = "2rem"  />} label = "Schedule" {...a11yProps(1)} />
-            <Tab sx = {styles.tab} iconPosition="top" icon= {<CgProfile  size = "2rem" />} label = "Patients" {...a11yProps(2)} />
-            <Tab sx = {styles.tab}  iconPosition="top" icon= {<FaClipboardList  size = "2rem" />} label = "Add Patients" {...a11yProps(3)} />
-            <Tab sx = {styles.tab} iconPosition="top" icon= {   <TbHeartRateMonitor  size = "2rem" />}  label = "Report"{...a11yProps(4)} />
-            
+
+            <Tab value={"dashboard"} sx = {styles.tab}  iconPosition="top" icon= {<MdSpaceDashboard size = "2rem" />} label = "Dashboard" {...a11yProps("dashboard")} />
+            {/* <Tab value={"calender"} sx = {styles.tab}  iconPosition="top" icon= {<BsCalendarPlusFill  size = "2rem"  />} label = "Schedule" {...a11yProps("calender")} /> */}
+            <Tab value={"patients"} sx = {styles.tab} iconPosition="top" icon= {<CgProfile  size = "2rem" />} label = "Patients" {...a11yProps("patients")} />
+            <Tab value={"add patient"} sx = {styles.tab}  iconPosition="top" icon= {<FaClipboardList  size = "2rem" />} label = "Add Patients" {...a11yProps("add patient")} />
+            {/* <Tab value={"report"} sx = {styles.tab} iconPosition="top" icon= {   <TbHeartRateMonitor  size = "2rem" />}  label = "Report"{...a11yProps("report")} /> */}
+            <Tab sx = {styles.tab} iconPosition="top"  icon= {   <Logout  size = "2rem" />}  label = "Logout"{...a11yProps("logout")} />
+          
           </Tabs>
         </Grid>
         <Grid item xs={10.9} 
@@ -95,27 +97,21 @@ export default function Info() {
                 height : "auto !important"
              }}
             >
-          <TabPanel value={value} index={0}>
+          <TabPanel value={value} index={"dashboard"} >
             <RightSection />
           </TabPanel>
-          <TabPanel value={value} index={1}>
+          <TabPanel value={value} index={"calender"}>
             Item Two
           </TabPanel>
-          <TabPanel value={value} index={2}>
+          <TabPanel value={value} index={"patients"}>
            <PatientList />
           </TabPanel>
-          <TabPanel value={value} index={3}>
-            Item Four
+          <TabPanel value={value} index={"add patient"}>
+            <AddPatient />
           </TabPanel>
-          <TabPanel value={value} index={4}>
-            Item Five
+          <TabPanel value={value} index={"report"}>
           </TabPanel>
-          <TabPanel value={value} index={5}>
-            Item Six
-          </TabPanel>
-          <TabPanel value={value} index={6}>
-            Item Seven
-          </TabPanel>
+     
         </Grid>
       </Grid>
     

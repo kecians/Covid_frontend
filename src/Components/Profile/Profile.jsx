@@ -3,7 +3,9 @@ import './Profile.css'
 // import {Link} from 'react-router-dom'
 // import { Button } from 'react-bootstrap'
 import cookie from 'react-cookies' 
-export default function Profile(props) {
+
+
+export default function StaffProfile(props) {
     return (
         <div className="card profile">
             <div className="card-body">

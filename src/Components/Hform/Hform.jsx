@@ -5,6 +5,10 @@ import {patientHealth} from '../../Api/health.api'
 import axios from 'axios'
 import {useToasts} from 'react-toast-notifications'
 import cookie from 'react-cookies'
+import { useDispatch } from 'react-redux'
+import { PATIENT_HEALTH_UPDATED, PATIENT_STATUS_CHANGE } from '../../Redux/types/patient'
+import { PrimaryButton } from '../RUCApi/Button'
+
 export default function Hform(props) {
     const {addToast} = useToasts()
     const initialState = {
@@ -19,7 +23,7 @@ export default function Hform(props) {
         redirect: false
 
     }
-
+    const dispatch = useDispatch()
     const {
         setUpdate
     } = props
@@ -64,8 +68,13 @@ export default function Hform(props) {
             if (res.data.status===201){
                 setLoading(false)
                 addToast(res.data.msg, { appearance: 'success' });
-                document.getElementById("form").reset();
                 // setState({ redirect: true});
+                dispatch( { type : PATIENT_STATUS_CHANGE, payload : true})
+
+                setTimeout(() => {
+                    dispatch( { type : PATIENT_STATUS_CHANGE, payload : false})
+
+                }, 1000 )
                 setUpdate(false)
             }
             else if (res.data.status===400){
@@ -93,7 +102,7 @@ export default function Hform(props) {
       }
 
     if (state.redirect){
-        return <Redirect to='/list' />
+        return <Redirect to='/dashboard' />
     }
     return (
         <div className="container">
@@ -193,14 +202,14 @@ export default function Hform(props) {
                             required
                         />
                 </Form.Group>
-                <Button variant="primary" type="submit" className="button my-2 p-2">
+                <PrimaryButton variant="primary" type="submit"  >
                 {loading ? 
                     <>
                     <span>Loading.....</span>
                     <Spinner animation="border" size="lg" className=""/>
                     </>: "Submit"
                   }
-                </Button>
+                </PrimaryButton>
             </Form>
         </div>
     )

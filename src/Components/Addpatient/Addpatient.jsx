@@ -281,7 +281,7 @@ export default function Addpatient() {
       }
 
     if (state.redirect){
-        return <Redirect to='/list' />
+        return <Redirect to='/dashboard' />
     }
 
     return (
@@ -292,7 +292,7 @@ export default function Addpatient() {
         </div>
 
 
-        <Form className="loginform" onSubmit={handleSubmit}>
+        <Form   onSubmit={handleSubmit}>
             
             {/* For Step 1 */}
             {count===1? <>

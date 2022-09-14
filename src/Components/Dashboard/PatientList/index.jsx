@@ -31,7 +31,7 @@ const PatientList = () => {
                 <PatientTable rows = {state.data} toggleProfile = {toggleProfile} setProfile = {setProfile} />
             </>
             :
-            <PatientProfile query_params = {profile} />
+            <PatientProfile closeProfile = {setProfile} query_params = {profile} />
             
         }
 

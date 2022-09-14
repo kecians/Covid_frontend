@@ -4,9 +4,14 @@ import Box from "@mui/material/Box";
 import { PrimaryHeading, SecondaryHeading, SMText } from "../../../RUCApi/Text";
 import { PrimaryButton } from '../../../RUCApi/Button';
 import { useTheme } from "@mui/material";
+import { FaBackward } from 'react-icons/fa';
 
-const ProfileHeader = () => {
-  
+const ProfileHeader = (props) => {
+
+  const {
+    closeProfile = () => {},
+    info
+  } = props;
   const theme = useTheme()
     return (
      <Stack
@@ -22,10 +27,12 @@ const ProfileHeader = () => {
         }}
      >
          <Stack 
-            direction="column"
+            direction="row"
             gap = {2}
+            alignItems = "center"
          >
-        <PrimaryHeading>Ayush Bisht</PrimaryHeading>
+          <FaBackward  color=  {theme.palette.v2.secondary} size = "2rem" onClick = {() => closeProfile(false)}  />
+        <PrimaryHeading> {info.name} </PrimaryHeading>
         
       </Stack>
       <Box

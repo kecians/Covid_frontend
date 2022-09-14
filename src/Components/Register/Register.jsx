@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { Form, Button } from 'react-bootstrap' 
 import { Link } from 'react-router-dom'
-import { login, register, loading } from "../../Redux/auth/auth.actions";
+import { login, register, loading } from "../../Redux/actions.js/auth.actions";
 import { Redirect } from 'react-router-dom'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";

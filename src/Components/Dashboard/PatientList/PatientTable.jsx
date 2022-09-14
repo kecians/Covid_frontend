@@ -22,33 +22,33 @@ import { useTheme } from "@mui/material";
 import { NativeHeading } from '../../RUCApi/Text';
 import { getDateTimeString } from '../../../assets/scripts';
 
+const StatuButton = ({ status }) => {
+      
+          const statusMapper = {
+              'Asymptomataic' : 'orange',
+              'Mild' : 'green',
+              'Severe' : 'red',
+              'Moderate' : 'light green',
+              'migrated' : 'red',
+              'active' : "blue"
+          }
 
-const StatuButton = ({status}) => {
-
-    const statusMapper = {
-        'Asymptomataic' : 'orange',
-        'Mild' : 'green',
-        'Severe' : 'red',
-        'Moderate' : 'yellow'
-    }
-
-    return (
-
-        <Button 
-            p = {1}
-            variant="outlined"
-            size = "small"
-            sx = {{
-                color : statusMapper[status] || "black",
-                borderColor : statusMapper[status]||"black" 
-            }}
-            >
-            {status}
+      const theme = useTheme()
+      return (
+        <Button
+          p={1}
+          variant="outlined"
+          size="small"
+          sx={{
+            color: statusMapper[status] || "black",
+            borderColor: statusMapper[status] || "black",
+            fontSize : theme.size.text.p3
+          }}
+        >
+          {status}
         </Button>
-
-    )
-}
- 
+      );
+    };
 
 
 
@@ -216,6 +216,7 @@ const  PatientTable = (props) => {
     setOrderBy(property);
   };
 
+ 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelected = rows.map((n) => n.name);
@@ -273,7 +274,7 @@ const  PatientTable = (props) => {
             />
             <TableBody>
              
-              {rows.length ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              {  Array.isArray(rows) && rows.length ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
@@ -304,7 +305,7 @@ const  PatientTable = (props) => {
                       <TableCell align="center">{ !row.patient_bed ?? row.patient_bed.bed_id}</TableCell>
                       <TableCell  align="center">{getDateTimeString(row.admitted_on)}</TableCell>
                       <TableCell align="center">
-                        <StatuButton status = {row.patient_status}  />
+                        <StatuButton status = {row.patient_status_display}  />
 
                       </TableCell>
                     

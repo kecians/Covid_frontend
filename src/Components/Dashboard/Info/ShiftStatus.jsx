@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import { PatientCategoryStatusCard, BedOccupancyStatusCard } from "../../RUCApi/Cards";
 import cookie from 'react-cookies'
 import axios from 'axios'
-import { allotedBeds } from "../../../Api/patient.api";
+import { allotedBeds, patientCount } from "../../../Api/patient.api";
 import { CovidCaseCard } from "../../RUCApi/Cards";
 
 
@@ -22,6 +22,32 @@ const ShiftStatus = () => {
   const [count, setCount] = React.useState(0)
   const [status, setStatus] = React.useState({})
   const colorOption = ["red", "blue", "green", "yellow", "orange", "purple"]
+  const [patient_count, setPatientCount] = React.useState([])
+
+
+  const getPatientCount = () => {
+    axios({
+      url: patientCount,
+      method: 'GET',
+      headers: {
+        Authorization: `Token ${cookie.load('token')}`,
+      },
+    })
+    .then((res) => {
+      if (res.data.status === 404) {
+        
+      } else {
+
+        console.log("p count", res.data.data)
+        setPatientCount(res.data.data)
+      }
+    })
+    .catch((err) => {
+      console.log(err.response);
+    });
+
+
+  }
 
   React.useEffect(() => {
       axios({
@@ -58,6 +84,8 @@ const ShiftStatus = () => {
         .catch((err) => {
           console.log(err.response);
         });
+
+        getPatientCount()
   }, [])
 
   return (
@@ -80,7 +108,7 @@ const ShiftStatus = () => {
       >
         <BedOccupancyStatusCard data = {data} />
         <PatientCategoryStatusCard data = {status}  />
-        <CovidCaseCard data = {status} />
+        <CovidCaseCard data = {patient_count} />
       </Box>
     </Box>
   );

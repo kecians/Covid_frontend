@@ -11,6 +11,7 @@ import Stack from "@mui/material/Stack";
 import { PrimaryButton } from "../../RUCApi/Button";
 import { CgAdd } from "react-icons/cg";
 import { useTheme } from "@mui/material";
+import { PatientAdmitDialog } from "../../RUCApi/Dialog";
 
 
 
@@ -60,15 +61,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Searchbar(props) {
   const { setState = () => {} } = props;
 
-  const [search_query, setQuery] = useState("");
+  const [search_query, setQuery] = useState("*");
  
   const theme = useTheme()
+
+  const [dialog, setDialog] = useState(false)
 
   const handleChange = (event) => {
     setQuery(event.target.value);
   };
 
   const handleSubmit = (event) => {
+
     event.preventDefault();
     setState((state) => ({ ...state, loading: true }));
     axios({
@@ -79,12 +83,14 @@ export default function Searchbar(props) {
       },
     })
       .then((res) => {
+
         if (res.data.status === 404) {
+
           setState((state) => ({
             ...state,
             show: true,
             loading: false,
-            data: "Data Not Found!!",
+            data: "Details not found",
           }));
         } else {
           console.log(res.data.data.reverse())
@@ -140,10 +146,10 @@ export default function Searchbar(props) {
             onChange={handleChange}
           />
         </Search>
-        <PrimaryButton type="submit">Search</PrimaryButton>
-        <PrimaryButton startIcon={<CgAdd />}>Add Patient</PrimaryButton>
+        <PrimaryButton type="submit" onClick = {handleSubmit} >Search</PrimaryButton>
+        <PrimaryButton startIcon={<CgAdd />}   onClick = { () => setDialog(true) }  >Add Patient</PrimaryButton>
       </Stack>
-
+      <PatientAdmitDialog open = {dialog} setOpen = {setDialog}  />
       <Box
         sx={{
           display: "flex",

@@ -9,7 +9,7 @@ import {
     TOASTNULL,
     LOGINERROR,
     REGISTERERROR
-  } from './auth.types';
+  } from '../types/auth.types';
   
   let tokenChange = cookie.load('token')
   if (!tokenChange){

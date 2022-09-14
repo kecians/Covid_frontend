@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import Grid from "@mui/material/Grid";
 import { HealthCard, NativeCard } from "../../../RUCApi/Cards";
 import { LineChart } from "../../../RUCApi/Charts/PieChart";
@@ -23,7 +23,7 @@ import TemperatureChart from "./TemperatureTimeScaleChart.jsx";
 import { BsHeart } from "react-icons/bs";
 import { useTheme } from "@mui/material";
 import {
-  HeartBeatTracker,
+  O2LevelTracker,
   TemperatureTracker,
   BloodPressureTracker,
 } from "./PatientHealthCharts";
@@ -31,6 +31,8 @@ import { MdWaves } from "react-icons/md";
 import { TbActivityHeartbeat } from "react-icons/tb";
 import { MdBloodtype } from "react-icons/md";
 import {GiHeartPlus} from 'react-icons/gi'
+import {RiHeartPulseLine} from 'react-icons/ri';
+import { FaLungs } from "react-icons/fa";
 
 const PatientTimeLine = (props) => {
   const steps = ["Covaxin dose 1", "Covid positive", "Covishield dose 2"];
@@ -51,15 +53,21 @@ const PatientTimeLine = (props) => {
   );
 };
 
+
+
 const HealthStatus = (props) => {
+
   const { info = {} } = props;
 
   useEffect(() => {
     console.log("info", info);
   }, []);
+
+
+
   return (
     <Box>
-      <PatientConditionIndicator type={info.patient_condition} />
+      <PatientConditionIndicator type={info.patient_condition_display} />
       <Box
         p={1}
         my={4}
@@ -86,7 +94,75 @@ const HealthStatus = (props) => {
 };
 
 const RightSection = (props) => {
-  const { data = {}, health_status = [] } = props;
+  const { data = {}, health_status = [], reading  = false} = props;
+
+
+  
+  const getReadings = useMemo(() => {
+
+    if( reading ){
+
+      const data = {
+        
+        "oxy" :  reading["oxy"] && reading["oxy"].length && Array.isArray(reading["oxy"]) && reading["oxy"].map((coords) => ({
+         ...coords,
+          x  : new Date(coords.x),
+        })),
+        "temperature" :   reading["temperature"] && reading["temperature"].length && Array.isArray(reading["temperature"]) && reading["temperature"].map((coords) => ({
+         ...coords,
+          x  : new Date(coords.x),
+        })),
+        "pulse" :   reading["pulse"] && reading["pulse"].length && Array.isArray(reading["pulse"]) && reading["pulse"].map((coords) => ({
+          ...coords,
+           x  : new Date(coords.x),
+         })),
+         "respiratory" :   reading["respiratory"] && reading["respiratory"].length && Array.isArray(reading["respiratory"]) && reading["respiratory"].map((coords) => ({
+          ...coords,
+           x  : new Date(coords.x),
+         })),
+
+      
+    }
+
+      return data;
+
+    }
+    return {}
+
+  }, [reading])
+
+  console.log("reading", getReadings)
+
+  const getBPReading = useMemo(() => {
+    
+    if( reading && reading.bp){
+      const data = [
+        {
+          id : "systolic",
+          data :  reading.bp.systolic && Array.isArray(reading.bp.systolic) && reading.bp.systolic.map((coords) => ({
+            ...coords,
+             x  : new Date(coords.x),
+           })),
+        },
+        {
+          id : "diastolic",
+          data : reading.bp.diastolic && Array.isArray(reading.bp.diastolic) && reading.bp.diastolic.map((coords) => ({
+            ...coords,
+             x  : new Date(coords.x),
+           })),
+        }
+      ]
+      return data
+    }
+
+    return [];
+  }, [reading])
+
+  useEffect(() => {
+    console.log("reading", getReadings, getBPReading)
+
+  }, [])
+
   const theme = useTheme();
   return (
     <Grid container gap={3} px = {3} >
@@ -98,6 +174,7 @@ const RightSection = (props) => {
               sx={{
                 width: "100%",
               }}
+              loading = { !(getReadings && getReadings.oxy && getReadings.oxy.length) }
               header={
                 <>
                   <NativeText
@@ -105,7 +182,7 @@ const RightSection = (props) => {
                       fontSize: theme.size.text.p2,
                     }}
                   >
-                    Heart rate
+                    O2 Level
                   </NativeText>
                   <BsHeart />
                 </>
@@ -116,10 +193,10 @@ const RightSection = (props) => {
                     fontSize: theme.size.heading.h1,
                   }}
                 >
-                  70/120
+                  {data.patient_health_status && data.patient_health_status.OL}
                 </NativeHeading>
               }
-              chart={<HeartBeatTracker />}
+              chart={<O2LevelTracker data = {getReadings.oxy} />}
             />
           </Grid>
           <Grid item xs={3}>
@@ -127,6 +204,8 @@ const RightSection = (props) => {
               sx={{
                 width: "100%",
               }}
+              loading = { !(getReadings && getReadings.temperature && getReadings.temperature.length) }
+
               header={
                 <>
                   <NativeText
@@ -145,10 +224,10 @@ const RightSection = (props) => {
                     fontSize: theme.size.heading.h1,
                   }}
                 >
-                  98 F
+                              {data.patient_health_status && data.patient_health_status.T} F
                 </NativeHeading>
               }
-              chart={<TemperatureTracker />}
+              chart={<TemperatureTracker data = {getReadings.temperature} />}
             />
           </Grid>
           <Grid item xs={5}>
@@ -156,6 +235,8 @@ const RightSection = (props) => {
               sx={{
                 width: "100%",
               }}
+              loading = { !( reading && getBPReading && getBPReading.length && getBPReading[1].data && getBPReading[0].data  ) }
+
               header={
                 <>
                   <NativeText
@@ -163,9 +244,9 @@ const RightSection = (props) => {
                       fontSize: theme.size.text.p2,
                     }}
                   >
-                    Blood pressure
+                      120/80
                   </NativeText>
-                  <TbActivityHeartbeat />
+                  <TbActivityHeartbeat  />
                 </>
               }
               reading={
@@ -177,7 +258,7 @@ const RightSection = (props) => {
                   70/120
                 </NativeHeading>
               }
-              chart={<BloodPressureTracker />}
+              chart={<BloodPressureTracker data = {getBPReading} />}
             />
           </Grid>
         </Grid>
@@ -194,7 +275,8 @@ const RightSection = (props) => {
               }}
               header={
                 <>
-                  <MdBloodtype/>
+                  <GiHeartPlus/>
+
                 </>
               }
               reading={
@@ -212,7 +294,7 @@ const RightSection = (props) => {
                    color : theme.palette.text.primary
                  }}
                >
-                 120/70
+                 120/80
                </NativeHeading>
                </>
 
@@ -227,8 +309,9 @@ const RightSection = (props) => {
               }}
               header={
                 <>
-                  <GiHeartPlus/>
+                  <RiHeartPulseLine/>
                 </>
+                
               }
               reading={
                 <>
@@ -237,7 +320,7 @@ const RightSection = (props) => {
                     fontSize: theme.size.text.p2,
                   }}
                 >
-                  Heart rate
+                  Pulse rate
                 </NativeText>
                  <NativeHeading
                  sx={{
@@ -245,7 +328,8 @@ const RightSection = (props) => {
                    color : theme.palette.text.primary
                  }}
                > 
-                 85 bmp
+                    {data.patient_health_status && data.patient_health_status.PR} bpm
+                 {}
                </NativeHeading>
                </>
 
@@ -260,7 +344,7 @@ const RightSection = (props) => {
               }}
               header={
                 <>
-                  <GiHeartPlus/>
+                  <FaLungs/>
                 </>
               }
               reading={
@@ -270,7 +354,7 @@ const RightSection = (props) => {
                     fontSize: theme.size.text.p2,
                   }}
                 >
-                  Glucose level
+                  Respiratory rate
                 </NativeText>
                  <NativeHeading
                  sx={{
@@ -278,7 +362,8 @@ const RightSection = (props) => {
                    color : theme.palette.text.primary
                  }}
                > 
-                 85 bmp 
+                    {data.patient_health_status && data.patient_health_status.RR} bpm
+                 
                </NativeHeading>
                </>
 
@@ -292,8 +377,10 @@ const RightSection = (props) => {
               }}
               header={
                 <>
-                  <GiHeartPlus/>
+                  <MdBloodtype/>
+
                 </>
+                
               }
               reading={
                 <>
@@ -310,7 +397,7 @@ const RightSection = (props) => {
                    color : theme.palette.text.primary
                  }}
                > 
-                 85 bmp
+                 9,456 ml
                </NativeHeading>
                </>
 

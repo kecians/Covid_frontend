@@ -15,7 +15,6 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Paper from "@mui/material/Paper";
 import PatientFilter from "../Filter";
-import { useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import {
@@ -32,15 +31,19 @@ import { NativeCard } from "../../../RUCApi/Cards";
 import { Stack } from "@mui/system";
 import { PatientInfoUpdateForm } from "../../../RUCApi/Dialog";
 import { getDateTimeString } from "../../../../assets/scripts";
+import { useTheme } from "@mui/material";
 
 const StatuButton = ({ status }) => {
-  const statusMapper = {
-    Asymptomataic: "orange",
-    Mild: "green",
-    Severe: "red",
-    Moderate: "yellow",
-  };
 
+  const statusMapper = {
+    'Asymptomataic' : 'orange',
+    'Mild' : 'green',
+    'Severe' : 'red',
+    'Moderate' : 'light green',
+    'migrated' : 'red',
+    'active' : "blue"
+}
+  const theme = useTheme()
   return (
     <Button
       p={1}
@@ -49,6 +52,7 @@ const StatuButton = ({ status }) => {
       sx={{
         color: statusMapper[status] || "black",
         borderColor: statusMapper[status] || "black",
+        fontSize : theme.size.text.p3
       }}
     >
       {status}
@@ -321,7 +325,7 @@ const PatientHealthTable = (props) => {
                     >
                       <TableCell  align="center">{getDateTimeString(row.created_on)}</TableCell>
                       <TableCell align="center">
-                        {row.patient_condition}
+                        <StatuButton status =    {row.patient_condition_display} />
                       </TableCell>
                       <TableCell align="center">{row.oxy_level}</TableCell>
                       <TableCell align="center">

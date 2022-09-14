@@ -2,24 +2,23 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import { store } from "../../Redux/store";
-import { logout, loading } from "../../Redux/auth/auth.actions";
+import { logout, loading } from "../../Redux/actions.js/auth.actions";
 import { Button } from 'react-bootstrap'
 import {Redirect} from 'react-router-dom'
+import { CgLogOut } from 'react-icons/cg';
+import { useHistory } from 'react-router-dom';
 export function Logout(props) {
-    if (!props.isAuthenticated) { 
-        return <Redirect to='/' />;
-      }
+  
+  const navigate = useHistory()
+
     return (
       
-      <Button variant="primary" type="submit" className="searchbarcontainer log mt-2" onClick={()=>{
+      <CgLogOut {...props} onClick={()=>{
           store.dispatch(loading());
           setTimeout(() => {
-          store.dispatch(logout());
+          store.dispatch(logout(navigate));
           }, 1000);          
-          }}>
-          Logout
-      </Button>
-        
+          }} />
     )
 }
 

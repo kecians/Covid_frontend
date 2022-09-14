@@ -62,7 +62,7 @@ const PatientInfoCard = (props) => {
           </PrimaryText>
           <IoMdNotifications />
         </Box>
-        <PatientConditionIndicator type={info.patient_condition} />
+        <PatientConditionIndicator type={info.patient_condition_display} />
       </Box>
       <Box
         p={1}

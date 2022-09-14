@@ -8,3 +8,7 @@ export const patientHealth = `${server}/api/health/update/`
 
 export const patientHealthProfile = `${server}/api/health/details/` // /<icmr>/
 export const patientHealthPaginateProfile = `${server}/api/health/patient_health_list/` //<str:icmr>/`
+
+
+// for getting patient health readings
+export const patientHealthStatusReadings = `${server}/api/health/readings/`

@@ -16,3 +16,4 @@ export const patientSearch = `${server}/api/patient/get_searched_patients/` // <
 export const patientListPagination = `${server}/api/patient/patient_list/` // pagination api
 
 // /For Getting all the lists of patient and if need to register new patient then admit using same link
+export const patientCount = `${server}/api/patient/get_patient_count/`

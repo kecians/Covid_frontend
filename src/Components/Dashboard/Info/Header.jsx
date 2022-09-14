@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import { PrimaryHeading, SecondaryHeading, SMText } from "../../RUCApi/Text";
 import { useTheme } from "@mui/material";
+import cookie from 'react-cookies'
 
 const DashboardHeader = () => {
   const theme = useTheme()
@@ -38,7 +39,7 @@ const DashboardHeader = () => {
         <img src= "https://happyhospital.in/wp-content/uploads/2016/08/single-doctor.jpg" width = "50px" height = "50px" style = {{ borderRadius : "100%", objectFit : "cover" }} />
 
         <SecondaryHeading>Ayush Bisht 
-        <SMText component = "div" >Doctor</SMText>
+        <SMText component = "div" >{cookie.load("staff")}</SMText>
         </SecondaryHeading>
       </Box>
     </Box>

@@ -5,6 +5,11 @@ import {patientBedalloatment} from '../../Api/patient.api'
 import axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import cookie from 'react-cookies'
+import { PrimaryButton } from '../RUCApi/Button'
+import { useDispatch } from 'react-redux'
+import { PATIENT_BED_CHANGE } from '../../Redux/types/patient'
+
+
 export default function Bedform(props) {
 
     const {
@@ -29,6 +34,16 @@ export default function Bedform(props) {
     }
     const [state, setState] = useState(initialState)
     const [loading, setLoading] = useState(false)
+
+    const dispatch = useDispatch()
+
+    dispatch( { type : PATIENT_BED_CHANGE, payload : true})
+
+    setTimeout(()=> {
+        dispatch( { type : PATIENT_BED_CHANGE, payload : false})
+
+    }, 1000 )
+    
     const handleSubmit = event => {
         if (state.bed_category==="General Bed"){
             state.bed_category="1"
@@ -95,11 +110,11 @@ export default function Bedform(props) {
       }
 
     if (state.redirect){
-        return <Redirect to='/list' />
+        return <Redirect to='/dashboard' />
     }
 
     return (
-        <Form className="loginform" onSubmit={handleSubmit} id="form1">
+        <Form   onSubmit={handleSubmit} id="form1">
             <Form.Group  controlId="Patientid">
                 <Form.Control 
                     type="text" 
@@ -167,14 +182,14 @@ export default function Bedform(props) {
                     <option>Ventilators</option>
                 </Form.Control>
             </Form.Group>
-            <Button variant="primary" type="submit" className="button my-2 p-2">
+            <PrimaryButton variant="primary" type="submit" className="PrimaryButton my-2 p-2">
             {loading ? 
                     <>
                     <span>Loading.....</span>
                     <Spinner animation="border" size="lg" className=""/>
                     </>: "Submit"
                   }
-            </Button>
+            </PrimaryButton>
         </Form>
     )
 }

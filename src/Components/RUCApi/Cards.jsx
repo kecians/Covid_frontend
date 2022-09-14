@@ -74,7 +74,7 @@ export const CovidCaseCard = (props) => {
   const theme = useTheme()
   const commonProperties = {
 
-    margin: { top: 4, right: 20, bottom: 25, left: 27 },
+    margin: { top: 14, right: 20, bottom: 25, left: 37 },
     animate: true,
     useMesh : true,
     enableSlices : 'x',
@@ -91,7 +91,7 @@ export const CovidCaseCard = (props) => {
       <NativeText sx = {{ fontSize : theme.size.text.p1 }} >Total Covid Patients</NativeText>
       </>
     }
-    loading = { !data.length}
+    loading = { !(data && data.length)}
     reading = {
       <NativeHeading sx = {{ fontSize : theme.size.heading.h1,  }} >
             <SMText sx = {{ color : theme.palette.text.light, fontWeight : "200" , margin : "0px", padding : "0px" }} >Total </SMText> 420
@@ -111,17 +111,8 @@ export const CovidCaseCard = (props) => {
     {...commonProperties}
     data={[
       {
-        id: "fake corp. A",
-        data: [
-          { x: "2018-01-01", y: 100 },
-          { x: "2018-01-02", y: 120 },
-          { x: "2018-01-03", y: 100 },
-          { x: "2018-01-04", y: 120 },
-          { x: "2018-01-05", y: 120 },
-          { x: "2018-01-06", y: 100 },
-          { x: "2018-01-07", y: 120 },
-          { x: "2018-01-08", y: 100 },
-        ],
+        id: "Covid Cases",
+        data: data
       },
        
     ]}
@@ -199,14 +190,15 @@ export const PatientCategoryStatusCard = (props) => {
 
   return (
     <HealthCard 
-      
+
+
     header = {
       <>
       <NativeText sx = {{ fontSize : theme.size.text.p1 }} >Patient Status</NativeText>
       <MdPeople />
       </>
     }
-    loading = { !data.length}
+    loading = { !(data && data.length)}
     reading = {
       <NativeHeading sx = {{ fontSize : theme.size.heading.h1,  }} >
             <SMText sx = {{ color : theme.palette.text.light, fontWeight : "200" , margin : "0px", padding : "0px" }} >Total </SMText> 420
@@ -292,8 +284,7 @@ export const HealthCard = (props) => {
         <Skeleton width="100%" height = "80px" />
 
         </Stack>
-        :
-      
+        :      
       <Stack direction = {"column"} spacing = {2} >
         <Box 
            sx = {{
@@ -329,7 +320,7 @@ export const HealthCard = (props) => {
         </Box>
         <Box 
           sx = {{
-          // overflowX :"auto",
+          overflowX :"auto",
           }}
         >
           {chart}

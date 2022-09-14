@@ -17,7 +17,7 @@ import {
   TOASTNULL,
   LOGINERROR,
   REGISTERERROR
-} from './auth.types';
+} from '../types/auth.types';
 
 
 // Login User
@@ -65,6 +65,7 @@ export const login = (username, password) => (dispatch) => {
         dispatch({
           type: TOASTNULL,
         });
+        
       }
     })
     .catch((err) => {
@@ -82,7 +83,7 @@ export const login = (username, password) => (dispatch) => {
 };
 
 // LOGOUT
-export const logout = () => (dispatch, getState) => {
+export const logout = (navigate) => (dispatch, getState) => {
   dispatch({
     type: LOGOUT_SUCCESS,
   });
@@ -92,7 +93,7 @@ export const logout = () => (dispatch, getState) => {
   dispatch({
     type: TOASTNULL,
   })
-
+  navigate.push('./')
   
 };
 
