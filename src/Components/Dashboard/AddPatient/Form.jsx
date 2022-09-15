@@ -78,6 +78,15 @@ export default function AddPatientForm(props) {
         setValue(count)
     }, [count])
 
+    const resetForm = () => {
+
+        setState(initialState)
+        setVaccine(vaccineState)
+        setCount(1)
+        
+
+    }
+
     const handleVaccineChange = e =>{
         const { name, value } = e.target;
         setVaccine({
@@ -282,7 +291,7 @@ export default function AddPatientForm(props) {
               addToast(res.data.msg, { appearance: 'success' });
               setState({...state, redirect: false});
               setUpdate(false)
-            
+              resetForm();
               dispatch( { type :PATIENT_LIST_UPDATED, payload : true})
               setTimeout(() => {
                 dispatch( { type :PATIENT_LIST_UPDATED, payload : false})

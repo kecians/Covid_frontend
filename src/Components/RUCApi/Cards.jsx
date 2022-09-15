@@ -28,7 +28,7 @@ export const NativeCard = styled(Card)(( {theme}) => ({
 
 
 export const BedOccupancyStatusCard = (props) => {
-  const { data = [] } = props;
+  const { data = [], vacant_beds = 0 } = props;
   const theme = useTheme()
   
   return (
@@ -44,7 +44,7 @@ export const BedOccupancyStatusCard = (props) => {
         loading = { !data.length}
         reading = {
           <NativeHeading sx = {{ fontSize : theme.size.heading.h1,  }} >
-            <SMText sx = {{ color : theme.palette.text.light, fontWeight : "200" , margin : "0px", padding : "0px" }} >Total </SMText> 120
+            <SMText sx = {{ color : theme.palette.text.light, fontWeight : "200" , margin : "0px", padding : "0px" }} >VAC beds</SMText> {vacant_beds} 
           </NativeHeading>
         }
         fill = {true}

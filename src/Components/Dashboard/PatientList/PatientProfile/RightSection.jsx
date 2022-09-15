@@ -244,7 +244,7 @@ const RightSection = (props) => {
                       fontSize: theme.size.text.p2,
                     }}
                   >
-                      120/80
+                      Blood Pressure
                   </NativeText>
                   <TbActivityHeartbeat  />
                 </>
@@ -255,7 +255,8 @@ const RightSection = (props) => {
                     fontSize: theme.size.heading.h1,
                   }}
                 >
-                  70/120
+                    {data.patient_health_status && data.patient_health_status.BP}
+
                 </NativeHeading>
               }
               chart={<BloodPressureTracker data = {getBPReading} />}
@@ -294,7 +295,8 @@ const RightSection = (props) => {
                    color : theme.palette.text.primary
                  }}
                >
-                 120/80
+                      {data.patient_health_status && data.patient_health_status.BP}
+
                </NativeHeading>
                </>
 

@@ -99,11 +99,11 @@ const PatientStatus = () => {
           aria-label="scrollable prevent tabs example"
           sx={styles.tabs}
         >
-          <Tab
+          {/* <Tab
             sx={styles.tab}
             value="all"
             label={<NativeText> All </NativeText>}
-          />
+          /> */}
           <Tab
             sx={styles.tab}
             value="active"

@@ -59,58 +59,65 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Searchbar(props) {
-  const { setState = () => {} } = props;
+  const { setQuery = () => {} } = props;
 
-  const [search_query, setQuery] = useState("*");
  
   const theme = useTheme()
+
+  const [data, setData] = useState("")
 
   const [dialog, setDialog] = useState(false)
 
   const handleChange = (event) => {
-    setQuery(event.target.value);
+    setData(event.target.value);
   };
 
   const handleSubmit = (event) => {
-
     event.preventDefault();
-    setState((state) => ({ ...state, loading: true }));
-    axios({
-      url: patientSearch + `${search_query}/`,
-      method: "GET",
-      headers: {
-        Authorization: `Token ${cookie.load("token")}`,
-      },
-    })
-      .then((res) => {
+    setQuery(data);
+  }
 
-        if (res.data.status === 404) {
+  // const handleSubmit = (event) => {
 
-          setState((state) => ({
-            ...state,
-            show: true,
-            loading: false,
-            data: "Details not found",
-          }));
-        } else {
-          console.log(res.data.data.reverse())
-          setState((state) => ({
-            ...state,
-            show: true,
-            data: res.data.data.reverse(),
-          }));
-        }
-      })
-      .catch((err) => {
-        setState((state) => ({
-          ...state,
-          show: true,
-          loading: false,
-          data: "Data Not Found!!",
-        }));
-      });
-    setState((state) => ({ ...state, loading: false }));
-  };
+  //   event.preventDefault();
+  //   setState((state) => ({ ...state, loading: true }));
+  //   axios({
+  //     url: patientSearch + `${search_query}/`,
+  //     method: "GET",
+  //     headers: {
+  //       Authorization: `Token ${cookie.load("token")}`,
+  //     },
+  //   })
+  //     .then((res) => {
+
+  //       if (res.data.status === 404) {
+
+  //         setState((state) => ({
+  //           ...state,
+  //           show: true,
+  //           loading: false,
+  //           data: "Details not found",
+  //         }));
+  //       } else {
+  //         console.log(res.data.data.reverse())
+  //         setState((state) => ({
+  //           ...state,
+  //           show: true,
+  //           data: res.data.data.reverse(),
+  //         }));
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       setState((state) => ({
+  //         ...state,
+  //         show: true,
+  //         loading: false,
+  //         data: "Data Not Found!!",
+  //       }));
+  //     });
+  //   setState((state) => ({ ...state, loading: false }));
+  // };
+  
   return (
     <Box
       sx={{

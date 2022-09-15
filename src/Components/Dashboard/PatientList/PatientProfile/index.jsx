@@ -97,9 +97,7 @@ const PatientProfile = (props) => {
         axios({
             url: patientHealthStatusReadings+`${query_params.id}/`,
             method: 'GET',
-            headers: {
-                Authorization: `Token ${cookie.load("token")}`,
-              },
+           
           })
           .then((res) => {
             if (res.data.status === 404) {
