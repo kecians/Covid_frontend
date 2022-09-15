@@ -1,6 +1,6 @@
 // import dependencies
 import React, {useState} from 'react'
-import { Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 // import components
 import { Form, Button} from 'react-bootstrap'
 import './Login.css'
@@ -67,6 +67,12 @@ export function Login(props) {
                 <Button variant="primary" type="submit" className="button my-2 p-2">
                     Submit
                 </Button>
+                <div className="text-center">or</div>
+                <Link to="/signup">
+                  <Button variant="light" type="submit" className="searchbarcontainer button my-2 p-2">
+                      SignUp
+                  </Button>
+                </Link>
             </Form>
         </>
     )
