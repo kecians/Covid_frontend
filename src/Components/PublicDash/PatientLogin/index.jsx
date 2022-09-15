@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import PatientProfile from './PatientProfile'
+import PatientProfile from '../../Dashboard/PatientList/PatientProfile'
 import PatientDetailsForm from  './PatientDetailForm.jsx'
 
 const PatientLogin = () => {

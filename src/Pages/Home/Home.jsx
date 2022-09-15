@@ -100,7 +100,7 @@ import StaffLogin from "../../Components/PublicDash/Staff";
                  }}
                 >
               <TabPanel value={value} index={"info"} >
-                <HospitalInfo  />
+                <RightSection  />
               </TabPanel>
               <TabPanel value={value} index={"patient"}>
                  <PatientLogin />

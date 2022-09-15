@@ -32,6 +32,7 @@ import { Stack } from "@mui/system";
 import { PatientInfoUpdateForm } from "../../../RUCApi/Dialog";
 import { getDateTimeString } from "../../../../assets/scripts";
 import { useTheme } from "@mui/material";
+import cookie from "react-cookies"
 
 const StatuButton = ({ status }) => {
 
@@ -213,11 +214,14 @@ const TableToolbar = (props) => {
         justifyContent = "space-between"
         
       >
-      <PatientFilter />
-    <PrimaryButton  onClick = { () => setOpen(true)} >
-      Examin Patient
-    </PrimaryButton>
-      <PatientInfoUpdateForm  open = {open} setOpen = {setOpen} id = {info.patient_id} name = {info.name}  />
+      {/* <PatientFilter /> */}
+      {cookie.load("token") ? (  <>
+              <PrimaryButton  onClick = { () => setOpen(true)} >
+                Examin Patient
+              </PrimaryButton>
+
+              <PatientInfoUpdateForm  open = {open} setOpen = {setOpen} id = {info.patient_id} name = {info.name}  /> 
+        </>): ""}
       </Stack>
 
     </Toolbar>

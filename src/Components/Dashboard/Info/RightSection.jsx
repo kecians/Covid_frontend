@@ -3,6 +3,8 @@ import Container from '@mui/material/Container';
 import DashboardHeader from './Header';
 import PatientStatus from './PatientStatus';
 import ShiftStatus from './ShiftStatus';
+import cookie from "react-cookies"
+
 
 const RightSection = () => {
     return (
@@ -17,12 +19,10 @@ const RightSection = () => {
             }}
         >
             <DashboardHeader />
-            <Container
-             
-             >
+            <Container>
 
             <ShiftStatus />
-            <PatientStatus />
+            {cookie.load("token") ? <PatientStatus /> : "" } 
             </Container>
 
       </Container>

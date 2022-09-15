@@ -26,7 +26,7 @@ const DashboardHeader = () => {
       }}
     >
       <Box>
-        <PrimaryHeading>Dashboard</PrimaryHeading>
+        <PrimaryHeading>  { cookie.load("token") ? "Dashboard" : "Information"} </PrimaryHeading>
       </Box>
       <Box
         sx = {{
@@ -36,11 +36,16 @@ const DashboardHeader = () => {
           gap : "10px"
         }}
       >
+        { cookie.load("token")  ? ( 
+        
+      <>
         <img src= "https://happyhospital.in/wp-content/uploads/2016/08/single-doctor.jpg" width = "50px" height = "50px" style = {{ borderRadius : "100%", objectFit : "cover" }} />
 
         <SecondaryHeading>Ayush Bisht 
         <SMText component = "div" >{cookie.load("staff")}</SMText>
         </SecondaryHeading>
+      </>)
+      :" "}
       </Box>
     </Box>
   );

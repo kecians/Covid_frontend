@@ -22,7 +22,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { BedChangeDialogForm, StatusUpdateDialogForm } from "../../../RUCApi/Dialog";
 import { getDateTimeString } from "../../../../assets/scripts";
-
+import cookie from "react-cookies"
 
 const InfoCard = styled((props) => <Card {...props} />)(
   ({ theme }) => `
@@ -67,8 +67,9 @@ const PatientInfo = (props) => {
           info.bed_number !== "NA" && (
           <> 
             <IoMdBed /> {info.bed_number}
-            <FaRegEdit onClick={ () => setUpdate("bed change")} title = "change bed"  size = "12px" style = {{ cursor : "pointer"}}  />
-          </>
+            {  cookie.load("token") && <FaRegEdit onClick={ () => setUpdate("bed change")} title = "change bed"  size = "12px" style = {{ cursor : "pointer"}}  />
+      }
+            </>
             )
           }
             </PrimaryText>
@@ -80,9 +81,8 @@ const PatientInfo = (props) => {
         },
         {
           label: <>{"Status"} 
-          
-            <FaRegEdit onClick={ () => {setUpdate("status change") }} title = "update patient status" size = "10"  style = {{ cursor : "pointer", margin : "0px 5px"}} /> 
-          </>,
+          {cookie.load("token") && <FaRegEdit onClick={ () => {setUpdate("status change") }} title = "update patient status" size = "10"  style = {{ cursor : "pointer", margin : "0px 5px"}} /> 
+        }</>,
           value: <> {info.patient_status_display} </> ,
         },
         {
@@ -123,11 +123,12 @@ const PatientInfo = (props) => {
 
       ]}
       other = {
-
+        cookie.load("token") &&(
         <>
+        
           <BedChangeDialogForm id = {info.patient_id}  open = {update} setOpen = {setUpdate}  />
           <StatusUpdateDialogForm id = {info.patient_id} open = {update} setOpen = {setUpdate} />
-        </>
+        </>)
 
       }
     />
