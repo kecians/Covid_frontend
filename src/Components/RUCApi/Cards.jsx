@@ -12,6 +12,9 @@ import { Stack } from "@mui/material";
 import { useTheme } from "@mui/material";
 import {MdPeople} from "react-icons/md"
 import { Line, ResponsiveLine } from "@nivo/line";
+import {ChartTooltip} from "./ChartTooltip";
+import { PieTooltip } from "./ChartTooltip";
+
 
 export const NativeCard = styled(Card)(( {theme}) => ({
 
@@ -55,7 +58,7 @@ export const BedOccupancyStatusCard = (props) => {
             height: "150px",
           }}
         >
-          <PieChart data={data} />
+          <PieChart data={data} tooltip = {PieTooltip} />
         </Box>
 
         }
@@ -176,6 +179,7 @@ export const CovidCaseCard = (props) => {
           }
         }
       }}
+      tooltip = {ChartTooltip}
       />
     </Box>
 
@@ -324,7 +328,9 @@ export const HealthCard = (props) => {
           }}
         >
           {chart}
+
         </Box>
+
       </Stack>
     }
 

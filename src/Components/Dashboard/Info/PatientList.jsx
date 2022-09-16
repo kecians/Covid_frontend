@@ -24,7 +24,7 @@ const PatientList = (props) => {
           <PatientInfoCard info={val} key={val.patient_id} />
         ))}
       {data.length == 0 &&
-        [1, 2, 4, 4, 5, 6].map((val) => <PatientInfoCard key={val} />)}
+        [1, 2, 4, 4, 5].map((val) => <PatientInfoCard key={val} />)}
     </PatientFlex>
   );
 };

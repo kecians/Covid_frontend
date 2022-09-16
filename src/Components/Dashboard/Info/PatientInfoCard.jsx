@@ -28,6 +28,7 @@ const PatientInfoCard = (props) => {
       gap={3}
       sx={{
         minWidth: "260px",
+        maxWidth : "300px"
       }}
     >
       <Box>
@@ -78,8 +79,8 @@ const PatientInfoCard = (props) => {
         {info.patient_health_status &&
           Object.keys(info.patient_health_status).map((val) => (
             <Box align = "center">
-              <SecondaryText sx = {{ color : theme.palette.text.dark}} >{val}</SecondaryText>
-              <PrimaryHeading  mt={1} sx = {{ color : theme.palette.text.ternary}} >
+              <SecondaryText sx = {{ color : theme.palette.text.dark, fontSize : theme.size.text.p2}} >{val}</SecondaryText>
+              <PrimaryHeading  mt={1} sx = {{ color : theme.palette.text.ternary, fontSize : theme.size.heading.h3 }} >
                 {info.patient_health_status[val]}
               </PrimaryHeading>
             </Box>
@@ -87,12 +88,12 @@ const PatientInfoCard = (props) => {
       </Box>
       <SecondaryText align="center"
         sx = {{
-          fontSize : theme.size.text.p2
+          fontSize : theme.size.text.p3
         }}
       >
         <BsCalendarPlusFill  />
         &nbsp; Medicine Treatment at
-        <SMText>8:00</SMText>
+        <SMText sx = {{ fontSize : theme.size.text.p3 }}> { info.updated_on && new Date(info.updated_on).toDateString()}</SMText>
       </SecondaryText>
     </NativeCard>
   ) : (

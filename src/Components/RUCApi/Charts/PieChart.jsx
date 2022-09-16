@@ -1,6 +1,7 @@
 import { ResponsivePie } from '@nivo/pie'
 import { Line } from '@nivo/line';
 import { useTheme } from '@mui/material';
+import { PieTooltip } from '../ChartTooltip';
 
 const commonProperties = {
     width: 900,
@@ -70,6 +71,7 @@ export const PieChart = (props) =>  {
         data = [],  
         textColor = "white",
         hoverText = "black",
+        tooltip = PieTooltip
 
     } = props;
 
@@ -94,6 +96,7 @@ export const PieChart = (props) =>  {
                 ]
             ]
         }}
+        tooltip = {PieTooltip}
         enableArcLinkLabels = {false}
         // arcLinkLabelsSkipAngle={10}
         // arcLinkLabelsTextColor= "white"

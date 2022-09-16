@@ -1,6 +1,7 @@
 import React from 'react'
 import { Line, ResponsiveLine } from '@nivo/line';
 import { useTheme } from "@mui/material";
+import {ChartTooltip} from '../../../RUCApi/ChartTooltip';
 
 
 const commonProperties = {
@@ -11,12 +12,14 @@ const commonProperties = {
     useMesh : true,
     enableSlices : 'x',
     enableSlices :'y',
+
     xScale :  {
       type: "time",
       format: "%Y-%m-%dT%H:%M:%S.%L%Z",
       useUTC: false,
       precision: "hour",
     },
+
     xFormat: "time:%b-%d,%H:%M",
     yScale: {
       type: "linear",
@@ -25,16 +28,18 @@ const commonProperties = {
       reverse: false,
       stacked : true
          },
+
     axisLeft: {
       legendOffset: 14,
       tickValues: 2,
     },
     axisBottom : {
       format: "%H:%M %b %d",
-          tickValues: "every 6 hours",
+      tickValues: "every 6 hours",
       legendOffset: -12,
       legendPosition: "middle",
     },
+
     curve :"monotoneX",
     pointSize : 8,
     pointBorderWidth : 1,
@@ -42,6 +47,9 @@ const commonProperties = {
       from: "color",
       modifiers: [["darker", 0.4]],
     },
+    tooltip  : ChartTooltip,
+
+
   };
 
 
@@ -67,7 +75,6 @@ export  function O2LevelTracker({data}) {
       from: "color",
       modifiers: [["darker", 0.4]],
     }}
-
     colors = "white"
     useMesh={true}
     enableSlices={false}
@@ -87,11 +94,12 @@ export  function O2LevelTracker({data}) {
             stroke: "white",
             strokeWidth: 0.4,
             strokeDasharray: "4 4"
-          }
-        }
-      }}
+                }
+              }
+            }}
+
   />
-    )
+  )
 }
 
 
