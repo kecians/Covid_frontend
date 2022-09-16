@@ -351,7 +351,7 @@ const PatientHealthTable = (props) => {
                         padding : "5px"    
                       }}
   >
-                      <Skeleton width = "100%" height = {40} />
+                      <Skeleton width = "100%" height = {"40px"} />
                       </TableCell>
                       
 

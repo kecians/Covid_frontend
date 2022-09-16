@@ -8,7 +8,7 @@ export const ChartTooltip = (props) => {
 
   const theme = useTheme();
 
-  console.table(props);
+  //(props);
 
   return (
     <Stack
@@ -56,7 +56,7 @@ export const PieTooltip = (props) => {
   
     const theme = useTheme();
   
-    console.table(" pie " , props);
+    //(" pie " , props);
   
     return (
       <Stack

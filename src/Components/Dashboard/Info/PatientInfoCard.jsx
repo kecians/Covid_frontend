@@ -101,7 +101,7 @@ const PatientInfoCard = (props) => {
     </NativeCard>
   ) : (
     <Box sx={{ pt: 0.5 }}>
-      <Skeleton variant="rectangular" width={210} height={118} />
+      <Skeleton variant="rectangular" width={"210px"} height={"118px"} />
       <Skeleton />
       <Skeleton width="60%" />
     </Box>

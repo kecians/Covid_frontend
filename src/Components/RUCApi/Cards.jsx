@@ -14,6 +14,8 @@ import {MdPeople} from "react-icons/md"
 import { Line, ResponsiveLine } from "@nivo/line";
 import {ChartTooltip} from "./ChartTooltip";
 import { PieTooltip } from "./ChartTooltip";
+import VirtualScroll from "virtual-scroll";
+import _ from "lodash";
 
 
 export const NativeCard = styled(Card)(( {theme}) => ({
@@ -69,10 +71,79 @@ export const BedOccupancyStatusCard = (props) => {
 
 export const CovidCaseCard = (props) => {
 
-
+  const [visible_data, setVisData] = React.useState([])
   const {
-    data = []
+    data = [],
+    count = 0
   } = props;
+
+
+
+  const win_start = React.useRef()
+
+  const win_size = 2;
+
+ 
+ 
+  const ref = React.useRef(0)
+
+  React.useEffect(() => {
+
+    win_start.current = 0;
+
+    if(ref.current)
+    {
+    const  vs = new VirtualScroll( {el : ref.current} )
+    vs.on(  e => handleScroll(e) )
+    }
+    const temp_data = data.slice(win_start.current,win_start.current+win_size)
+    setVisData(temp_data)
+
+  
+
+  } , [data])
+
+  const[movX, setX] = React.useState(0)
+
+  const handleScroll =  (e) => {
+
+    console.log(e.deltaX)
+    const x = e.deltaX;
+    console.log("scroll - ",  win_start.current, data.length)
+
+    if(x < 0 && win_start.current > 0 )
+  {   
+    win_start.current-- ; 
+  }
+    else
+    if(win_start.current + win_size < data.length ) {
+      win_start.current++ ; 
+
+    }
+    setX(e.x )
+    
+
+  } 
+
+  React.useEffect(( ) => {
+    const debounce =   setTimeout(( )=> {
+
+      const temp_data = data.slice(win_start.current,win_start.current+win_size)
+      setVisData(temp_data)
+    console.log("ref change",  temp_data)
+      
+
+    } , 500)
+
+    return () => {
+      clearTimeout(debounce)
+    }
+
+  }, [win_start.current ] ) 
+
+ 
+
+ 
 
   const theme = useTheme()
   const commonProperties = {
@@ -97,7 +168,7 @@ export const CovidCaseCard = (props) => {
     loading = { !(data && data.length)}
     reading = {
       <NativeHeading sx = {{ fontSize : theme.size.heading.h1,  }} >
-            <SMText sx = {{ color : theme.palette.text.light, fontWeight : "200" , margin : "0px", padding : "0px" }} >Total </SMText> 420
+            <SMText sx = {{ color : theme.palette.text.light, fontWeight : "200" , margin : "0px", padding : "0px" }} >Today Active Patient - </SMText> { count }
       </NativeHeading>
     }
     fill = {true}
@@ -107,15 +178,19 @@ export const CovidCaseCard = (props) => {
       sx={{
         width: "auto",
         height: "150px",
+        overflow : "hidden"
       }}
+      ref = {ref}
+
     >
-    
+    {  visible_data.length ? 
     <ResponsiveLine
+      
     {...commonProperties}
     data={[
       {
         id: "Covid Cases",
-        data: data
+        data: visible_data
       },
        
     ]}
@@ -143,10 +218,10 @@ export const CovidCaseCard = (props) => {
     enablePointLabel = {false}
     pointColor="white"
     axisBottom={{
-      format: "%b %d",
-      tickValues: "every 1 days",
-      legendOffset: -12,
-      legendPosition: "middle",
+    format: "%b %d",
+    tickValues: "every 1 days",
+    legendOffset: -12,
+    legendPosition: "middle",
 
     }}
     enableGridX={false}
@@ -180,7 +255,7 @@ export const CovidCaseCard = (props) => {
         }
       }}
       tooltip = {ChartTooltip}
-      />
+      /> : "" }
     </Box>
 
     }
@@ -189,8 +264,10 @@ export const CovidCaseCard = (props) => {
 }
 
 export const PatientCategoryStatusCard = (props) => {
-  const { data = [] } = props;
+  const { data = [], count = 0} = props;
   const theme = useTheme()
+
+  console.log("data patient", data)
 
   return (
     <HealthCard 
@@ -205,7 +282,7 @@ export const PatientCategoryStatusCard = (props) => {
     loading = { !(data && data.length)}
     reading = {
       <NativeHeading sx = {{ fontSize : theme.size.heading.h1,  }} >
-            <SMText sx = {{ color : theme.palette.text.light, fontWeight : "200" , margin : "0px", padding : "0px" }} >Total </SMText> 420
+            <SMText sx = {{ color : theme.palette.text.light, fontWeight : "200" , margin : "0px", padding : "0px" }} >Total Patient :</SMText> {count } 
       </NativeHeading>
     }
     fill = {true}
@@ -416,9 +493,9 @@ export const   PatientInfoCard = (props) => {
         </Stack> 
          : 
       <Stack sx={{ pt: 0.5 }} gap = {2} height = "150px"  >
-      <Skeleton variant="rectangular" width="90%"  height = {50} />
-      <Skeleton width="80%" />
-      <Skeleton width="60%" />
+      <Skeleton variant="rectangular" width="90%"  height = {"50px"} />
+      <Skeleton width="80%" height = "20px" />
+      <Skeleton width="60%" height = "20px" />
 
       </Stack> 
       }

@@ -20,9 +20,14 @@ const ShiftStatus = () => {
   const [data, setData] = React.useState({});
   const [count, setCount] = React.useState(0);
   const [status, setStatus] = React.useState({});
-  const [total_vacant_beds, setTotalVacant] = React.useState(0)
-  const colorOption = ["red", "blue", "green", "yellow", "orange", "purple"];
-  const [patient_count, setPatientCount] = React.useState([]);
+  const [total_vacant_beds, setTotalVacant] = React.useState(0);
+  const [timestamp_patient_count, setTimestampPatientCount] = React.useState( [] );
+
+  const [patient_count, setPatientsCount] = React.useState({
+    active_patient: 0,
+    total_patient: 0,
+    todays_patient : 0
+  });
 
   const getPatientCount = () => {
     axios({
@@ -32,7 +37,8 @@ const ShiftStatus = () => {
       .then((res) => {
         if (res.data.status === 404) {
         } else {
-          setPatientCount(res.data.data);
+          setTimestampPatientCount(res.data.data);
+          setPatientsCount ( (state) => ({...state, todays_patient : res.data.data.length ?  res.data.data[ res.data.data.length - 1  ].y : 0}))
         }
       })
       .catch((err) => {
@@ -54,22 +60,25 @@ const ShiftStatus = () => {
             {
               id: "general",
               label: "general",
-              value: res.data.total_beds.general -   res.data.alloted_beds.general,
+              value:
+                res.data.total_beds.general - res.data.alloted_beds.general,
             },
             {
               id: "oxygen",
               label: "oxygen",
-              value: res.data.total_beds.oxygen -  res.data.alloted_beds.oxygen,
+              value: res.data.total_beds.oxygen - res.data.alloted_beds.oxygen,
             },
             {
               id: "icu",
               label: "icu",
-              value: res.data.total_beds.icu-  res.data.alloted_beds.icu,
+              value: res.data.total_beds.icu - res.data.alloted_beds.icu,
             },
             {
               id: "ventillator",
               label: "ventillator",
-              value: res.data.total_beds.ventillator -  res.data.alloted_beds.ventillator,
+              value:
+                res.data.total_beds.ventillator -
+                res.data.alloted_beds.ventillator,
             },
           ];
 
@@ -82,9 +91,21 @@ const ShiftStatus = () => {
               value: res.data.patient_status[val],
             })
           );
+
+          setPatientsCount((state) => ({
+            ...state,
+            active_patient: res.data.patient_status.active,
+            total_patient: patient_status.reduce(
+              (total, cur) => total + cur.value,
+              0
+            ),
+          }));
+
           setStatus(patient_status);
 
-          setTotalVacant( res.data.total_beds.total -  res.data.alloted_beds.total)
+          setTotalVacant(
+            res.data.total_beds.total - res.data.alloted_beds.total
+          );
         }
       })
       .catch((err) => {
@@ -107,9 +128,9 @@ const ShiftStatus = () => {
         }}
         mt={2}
       >
-        <BedOccupancyStatusCard data={data} vacant_beds = {total_vacant_beds } />
-        <PatientCategoryStatusCard data={status} />
-        <CovidCaseCard data={patient_count} />
+        <BedOccupancyStatusCard data={data} vacant_beds={total_vacant_beds} />
+        <PatientCategoryStatusCard data={status} count = {patient_count.total_patient} />
+        <CovidCaseCard data={timestamp_patient_count} count = {patient_count.todays_patient} />
       </Box>
     </Box>
   );

@@ -24,7 +24,7 @@ import {
 } from "../../RUCApi/Text";
 import { PrimaryButton } from "../../RUCApi/Button";
 import { NativeCard } from "../../RUCApi/Cards";
-import { useTheme } from '@mui/styles';
+import { useTheme } from "@mui/styles";
 import { NativeHeading } from "../../RUCApi/Text";
 import { getDateTimeString } from "../../../assets/scripts";
 import { useEffect } from "react";
@@ -134,7 +134,6 @@ function EnhancedTableHead(props) {
     numSelected,
     rowCount,
     onRequestSort,
-    
   } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -186,8 +185,8 @@ EnhancedTableHead.propTypes = {
 };
 
 const TableToolbar = (props) => {
-  const { numSelected , rowCount = 0 } = props;
-  const theme = useTheme()
+  const { numSelected, rowCount = 0 } = props;
+  const theme = useTheme();
   return (
     <Toolbar
       sx={{
@@ -202,7 +201,14 @@ const TableToolbar = (props) => {
         }),
       }}
     >
-      <NativeHeading sx = {{ color : theme.palette.text.primary, fontSize : theme.size.heading.h3 }}>{rowCount} Patients</NativeHeading>
+      <NativeHeading
+        sx={{
+          color: theme.palette.text.primary,
+          fontSize: theme.size.heading.h3,
+        }}
+      >
+        {rowCount} Patients
+      </NativeHeading>
       {/* <PatientFilter /> */}
     </Toolbar>
   );
@@ -213,25 +219,22 @@ TableToolbar.propTypes = {
 };
 
 const PatientTable = (props) => {
-  const { toggleProfile = () => {}, setProfile = () => {}, query = "" } = props;
+  const {
+    toggleProfile = () => {},
+    setProfile = () => {},
+    query = "",
+    data,
+    pageCount,
+    setPageCount,
+    loading = true,
+  } = props;
 
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [data, setData] = React.useState({
-    rows: [],
-    final_page: false,
-    total_page: 0,
-    total_record: 0,
-  });
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [loading, setLoading] = React.useState(false);
-
   const theme = useTheme();
-
-  const [state, setState] = React.useState([]);
-  const [pageCount, setPageCount] = React.useState({ count: 1 });
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -239,54 +242,13 @@ const PatientTable = (props) => {
     setOrderBy(property);
   };
 
+  
+
+ 
+
   useEffect(() => {
-    setLoading(true);
-    axios({
-      url: patientListPagination + `?page=${pageCount.count}&query=${query}`,
-      method: "GET",
-      headers: {
-        Authorization: `Token ${cookie.load("token")}`,
-      },
-    })
-      .then((res) => {
-        if (res.data.status === 404) {
-          setLoading(false);
-          // setState(res.data.data)
-          // setvaccine
-        } else {
-          setLoading(false);
-          setData((state) => ({
-            ...state,
-            rows: [...state.rows, ...res.data.results],
-            final_page: res.data.next == null ? true : state.final_page,
-            total_page: res.data.total_pages,
-            total_record: res.data.count,
-          }));
-        }
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
+    console.log("rows", data.rows, query, pageCount);
   }, [pageCount]);
-
-  useEffect(() => {
-    if (query) {
-      setData((state) => ({
-        ...state,
-        rows: [],
-        final_page: false,
-        total_page: 0,
-        total_record: 0,
-      }));
-      setPage(0);
-      setRowsPerPage(5);
-      setPageCount((state) => ({ ...state, count: 1 }));
-    }
-  }, [query]);
-
-  useEffect(() => {
-    console.log("rows", data.rows, query);
-  }, [data]);
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -334,7 +296,10 @@ const PatientTable = (props) => {
   return (
     <Box sx={{ width: "100%" }} p={3}>
       <NativeCard sx={{ width: "100%", padding: "0px" }}>
-        <TableToolbar numSelected={selected.length} rowCount = {data.total_record} />
+        <TableToolbar
+          numSelected={selected.length}
+          rowCount={data.total_record}
+        />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -403,7 +368,7 @@ const PatientTable = (props) => {
                         padding: "5px",
                       }}
                     >
-                      <Skeleton width="100%" height={40} />
+                      <Skeleton width="100%" height={"40px"} />
                     </TableCell>
                   </TableRow>
                 ))}
@@ -427,6 +392,11 @@ const PatientTable = (props) => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          sx={{
+            " &   p ": {
+              fontSize: "1.3rem ",
+            },
+          }}
         />
       </NativeCard>
     </Box>
