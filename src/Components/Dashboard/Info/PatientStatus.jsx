@@ -8,7 +8,7 @@ import PatientList from "./PatientList";
 import axios from "axios";
 import cookie from "react-cookies";
 import { patientSearch } from "../../../Api/patient.api";
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/styles';
 import { getComputedStyle } from "./style";
 import { useEffect } from "react";
 

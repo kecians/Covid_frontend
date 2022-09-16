@@ -24,7 +24,7 @@ import {
 } from "../../RUCApi/Text";
 import { PrimaryButton } from "../../RUCApi/Button";
 import { NativeCard } from "../../RUCApi/Cards";
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/styles';
 import { NativeHeading } from "../../RUCApi/Text";
 import { getDateTimeString } from "../../../assets/scripts";
 import { useEffect } from "react";

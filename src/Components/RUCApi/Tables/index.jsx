@@ -18,7 +18,7 @@ import PatientFilter from './Filter';
 import { PrimaryText, SecondaryHeading, SecondaryText, SMHeading, SMText } from '../../RUCApi/Text';
 import { PrimaryButton } from '../../RUCApi/Button';
 import { NativeCard } from '../../RUCApi/Cards';
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/styles';
 
 
 const StatuButton = ({status}) => {

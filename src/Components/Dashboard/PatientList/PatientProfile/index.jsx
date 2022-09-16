@@ -11,7 +11,7 @@ import ProfileHeader from './ProfileHeader.jsx';
 import Grid from '@mui/material/Grid';
 import LeftSection from './LeftSection';
 import RightSection from './RightSection';
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/styles';
 import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
 import { patientHealthStatusReadings } from '../../../../Api/health.api';

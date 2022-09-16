@@ -16,7 +16,7 @@ import { NativeCard, PatientInfoCard } from "../../../RUCApi/Cards";
 import { darken } from "@mui/material/styles";
 import { TbVaccine } from "react-icons/tb";
 import { GiTestTubes } from "react-icons/gi";
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/styles';
 import {FaRegEdit} from 'react-icons/fa';
 import { Link } from "react-router-dom";
 import { useState } from "react";

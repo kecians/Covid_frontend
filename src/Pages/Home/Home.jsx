@@ -16,7 +16,7 @@
     // }
     
     import * as React from "react";
-    import { useTheme } from "@mui/material";
+    import { useTheme } from '@mui/styles';
     import Grid from "@mui/material/Grid";
     import PropTypes from "prop-types";
     import Tabs from "@mui/material/Tabs";

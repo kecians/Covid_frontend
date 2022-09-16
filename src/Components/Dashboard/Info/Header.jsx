@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import { PrimaryHeading, SecondaryHeading, SMText } from "../../RUCApi/Text";
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/styles';
 import cookie from 'react-cookies'
 
 const DashboardHeader = () => {

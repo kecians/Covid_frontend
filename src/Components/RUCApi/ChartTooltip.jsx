@@ -1,6 +1,6 @@
 import { Box, Stack } from "@mui/material";
 import { SMText } from "./Text.jsx";
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/styles';
 import React from "react";
 
 export const ChartTooltip = (props) => {

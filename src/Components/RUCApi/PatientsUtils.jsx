@@ -1,7 +1,7 @@
 import * as React from "react";
 import { NativeText, SecondaryText } from "./Text";
 import { Box } from "@mui/system";
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/styles';
 
 export const PatientConditionIndicator = ({ type }) => {
   const colorOption = {

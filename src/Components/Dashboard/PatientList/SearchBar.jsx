@@ -10,7 +10,7 @@ import { BsSearch } from "react-icons/bs";
 import Stack from "@mui/material/Stack";
 import { PrimaryButton } from "../../RUCApi/Button";
 import { CgAdd } from "react-icons/cg";
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/styles';
 import { PatientAdmitDialog } from "../../RUCApi/Dialog";
 
 

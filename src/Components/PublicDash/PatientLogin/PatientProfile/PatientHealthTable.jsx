@@ -31,7 +31,7 @@ import { NativeCard } from "../../../RUCApi/Cards";
 import { Stack } from "@mui/system";
 import { PatientInfoUpdateForm } from "../../../RUCApi/Dialog";
 import { getDateTimeString } from "../../../../assets/scripts";
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/styles';
 
 const StatuButton = ({ status }) => {
 

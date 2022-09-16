@@ -1,6 +1,6 @@
 import React from 'react'
 import { Line, ResponsiveLine } from '@nivo/line';
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/styles';
 import {ChartTooltip} from '../../../RUCApi/ChartTooltip';
 
 

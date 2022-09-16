@@ -3,7 +3,7 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import { PrimaryHeading, SecondaryHeading, SMText } from "../../../RUCApi/Text";
 import { PrimaryButton } from '../../../RUCApi/Button';
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/styles';
 import { FaBackward } from 'react-icons/fa';
 
 const ProfileHeader = (props) => {

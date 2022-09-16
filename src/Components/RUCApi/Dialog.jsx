@@ -9,7 +9,7 @@ import { IoMdBed } from "react-icons/io";
 import { IoMdNotifications } from "react-icons/io";
 import Skeleton from "@mui/material/Skeleton";
 import { Stack } from "@mui/material";
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/styles';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import Bedform from "../Bedform/Bedform";

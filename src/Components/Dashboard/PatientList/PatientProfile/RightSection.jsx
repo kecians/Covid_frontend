@@ -21,7 +21,7 @@ import { generateDrinkStats } from "@nivo/generators";
 import { Line } from "@nivo/line";
 import TemperatureChart from "./TemperatureTimeScaleChart.jsx";
 import { BsHeart } from "react-icons/bs";
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/styles';
 import {
   O2LevelTracker,
   TemperatureTracker,

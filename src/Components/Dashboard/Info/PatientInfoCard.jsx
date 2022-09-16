@@ -17,7 +17,7 @@ import {
 } from "../../RUCApi/Text";
 import { PatientConditionIndicator } from "../../RUCApi/PatientsUtils";
 import Skeleton from "@mui/material/Skeleton";
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/styles';
 
 const PatientInfoCard = (props) => {
   const { info = false } = props;

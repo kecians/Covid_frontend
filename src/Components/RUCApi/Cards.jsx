@@ -9,7 +9,7 @@ import { IoMdBed } from "react-icons/io";
 import { IoMdNotifications } from "react-icons/io";
 import Skeleton from "@mui/material/Skeleton";
 import { Stack } from "@mui/material";
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/styles';
 import {MdPeople} from "react-icons/md"
 import { Line, ResponsiveLine } from "@nivo/line";
 import {ChartTooltip} from "./ChartTooltip";
@@ -58,7 +58,7 @@ export const BedOccupancyStatusCard = (props) => {
             height: "150px",
           }}
         >
-          <PieChart data={data} tooltip = {PieTooltip} />
+          <PieChart data={data} tooltip = { PieTooltip} />
         </Box>
 
         }
