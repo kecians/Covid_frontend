@@ -55,7 +55,7 @@ export const BedOccupancyStatusCard = (props) => {
           <Box
           sx={{
             width: "240px",
-            height: "150px",
+            height: "200px",
           }}
         >
           <PieChart data={data} tooltip = { PieTooltip} />
@@ -214,7 +214,7 @@ export const PatientCategoryStatusCard = (props) => {
       <Box
       sx={{
         width: "240px",
-        height: "150px",
+        height: "200px",
       }}
     >
     

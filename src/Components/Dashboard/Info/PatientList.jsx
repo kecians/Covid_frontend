@@ -23,8 +23,14 @@ const PatientList = (props) => {
         data.map((val, ind) => (
           <PatientInfoCard info={val} key={val.patient_id} />
         ))}
-      {data.length == 0 &&
-        [1, 2, 4, 4, 5].map((val) => <PatientInfoCard key={val} />)}
+      {data.length === 0 ? <>
+        <PatientInfoCard  />
+        <PatientInfoCard  />
+        <PatientInfoCard  />
+        <PatientInfoCard  />
+        <PatientInfoCard  />
+
+      </> : "" }
     </PatientFlex>
   );
 };

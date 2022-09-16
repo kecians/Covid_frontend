@@ -6,7 +6,7 @@ import { PieTooltip } from '../ChartTooltip';
 const commonProperties = {
     width: 900,
     height: 400,
-    margin: { top: 10, right: 20, bottom: 200, left: 80 },
+    margin: { top: 5, right: 20, bottom: 5, left: 80 },
     animate: true,
     enableSlices: "x",
     useMesh : true,
@@ -81,7 +81,7 @@ export const PieChart = (props) =>  {
     <ResponsivePie
         data={data}
         colors={{ scheme: colorScheme }}
-        margin={{ top: 0,right : 70,  bottom: 0, left: 0 }}
+        margin={{ top: 0,right : 80,  bottom: 0, left: 0 }}
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
@@ -187,8 +187,8 @@ export const PieChart = (props) =>  {
                 anchor: 'top-right',
                 direction: 'column',
                 justify: false,
-                translateX: 100,
-                translateY: 3,
+                translateX: 110,
+                translateY: 40,
                 itemsSpacing: 0,
                 itemWidth: 100,
                 itemHeight: 28,

@@ -28,13 +28,14 @@ const PatientInfoCard = (props) => {
       gap={3}
       sx={{
         minWidth: "260px",
-        maxWidth : "300px"
+        maxWidth : "300px",
+        height : "auto"
       }}
     >
       <Box>
         <Box
           sx={{
-            display: "inlineflex",
+            display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             flexWrap: "nowrap",
@@ -73,10 +74,12 @@ const PatientInfoCard = (props) => {
           flexWrap: "wrap",
           justifyContent: "space-between",
           gap: "10px",
-          height : "80px"
+          height : "80px",
+          fontSize : theme.size.text.p1
         }}
       >
-        {info.patient_health_status &&
+        
+        {info.patient_health_status?
           Object.keys(info.patient_health_status).map((val) => (
             <Box align = "center">
               <SecondaryText sx = {{ color : theme.palette.text.dark, fontSize : theme.size.text.p2}} >{val}</SecondaryText>
@@ -84,7 +87,7 @@ const PatientInfoCard = (props) => {
                 {info.patient_health_status[val]}
               </PrimaryHeading>
             </Box>
-          ))}
+          )) : "" }
       </Box>
       <SecondaryText align="center"
         sx = {{
