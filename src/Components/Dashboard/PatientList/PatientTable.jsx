@@ -355,7 +355,7 @@ const PatientTable = (props) => {
                           <TableCell align="center">{row.patient_id}</TableCell>
                           <TableCell align="center">{row.gender}</TableCell>
                           <TableCell align="center">
-                            {!row.patient_bed ?? row.patient_bed.bed_id}
+                            { row.patient_bed ? row.patient_bed.bed_id : "Not Alloted"}
                           </TableCell>
                           <TableCell align="center">
                             {getDateTimeString(row.admitted_on)}
