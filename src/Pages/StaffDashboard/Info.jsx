@@ -87,7 +87,7 @@ function Dashboard() {
     setValue(newValue);
   };
 
-  const styles = React.useMemo(()=>getComputedStyle(theme))
+  const styles = React.useMemo(()=> getComputedStyle(theme), [mode])
  
 
   return (

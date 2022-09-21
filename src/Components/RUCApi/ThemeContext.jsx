@@ -5,7 +5,7 @@ import { useContext, createContext  } from 'react';
 
  export const dark = {
   palette: {
-    mode: 'light' ,
+    mode: 'dark' ,
     v2 : {
       primary : "rgb(17, 24, 39)",
       secondary : "#5156BE",

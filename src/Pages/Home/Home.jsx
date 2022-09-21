@@ -45,7 +45,6 @@ import { useContext } from "react";
 import { ThemeContext } from "../../Components/RUCApi/ThemeContext";
 import CoolBg from "../../Components/RUCApi/CoolBg";
 
-
 function a11yProps(index) {
   return {
     id: `vertical-tab-${index}`,
@@ -65,7 +64,7 @@ export default function Home() {
     } else setValue(newValue);
   };
 
-  const styles = React.useMemo(() => getComputedStyle(theme));
+  const styles = React.useMemo(() => getComputedStyle(theme), [mode]);
 
   return (
     <Grid
