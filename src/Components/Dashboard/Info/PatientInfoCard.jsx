@@ -102,8 +102,8 @@ const PatientInfoCard = (props) => {
   ) : (
     <Stack sx={{ pt: 0.5 }} >
       <Skeleton variant="rectangular" width={"210px"} height={"118px"} />
-      <Skeleton width="180px" height={"20px"}  />
-      <Skeleton width="100px" height={"20px"}  />
+      <Skeleton width={"180px"} height={"20px"}  />
+      <Skeleton width={"100px"} height={"20px"}  />
     </Stack>
   );
 };

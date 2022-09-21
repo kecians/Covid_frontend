@@ -7,12 +7,12 @@ export const PatientConditionIndicator = ({ type }) => {
   const colorOption = {
     critical: "#f30035",
     normal: "#61c554",
-    satisfactory: "#f5bf4f",
+    satisfactory: "blue",
     stable: "#61c554",
-    Asymptomataic: "#f30035",
+    Asymptomataic: "orangered",
     Mild: "#61c554",
     Moderate: "#f5bf4f",
-    severe: "#f30035",
+    Severe: "#f30035",
     active : "blue"
   };
 
