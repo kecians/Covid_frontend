@@ -62,9 +62,8 @@ export  function O2LevelTracker({data}) {
     <Box
       ref = {ref}
       sx = {{
-        heihgt : "140px",
-        width :"240px"
-
+        width : "240px",
+        height : "140px"
       }}
     >
 
