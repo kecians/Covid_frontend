@@ -16,6 +16,7 @@ import {ChartTooltip} from "./ChartTooltip";
 import { PieTooltip } from "./ChartTooltip";
 import VirtualScroll from "virtual-scroll";
 import _ from "lodash";
+import { useChartScroll } from "../Hooks/ChartScrollMore";
 
 
 export const NativeCard = styled(Card)(( {theme}) => ({
@@ -71,78 +72,13 @@ export const BedOccupancyStatusCard = (props) => {
 
 export const CovidCaseCard = (props) => {
 
-  const [visible_data, setVisData] = React.useState([])
   const {
     data = [],
     count = 0
   } = props;
 
-
-
-  const win_start = React.useRef()
-
-  const win_size = 2;
-
- 
- 
-  const ref = React.useRef(0)
-
-  React.useEffect(() => {
-
-    win_start.current = 0;
-
-    if(ref.current)
-    {
-    const  vs = new VirtualScroll( {el : ref.current} )
-    vs.on(  e => handleScroll(e) )
-    }
-    const temp_data = data.slice(win_start.current,win_start.current+win_size)
-    setVisData(temp_data)
-
-  
-
-  } , [data])
-
-  const[movX, setX] = React.useState(0)
-
-  const handleScroll =  (e) => {
-
-    console.log(e.deltaX)
-    const x = e.deltaX;
-    console.log("scroll - ",  win_start.current, data.length)
-
-    if(x < 0 && win_start.current > 0 )
-  {   
-    win_start.current-- ; 
-  }
-    else
-    if(win_start.current + win_size < data.length ) {
-      win_start.current++ ; 
-
-    }
-    setX(e.x )
-    
-
-  } 
-
-  React.useEffect(( ) => {
-    const debounce =   setTimeout(( )=> {
-
-      const temp_data = data.slice(win_start.current,win_start.current+win_size)
-      setVisData(temp_data)
-    console.log("ref change",  temp_data)
-      
-
-    } , 500)
-
-    return () => {
-      clearTimeout(debounce)
-    }
-
-  }, [win_start.current ] ) 
-
- 
-
+  const ref = React.useRef()
+  const visible_data = useChartScroll( { ref, data })  
  
 
   const theme = useTheme()
@@ -185,6 +121,7 @@ export const CovidCaseCard = (props) => {
     >
     {  visible_data.length ? 
     <ResponsiveLine
+    ref = {ref}
       
     {...commonProperties}
     data={[
@@ -220,7 +157,7 @@ export const CovidCaseCard = (props) => {
     axisBottom={{
     format: "%b %d",
     tickValues: "every 1 days",
-    legendOffset: -12,
+    legendOffset: 0,
     legendPosition: "middle",
 
     }}
@@ -341,11 +278,22 @@ export const HealthCard = (props) => {
     fill = false,
     type = "primary",
     sx= {},
-    loading = false
+    loading = false,
   } = props;
+
+
+
+
 
   return (
 
+    loading ? 
+      <Stack  >
+      <Skeleton width="200px" height = "20px" />
+      <Skeleton width="160px" height = "40px" />
+      <Skeleton width="200px" height = "140px" />
+      </Stack>
+      :  
     <NativeCard 
       sx = {{
 
@@ -358,14 +306,7 @@ export const HealthCard = (props) => {
       }}
     
     >
-      {loading ? 
-        <Stack>
-        <Skeleton width="100%" height = "20px" />
-        <Skeleton width="60%" height = "40px" />
-        <Skeleton width="100%" height = "80px" />
-
-        </Stack>
-        :      
+          
       <Stack direction = {"column"} spacing = {2} >
         <Box 
            sx = {{
@@ -375,7 +316,7 @@ export const HealthCard = (props) => {
             height : "auto",
             minHeight : "20px",
 
-            color : fill ? theme.palette.text.light : theme.palette.text.dark,
+            color : fill ? theme.palette.text.light : theme.palette.text.ternary,
             '& svg' : {
               fontSize : "2.9rem",
               color : fill ? theme.palette.text.light : theme.palette.v2.secondary,
@@ -393,23 +334,19 @@ export const HealthCard = (props) => {
         >
           <Box 
             sx = {{
-              color : fill ? theme.palette.text.light : theme.palette.text.dark  
+              color : fill ? theme.palette.text.light : theme.palette.text.secondary  
             }}
           >
             {reading}
           </Box>
         </Box>
-        <Box 
-          sx = {{
-          overflowX :"auto",
-          }}
-        >
+        <Box>
           {chart}
 
         </Box>
 
       </Stack>
-    }
+    
 
     </NativeCard>
   )

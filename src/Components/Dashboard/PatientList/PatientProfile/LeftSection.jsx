@@ -149,7 +149,7 @@ const VaccineInfo = (props) => {
         info &&
         info.is_vaccinated &&
         info.vaccine_status.map((val) => ({
-          label: val.type,
+          label: val.vaccine_type_display,
           value: getDateTimeString(val.vaccinated_on),
         }))
       }
@@ -172,7 +172,7 @@ const CovidTest = (props) => {
         
           {
               label : "Test type",
-              value : info.type
+              value : info.test_type_display
           },
           {
               label : "Tested on",
@@ -180,7 +180,7 @@ const CovidTest = (props) => {
           },
           {
               label : "Tested result",
-              value : info.result
+              value : info.test_result_display
           }
       ]
     }

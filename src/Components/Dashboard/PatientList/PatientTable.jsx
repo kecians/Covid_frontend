@@ -40,6 +40,8 @@ const StatuButton = ({ status }) => {
     Moderate: "light green",
     migrated: "red",
     active: "blue",
+    death : "orangered",
+    home_isolated : "purple"
   };
 
   const theme = useTheme();
@@ -302,9 +304,16 @@ const PatientTable = (props) => {
         />
         <TableContainer>
           <Table
-            sx={{ minWidth: 750 }}
+            sx={{ 
+              
+              minWidth: 750,
+              '& .MuiTableCell-root' : {
+              borderBottom :  `1px solid ${theme.palette.border.primary }!important`
+            } 
+          }}
             aria-labelledby="tableTitle"
             size={"medium"}
+        
           >
             <EnhancedTableHead
               numSelected={selected.length}

@@ -11,11 +11,12 @@ import { PrimaryButton } from "../../RUCApi/Button";
 import { NativeCard } from "../../RUCApi/Cards";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
+import { CgPassword, CgProfile } from "react-icons/cg";
 
 const PatientDetailsForm = (props) => {
   const initialState = {
-    id: "",
-    contact: "",
+    id: "202209210126",
+    contact: "457931910861",
   };
   const {
     setForm
@@ -49,10 +50,13 @@ const PatientDetailsForm = (props) => {
       <NativeCard>
         <NativeForm heading="Check Patient Details" >
           <NativeInput 
-            placeholder="Username" 
-            label="Username" 
+            placeholder="ID" 
+            label="Patient ID" 
             name="id"
+            value = {logindata.id}
             onChange={handleChange} 
+            icon = {<CgProfile />}
+
             required
           />
           <NativeInput
@@ -60,10 +64,12 @@ const PatientDetailsForm = (props) => {
             placeholder="Password"
             label="Password"
             name="contact"
-            onChange={handleChange} 
+            value = {logindata.contact}
+            onChange={handleChange}
+            icon = {<CgPassword />}
             required
           />
-          <PrimaryButton type="submit" onClick = {handleSubmit}>Submit</PrimaryButton>
+          <PrimaryButton type="submit" onClick = {handleSubmit}>Check</PrimaryButton>
         </NativeForm>
       </NativeCard>
     </Box>

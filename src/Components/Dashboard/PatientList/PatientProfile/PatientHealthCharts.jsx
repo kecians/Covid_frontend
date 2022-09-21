@@ -1,13 +1,12 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import { Line, ResponsiveLine } from '@nivo/line';
 import { useTheme } from '@mui/styles';
 import {ChartTooltip} from '../../../RUCApi/ChartTooltip';
-
+import { useChartScroll } from '../../../Hooks/ChartScrollMore';
+import { Box } from '@mui/material';
 
 const commonProperties = {
-    width: 430,
-    height: 150,
-    margin: { top: 30, right: 20, bottom: 35, left: 30 },
+    margin: { top: 30, right: 55, bottom: 35, left: 30 },
     animate: true,
     useMesh : true,
     enableSlices : 'x',
@@ -54,13 +53,24 @@ const commonProperties = {
 
 
 export  function O2LevelTracker({data}) {
+
+  const ref = useRef();
+  const visible_data = useChartScroll( {ref, data})
+
   return (
-    <Line
+
+    <Box
+      ref = {ref}
+      width = "240px"
+      height = "140px"
+    >
+
+    <ResponsiveLine
     {...commonProperties}
     data={[
       {
         id: "O2 level",
-        data: data
+        data: visible_data
       },
        
     ]}
@@ -99,26 +109,36 @@ export  function O2LevelTracker({data}) {
             }}
 
   />
+
+  </Box>
   )
 }
 
 
 export  function TemperatureTracker({data}) {
   const theme = useTheme();
+  const ref = useRef();
+  const visible_data = useChartScroll( {ref, data})
 
   return (
-    <Line
+    <Box 
+      ref = {ref}
+      width = "240px"
+        height = "140px"
+    >
+
+    <ResponsiveLine
     {...commonProperties}
     data={[
       {
         id: "Temperature",
-        data: data
+        data: visible_data
       },
-       
+      
     ]}
    
     pointColor="white"
-
+    
     enablePointLabel = {false}
     
     enableGridX={false}
@@ -128,7 +148,7 @@ export  function TemperatureTracker({data}) {
     useMesh={true}
     enableSlices={false}
     theme={{
-        axis: {
+      axis: {
           ticks: {
             line: {
               stroke: theme.palette.v2.secondary
@@ -146,19 +166,37 @@ export  function TemperatureTracker({data}) {
           }
         }
       }}
-  />
+      />
+</Box>
     )
 }
 
 
 export  function BloodPressureTracker({data}) {
   const theme = useTheme();
-
+  const ref = useRef();
+  const visible_sys_data = useChartScroll( {ref, data:  data.systolic})
+  const visible_dia_data = useChartScroll( {ref,  data : data.diastolic })
+  
   return (
-    <Line
+    <Box
+    ref = {ref}
+      width = "350px"
+      height = "140px"
+  
+    >
+
+    <ResponsiveLine
     {...commonProperties}
-    data={data}
-   
+    data={[ {
+      id : "systolic",
+      data : visible_sys_data,
+    },
+   {
+      id : "diastolic",
+      data : visible_dia_data
+   } ]}
+    
     pointColor="white"
 
     enablePointLabel = {false}
@@ -173,7 +211,7 @@ export  function BloodPressureTracker({data}) {
     enableSlices={false}
     
     theme={{
-        axis: {
+      axis: {
           ticks: {
             line: {
               stroke: theme.palette.v2.secondary
@@ -194,31 +232,32 @@ export  function BloodPressureTracker({data}) {
 
       legends={[
         {
-            anchor: 'top-center',
-            direction: 'row',
-            justify: false,
-            translateX: 80,
-            translateY: -30,
-            itemsSpacing: 0,
-            itemDirection: 'left-to-right',
-            itemWidth: 80,
-            itemHeight: 20,
-            itemOpacity: 0.75,
-            symbolSize: 12,
-            symbolShape: 'circle',
-            symbolBorderColor: 'rgba(0, 0, 0, .5)',
-            effects: [
-                {
-                    on: 'hover',
-                    style: {
-                        itemBackground: 'rgba(0, 0, 0, .03)',
-                        itemOpacity: 1
-                    }
-                }
-            ]
+          anchor: 'top-center',
+          direction: 'row',
+          justify: false,
+          translateX: 80,
+          translateY: -30,
+          itemsSpacing: 0,
+          itemDirection: 'left-to-right',
+          itemWidth: 80,
+          itemHeight: 20,
+          itemOpacity: 0.75,
+          symbolSize: 12,
+          symbolShape: 'circle',
+          symbolBorderColor: theme.palette.text.ternary,
+          itemTextColor  : theme.palette.text.ternary,
+          effects: [
+            {
+              on: 'hover',
+              style: {
+                itemOpacity: 1
+              }
+            }
+          ]
         }
-    ]}
+      ]}
   />
+      </Box>
     )
 }
 

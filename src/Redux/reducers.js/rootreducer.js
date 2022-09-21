@@ -5,7 +5,7 @@ import patientProfileReducer from './patientProfile';
 
 const rootReducer = combineReducers({
   authReducer,
-  patient : patientProfileReducer
+  patient : patientProfileReducer,
 });
 
 export default rootReducer

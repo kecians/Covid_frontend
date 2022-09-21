@@ -7,7 +7,67 @@ import { Provider } from 'react-redux'
 import { store } from './Redux/store';
 import { BrowserRouter } from 'react-router-dom';
 import {   ThemeProvider, createTheme, } from '@mui/material/styles';
-import DefaultTheme from './Components/RUCApi/Theme'
+import DefaultTheme from './Components/RUCApi/ThemeContext'
+
+
+const dark =     createTheme({
+  palette: {
+    mode: 'light' ,
+    v2 : {
+      primary : "rgb(17, 24, 39)",
+      secondary : "#5156BE",
+      offlight : "rgb(17, 24, 39)",
+      light : "rgb(11, 15, 25)",
+      dark : "#424242"
+    },
+    text : {
+      primary : "#5156BE",
+      secondary : "#fff",
+      ternary : "#fff",
+      light : "#fff",
+      dark : "#424242"
+    },
+    button : {
+      primary : "#6C70F9",
+      secondary : "#6C70F9"
+    },
+    border : {
+        primary : "rgb(45, 55, 72)",
+        secondary : "black"
+
+      },
+      card : {
+        primary : "#5156BE",
+        default : "rgb(17, 24, 39)",
+        secondary : "",
+        dark : "",
+        t1 : "#4FE1B8",
+        t2 : "#8160FF",
+        t3 : "#558CFF"
+      }
+  },
+  size : {
+    text : {
+      p1 : "1.8rem",
+      p2 : "1.4rem",
+      p3 : "1.2rem"
+    },
+    heading : {
+      h1 : "3rem",
+      h2 : "2.5rem",
+      h3 : "2rem",
+      h4 : "1.4rem",
+
+    },
+    input : {
+      h : "20px",
+      w : "250px",
+      fs : "1.6rem",
+      lfs : "1.4rem"
+    }
+
+  }
+})
 
 const light =     createTheme({
   palette: {
@@ -72,9 +132,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter> 
-        <ThemeProvider theme = {light} >
           <App />
-          </ThemeProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

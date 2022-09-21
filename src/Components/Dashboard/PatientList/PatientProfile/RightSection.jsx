@@ -21,7 +21,7 @@ import { generateDrinkStats } from "@nivo/generators";
 import { Line } from "@nivo/line";
 import TemperatureChart from "./TemperatureTimeScaleChart.jsx";
 import { BsHeart } from "react-icons/bs";
-import { useTheme } from '@mui/styles';
+import { useTheme } from "@mui/styles";
 import {
   O2LevelTracker,
   TemperatureTracker,
@@ -30,8 +30,8 @@ import {
 import { MdWaves } from "react-icons/md";
 import { TbActivityHeartbeat } from "react-icons/tb";
 import { MdBloodtype } from "react-icons/md";
-import {GiHeartPlus} from 'react-icons/gi'
-import {RiHeartPulseLine} from 'react-icons/ri';
+import { GiHeartPlus } from "react-icons/gi";
+import { RiHeartPulseLine } from "react-icons/ri";
 import { FaLungs } from "react-icons/fa";
 
 const PatientTimeLine = (props) => {
@@ -53,17 +53,12 @@ const PatientTimeLine = (props) => {
   );
 };
 
-
-
 const HealthStatus = (props) => {
-
   const { info = {} } = props;
 
   useEffect(() => {
     console.log("info", info);
   }, []);
-
-
 
   return (
     <Box>
@@ -94,78 +89,77 @@ const HealthStatus = (props) => {
 };
 
 const RightSection = (props) => {
-  const { data = {}, health_status = [], reading  = false} = props;
+  const { data = {}, health_status = [], reading = false } = props;
 
-
-  
   const getReadings = useMemo(() => {
-
-    if( reading ){
-
+    if (reading) {
       const data = {
-        
-        "oxy" :  reading["oxy"] && reading["oxy"].length && Array.isArray(reading["oxy"]) && reading["oxy"].map((coords) => ({
-         ...coords,
-          x  : new Date(coords.x),
-        })),
-        "temperature" :   reading["temperature"] && reading["temperature"].length && Array.isArray(reading["temperature"]) && reading["temperature"].map((coords) => ({
-         ...coords,
-          x  : new Date(coords.x),
-        })),
-        "pulse" :   reading["pulse"] && reading["pulse"].length && Array.isArray(reading["pulse"]) && reading["pulse"].map((coords) => ({
-          ...coords,
-           x  : new Date(coords.x),
-         })),
-         "respiratory" :   reading["respiratory"] && reading["respiratory"].length && Array.isArray(reading["respiratory"]) && reading["respiratory"].map((coords) => ({
-          ...coords,
-           x  : new Date(coords.x),
-         })),
-
-      
-    }
+        oxy:
+          reading["oxy"] &&
+          reading["oxy"].length &&
+          Array.isArray(reading["oxy"]) &&
+          reading["oxy"].map((coords) => ({
+            ...coords,
+            x: new Date(coords.x),
+          })),
+        temperature:
+          reading["temperature"] &&
+          reading["temperature"].length &&
+          Array.isArray(reading["temperature"]) &&
+          reading["temperature"].map((coords) => ({
+            ...coords,
+            x: new Date(coords.x),
+          })),
+        pulse:
+          reading["pulse"] &&
+          reading["pulse"].length &&
+          Array.isArray(reading["pulse"]) &&
+          reading["pulse"].map((coords) => ({
+            ...coords,
+            x: new Date(coords.x),
+          })),
+        respiratory:
+          reading["respiratory"] &&
+          reading["respiratory"].length &&
+          Array.isArray(reading["respiratory"]) &&
+          reading["respiratory"].map((coords) => ({
+            ...coords,
+            x: new Date(coords.x),
+          })),
+      };
 
       return data;
-
     }
-    return {}
-
-  }, [reading])
-
-  console.log("reading", getReadings)
+    return {};
+  }, [reading]);
 
   const getBPReading = useMemo(() => {
-    
-    if( reading && reading.bp){
-      const data = [
-        {
-          id : "systolic",
-          data :  reading.bp.systolic && Array.isArray(reading.bp.systolic) && reading.bp.systolic.map((coords) => ({
+    if (reading && reading.bp) {
+      const data = {
+        systolic:
+          reading.bp.systolic &&
+          Array.isArray(reading.bp.systolic) &&
+          reading.bp.systolic.map((coords) => ({
             ...coords,
-             x  : new Date(coords.x),
-           })),
-        },
-        {
-          id : "diastolic",
-          data : reading.bp.diastolic && Array.isArray(reading.bp.diastolic) && reading.bp.diastolic.map((coords) => ({
+            x: new Date(coords.x),
+          })),
+        diastolic:
+          reading.bp.diastolic &&
+          Array.isArray(reading.bp.diastolic) &&
+          reading.bp.diastolic.map((coords) => ({
             ...coords,
-             x  : new Date(coords.x),
-           })),
-        }
-      ]
-      return data
+            x: new Date(coords.x),
+          })),
+      };
+      return data;
     }
 
     return [];
-  }, [reading])
-
-  useEffect(() => {
-    console.log("reading", getReadings, getBPReading)
-
-  }, [])
+  }, [reading]);
 
   const theme = useTheme();
   return (
-    <Grid container gap={3} px = {3} >
+    <Grid container gap={3} px={3}>
       <Grid item xs={12}>
         <Grid container gap={3}>
           <Grid item xs={3}>
@@ -174,7 +168,9 @@ const RightSection = (props) => {
               sx={{
                 width: "100%",
               }}
-              loading = { !(getReadings && getReadings.oxy && getReadings.oxy.length) }
+              loading={
+                !(getReadings && getReadings.oxy && getReadings.oxy.length)
+              }
               header={
                 <>
                   <NativeText
@@ -196,7 +192,7 @@ const RightSection = (props) => {
                   {data.patient_health_status && data.patient_health_status.OL}
                 </NativeHeading>
               }
-              chart={<O2LevelTracker data = {getReadings.oxy} />}
+              chart={<O2LevelTracker data={getReadings.oxy} />}
             />
           </Grid>
           <Grid item xs={3}>
@@ -204,8 +200,13 @@ const RightSection = (props) => {
               sx={{
                 width: "100%",
               }}
-              loading = { !(getReadings && getReadings.temperature && getReadings.temperature.length) }
-
+              loading={
+                !(
+                  getReadings &&
+                  getReadings.temperature &&
+                  getReadings.temperature.length
+                )
+              }
               header={
                 <>
                   <NativeText
@@ -224,10 +225,10 @@ const RightSection = (props) => {
                     fontSize: theme.size.heading.h1,
                   }}
                 >
-                              {data.patient_health_status && data.patient_health_status.T} F
+                  {data.patient_health_status && data.patient_health_status.T} F
                 </NativeHeading>
               }
-              chart={<TemperatureTracker data = {getReadings.temperature} />}
+              chart={<TemperatureTracker data={getReadings.temperature} />}
             />
           </Grid>
           <Grid item xs={5}>
@@ -235,8 +236,14 @@ const RightSection = (props) => {
               sx={{
                 width: "100%",
               }}
-              loading = { !( reading && getBPReading && getBPReading.length && getBPReading[1].data && getBPReading[0].data  ) }
-
+              loading={
+                !(
+                  reading &&
+                  getBPReading &&
+                  getBPReading.systolic&&
+                  getBPReading.systolic.length
+                )
+              }
               header={
                 <>
                   <NativeText
@@ -244,9 +251,9 @@ const RightSection = (props) => {
                       fontSize: theme.size.text.p2,
                     }}
                   >
-                      Blood Pressure
+                    Blood Pressure
                   </NativeText>
-                  <TbActivityHeartbeat  />
+                  <TbActivityHeartbeat />
                 </>
               }
               reading={
@@ -255,11 +262,10 @@ const RightSection = (props) => {
                     fontSize: theme.size.heading.h1,
                   }}
                 >
-                    {data.patient_health_status && data.patient_health_status.BP}
-
+                  {data.patient_health_status && data.patient_health_status.BP}
                 </NativeHeading>
               }
-              chart={<BloodPressureTracker data = {getBPReading} />}
+              chart={<BloodPressureTracker data={getBPReading} />}
             />
           </Grid>
         </Grid>
@@ -268,7 +274,7 @@ const RightSection = (props) => {
       <Grid item xs={11}></Grid>
 
       <Grid item xs={12}>
-        <Grid container gap = {3} >
+        <Grid container gap={3}>
           <Grid item xs={2.5}>
             <HealthCard
               sx={{
@@ -276,30 +282,28 @@ const RightSection = (props) => {
               }}
               header={
                 <>
-                  <GiHeartPlus/>
-
+                  <GiHeartPlus />
                 </>
               }
               reading={
                 <>
-                <NativeText
-                  sx={{
-                    fontSize: theme.size.text.p2,
-                  }}
-                >
-                  Blood Pressure
-                </NativeText>
-                 <NativeHeading
-                 sx={{
-                   fontSize: theme.size.heading.h2,
-                   color : theme.palette.text.primary
-                 }}
-               >
-                      {data.patient_health_status && data.patient_health_status.BP}
-
-               </NativeHeading>
-               </>
-
+                  <NativeText
+                    sx={{
+                      fontSize: theme.size.text.p2,
+                    }}
+                  >
+                    Blood Pressure
+                  </NativeText>
+                  <NativeHeading
+                    sx={{
+                      fontSize: theme.size.heading.h2,
+                      color: theme.palette.text.primary,
+                    }}
+                  >
+                    {data.patient_health_status &&
+                      data.patient_health_status.BP}
+                  </NativeHeading>
+                </>
               }
             />
           </Grid>
@@ -311,30 +315,30 @@ const RightSection = (props) => {
               }}
               header={
                 <>
-                  <RiHeartPulseLine/>
+                  <RiHeartPulseLine />
                 </>
-                
               }
               reading={
                 <>
-                <NativeText
-                  sx={{
-                    fontSize: theme.size.text.p2,
-                  }}
-                >
-                  Pulse rate
-                </NativeText>
-                 <NativeHeading
-                 sx={{
-                   fontSize: theme.size.heading.h2,
-                   color : theme.palette.text.primary
-                 }}
-               > 
-                    {data.patient_health_status && data.patient_health_status.PR} bpm
-                 {}
-               </NativeHeading>
-               </>
-
+                  <NativeText
+                    sx={{
+                      fontSize: theme.size.text.p2,
+                    }}
+                  >
+                    Pulse rate
+                  </NativeText>
+                  <NativeHeading
+                    sx={{
+                      fontSize: theme.size.heading.h2,
+                      color: theme.palette.text.primary,
+                    }}
+                  >
+                    {data.patient_health_status &&
+                      data.patient_health_status.PR}{" "}
+                    bpm
+                    {}
+                  </NativeHeading>
+                </>
               }
             />
           </Grid>
@@ -346,70 +350,67 @@ const RightSection = (props) => {
               }}
               header={
                 <>
-                  <FaLungs/>
+                  <FaLungs />
                 </>
               }
               reading={
                 <>
-                <NativeText
-                  sx={{
-                    fontSize: theme.size.text.p2,
-                  }}
-                >
-                  Respiratory rate
-                </NativeText>
-                 <NativeHeading
-                 sx={{
-                   fontSize: theme.size.heading.h2,
-                   color : theme.palette.text.primary
-                 }}
-               > 
-                    {data.patient_health_status && data.patient_health_status.RR} bpm
-                 
-               </NativeHeading>
-               </>
-
+                  <NativeText
+                    sx={{
+                      fontSize: theme.size.text.p2,
+                    }}
+                  >
+                    Respiratory rate
+                  </NativeText>
+                  <NativeHeading
+                    sx={{
+                      fontSize: theme.size.heading.h2,
+                      color: theme.palette.text.primary,
+                    }}
+                  >
+                    {data.patient_health_status &&
+                      data.patient_health_status.RR}{" "}
+                    bpm
+                  </NativeHeading>
+                </>
               }
             />
           </Grid>
           <Grid item xs={2.5}>
-          <HealthCard
+            <HealthCard
               sx={{
                 width: "100%",
               }}
               header={
                 <>
-                  <MdBloodtype/>
-
+                  <MdBloodtype />
                 </>
-                
               }
               reading={
                 <>
-                <NativeText
-                  sx={{
-                    fontSize: theme.size.text.p2,
-                  }}
-                >
-                  Blood cells
-                </NativeText>
-                 <NativeHeading
-                 sx={{
-                   fontSize: theme.size.heading.h2,
-                   color : theme.palette.text.primary
-                 }}
-               > 
-                 9,456 ml
-               </NativeHeading>
-               </>
-
+                  <NativeText
+                    sx={{
+                      fontSize: theme.size.text.p2,
+                    }}
+                  >
+                    Blood cells
+                  </NativeText>
+                  <NativeHeading
+                    sx={{
+                      fontSize: theme.size.heading.h2,
+                      color: theme.palette.text.primary,
+                    }}
+                  >
+                    9,456 ml
+                  </NativeHeading>
+                </>
               }
             />
           </Grid>
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <PatientHealthTable rows={health_status} patient_info = {data} />
+        <PatientHealthTable rows={health_status} patient_info={data} />
       </Grid>
 
       <div></div>

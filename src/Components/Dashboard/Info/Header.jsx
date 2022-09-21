@@ -41,7 +41,7 @@ const DashboardHeader = () => {
       <>
         <img src= "https://happyhospital.in/wp-content/uploads/2016/08/single-doctor.jpg" width = "50px" height = "50px" style = {{ borderRadius : "100%", objectFit : "cover" }} />
 
-        <SecondaryHeading>Ayush Bisht 
+        <SecondaryHeading>{cookie.load("username")}
         <SMText component = "div" >{cookie.load("staff")}</SMText>
         </SecondaryHeading>
       </>)

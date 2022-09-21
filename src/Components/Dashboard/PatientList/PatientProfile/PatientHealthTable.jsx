@@ -291,7 +291,11 @@ const PatientHealthTable = (props) => {
             sx={{
               minWidth: 750,
               boxShadow: "none",
+              '& .MuiTableCell-root' : {
+                borderBottom :  `1px solid ${theme.palette.border.primary }!important`
+              }
             }}
+          
             aria-labelledby="tableTitle"
             size={"medium"}
           >

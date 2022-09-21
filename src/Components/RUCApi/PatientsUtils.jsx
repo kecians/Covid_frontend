@@ -13,6 +13,7 @@ export const PatientConditionIndicator = ({ type }) => {
     Mild: "#61c554",
     Moderate: "#f5bf4f",
     severe: "#f30035",
+    active : "blue"
   };
 
   const theme = useTheme()
@@ -23,6 +24,8 @@ export const PatientConditionIndicator = ({ type }) => {
         fontSize : theme.size.text.p2
       }}
     >
+     { type !== "NA" ? 
+      <>
       <Box
         mx={1}
         style={{
@@ -34,6 +37,9 @@ export const PatientConditionIndicator = ({ type }) => {
         }}
       ></Box>
       {type}
+      </>
+      : 
+      "" }
     </NativeText>
   );
 };

@@ -21,6 +21,7 @@ const Search = styled("div")(({ theme }) => ({
   width: "auto",
   fontSize : theme.size.text.p2,
   backgroundColor: alpha(theme.palette.v2.primary, 1),
+  color : theme.palette.text.ternary,
   "&:hover": {
     backgroundColor: alpha(theme.palette.v2.primary, 0.75),
   },

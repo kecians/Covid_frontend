@@ -28,7 +28,7 @@ const PatientInfoCard = (props) => {
       gap={3}
       sx={{
         minWidth: "260px",
-        maxWidth : "300px",
+        maxWidth : "273px",
         height : "auto"
       }}
     >
@@ -64,7 +64,7 @@ const PatientInfoCard = (props) => {
           </PrimaryText>
           <IoMdNotifications />
         </Box>
-        <PatientConditionIndicator type={info.patient_condition_display} />
+        <PatientConditionIndicator type={info.patient_condition} />
       </Box>
       <Box
         p={1}

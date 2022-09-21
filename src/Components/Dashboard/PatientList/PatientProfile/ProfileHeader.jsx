@@ -31,7 +31,7 @@ const ProfileHeader = (props) => {
             gap = {2}
             alignItems = "center"
          >
-          <FaBackward  color=  {theme.palette.v2.secondary} size = "2rem" onClick = {() => closeProfile(false)}  />
+          <FaBackward style = {{ zIndex : "1", cursor : "pointer"}} color=  {theme.palette.v2.secondary} size = "2rem" onClick = {() => closeProfile(false)}  />
         <PrimaryHeading> {info.name} </PrimaryHeading>
         
       </Stack>

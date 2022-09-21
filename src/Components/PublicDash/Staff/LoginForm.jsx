@@ -10,11 +10,14 @@ import { Redirect } from "react-router-dom";
 import { PrimaryButton } from "../../RUCApi/Button";
 import { NativeCard } from "../../RUCApi/Cards";
 import { useHistory } from "react-router-dom";
+import StaffLoginSvg from '../../../assets/images/coolbg.svg'
+import { CgPassword, CgProfile } from "react-icons/cg";
+import CoolBg from "../../RUCApi/CoolBg";
 
 const StaffLoginForm = (props) => {
   const initialState = {
-    username: "",
-    password: "",
+    username: "xyzdoctor",
+    password: "123",
   };
   const navigate = useHistory()
   const [logindata, setLogindata] = useState(initialState);
@@ -30,9 +33,7 @@ const StaffLoginForm = (props) => {
     props.loading();
     console.log("submit")
     if (!logindata) {
-      console.log("Login---->");
     } else {
-      console.log("Login---->");
       setTimeout(() => {
         props.login(logindata.username, logindata.password ) ;
       }, 1000);
@@ -51,15 +52,24 @@ const StaffLoginForm = (props) => {
         justifyContent: "center",
         alignItems: "center",
         position: "relative",
+        overflow : "hidden"
       }}
     >
-      <NativeCard>
+     
+      <NativeCard
+        sx = {{
+          position : "relative",
+          right : "5%"
+        }}
+      >
         <NativeForm heading="Staff Login" >
           <NativeInput 
             placeholder="Username" 
             label="Username" 
             name="username"
+            value = {logindata.username}
             onChange={handleChange} 
+            icon = { <CgProfile />}
             required
           />
           <NativeInput
@@ -68,11 +78,14 @@ const StaffLoginForm = (props) => {
             label="Password"
             name="password"
             onChange={handleChange} 
+            value = {logindata.password}
+            icon = { <CgPassword />}
             required
           />
           <PrimaryButton type="submit" onClick = {handleSubmit}>Submit</PrimaryButton>
         </NativeForm>
       </NativeCard>
+
     </Box>
   );
 };

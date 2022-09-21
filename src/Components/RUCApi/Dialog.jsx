@@ -21,16 +21,16 @@ export const NativeDialog = styled(Dialog)(( {theme}) => ({
 
   height: "auto",
   width: "auto",
-
   '& .MuiBackdrop-root ' : {
     "filter" : "blur(350px) !important",
-    background: theme.palette.card.primary,
+    background: theme.palette.v2.primary,
     opacity : "0.8 !important"
   },
   '& .MuiPaper-root ' : {
     padding : "20px",
     borderRadius : "20px",
     border : "1px solid" + theme.palette.border.primary,
+    background : theme.palette.v2.light,
 
   }
 }));
@@ -65,6 +65,7 @@ export const NativeDialogForms = (props) => {
                 gap = {2}
                 minWidth = "300px"
                 width = "auto"
+               
             >
                 <Box>
                     {head}
@@ -100,7 +101,7 @@ export const BedChangeDialogForm = (props) =>{
             
             head = { 
             <NativeHeading  sx = {{
-                color : theme.palette.text.dark,
+                color : theme.palette.text.secondary,
                 fontSize : theme.size.heading.h3
 
             }} 
@@ -116,7 +117,11 @@ export const BedChangeDialogForm = (props) =>{
                 '& input, & select, & textarea' : {
                     minHeight : "40px",
                     borderRadius : "20px",
-                    fontSize : theme.size.text.p2
+                    fontSize : theme.size.text.p2,
+                    color : theme.palette.text.secondary + "!important",
+                    background : theme.palette.v2.primary + "!important",
+                borderColor : theme.palette.border.primary + "!important"
+
                 }
             }}
             >
@@ -149,8 +154,9 @@ export const StatusUpdateDialogForm = (props) =>{
         head = { 
             <NativeHeading
             sx = {{
-                color : theme.palette.text.dark,
-                fontSize : theme.size.heading.h3
+                color : theme.palette.text.secondary,
+                fontSize : theme.size.heading.h3,
+           
             }}
             >
                 Update patient status
@@ -163,7 +169,12 @@ export const StatusUpdateDialogForm = (props) =>{
                 '& input, & select, & textarea' : {
                     minHeight : "40px",
                     borderRadius : "20px",
-                    fontSize : theme.size.text.p2
+                    fontSize : theme.size.text.p2,
+                    color : theme.palette.text.secondary + "!important",
+                    background : theme.palette.v2.primary + "!important",
+                borderColor : theme.palette.border.primary + "!important"
+
+               
                 }
             }}
             >
@@ -199,8 +210,9 @@ export const PatientInfoUpdateForm = (props) =>{
         head = { 
             <NativeHeading
             sx = {{
-                color : theme.palette.text.dark,
-                fontSize : theme.size.heading.h3
+                color : theme.palette.text.secondary,
+                fontSize : theme.size.heading.h3,
+                
             }}
             >
                 Health Check 
@@ -212,7 +224,12 @@ export const PatientInfoUpdateForm = (props) =>{
                 '& input, & select, & textarea' : {
                     minHeight : "40px",
                     borderRadius : "20px",
-                    fontSize : theme.size.text.p2
+                    fontSize : theme.size.text.p2,
+                    color : theme.palette.text.secondary + "!important",
+                    background : theme.palette.v2.primary + "!important",
+                borderColor : theme.palette.border.primary + "!important"
+
+               
                 }
             }}
             >
@@ -248,7 +265,7 @@ export const PatientAdmitDialog = (props) =>{
         head = { 
             <NativeHeading
             sx = {{
-                color : theme.palette.text.dark,
+                color : theme.palette.text.secondary,
                 fontSize : theme.size.heading.h3
             }}
             >

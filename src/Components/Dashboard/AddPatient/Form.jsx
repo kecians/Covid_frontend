@@ -343,7 +343,10 @@ export default function AddPatientForm(props) {
             '& input, & select, & textarea' : {
                 minHeight : "40px",
                 borderRadius : "20px",
-                fontSize : theme.size.text.p2
+                fontSize : theme.size.text.p2,
+                color : theme.palette.text.secondary + "!important",
+                background : theme.palette.v2.primary + "!important",
+                borderColor : theme.palette.border.primary + "!important"
             }
         }}
     >

@@ -35,7 +35,14 @@ import PatientList from "../../Components/Dashboard/PatientList";
 import { getComputedStyle } from "./style.js";
 import { CgLogOut } from "react-icons/cg";
 import { Logout } from "../../Components/Logout/Logout";
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 import AddPatient from "../../Components/Dashboard/AddPatient";
+import cookie from 'react-cookies'
+import { useContext } from "react";
+import { ThemeContext } from "../../Components/RUCApi/ThemeContext";
+import CoolBg from "../../Components/RUCApi/CoolBg";
+
 function a11yProps(index) {
   return {
     id: `vertical-tab-${index}`,
@@ -52,8 +59,15 @@ export default function Dashboard() {
   const theme = useTheme();
 
   const [value, setValue] = React.useState("dashboard");
+  const { mode, toggleTheme} = useContext( ThemeContext )
+
 
   const handleChange = (event, newValue) => {
+
+    if(newValue === "mode"){
+      toggleTheme()
+    }
+    else
     setValue(newValue);
   };
 
@@ -68,8 +82,18 @@ export default function Dashboard() {
           height: "auto",
           maxWidth: "100vw",
           backgroundColor : theme.palette.v2.light,
+          '& .coolBg' : {
+            position : "fixed",
+            top : "0px",
+            right : "-25px",
+            zIndex : "0",
+            ' & path' : {
+              fillOpacity : "0.03"
+            }
+          },
         }}
       >
+        <CoolBg />
         <Grid item xs={1.1} 
         style = {styles.gridItem1}
         >
@@ -89,6 +113,7 @@ export default function Dashboard() {
             <Tab value={"add patient"} sx = {styles.tab}  iconPosition="top" icon= {<FaClipboardList  size = "2rem" />} label = "Add Patients" {...a11yProps("add patient")} />
             {/* <Tab value={"report"} sx = {styles.tab} iconPosition="top" icon= {   <TbHeartRateMonitor  size = "2rem" />}  label = "Report"{...a11yProps("report")} /> */}
             <Tab sx = {styles.tab} iconPosition="top"  icon= {   <Logout  size = "2rem" />}  label = "Logout"{...a11yProps("logout")} />
+            <Tab value={"mode"} sx = {styles.tab} iconPosition="top"  icon= { mode === "light" ? <DarkModeIcon /> : <Brightness7Icon/> }   label = { mode === "light" ? "dark" : "light"} {...a11yProps("mode")} />
           
           </Tabs>
         </Grid>
@@ -100,18 +125,13 @@ export default function Dashboard() {
           <TabPanel value={value} index={"dashboard"} >
             <RightSection />
           </TabPanel>
-          <TabPanel value={value} index={"calender"}>
-            Item Two
-          </TabPanel>
           <TabPanel value={value} index={"patients"}>
            <PatientList />
           </TabPanel>
           <TabPanel value={value} index={"add patient"}>
             <AddPatient />
           </TabPanel>
-          <TabPanel value={value} index={"report"}>
-          </TabPanel>
-     
+      
         </Grid>
       </Grid>
     

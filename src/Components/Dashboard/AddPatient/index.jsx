@@ -49,7 +49,7 @@ export default function AddPatient() {
 <AdmitHeader>
     <NativeHeading
     sx = {{
-        color : theme.palette.text.dark,
+        color : theme.palette.text.secondary,
         fontSize : theme.size.heading.h2
 
     }}

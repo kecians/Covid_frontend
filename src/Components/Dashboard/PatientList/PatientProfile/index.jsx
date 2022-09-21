@@ -41,7 +41,6 @@ const PatientProfile = (props) => {
     const theme = useTheme()
 
     const isProfileUpdated = useSelector((state) => state.patient.profileUpdated )
-    const dispatch = useDispatch()
 
     const getDetails = () => {
 
@@ -101,7 +100,7 @@ const PatientProfile = (props) => {
           })
           .then((res) => {
             if (res.data.status === 404) {
-                addToast("Readings Not Found!!", {appearance: "error"})
+                addToast("Readings Not Found!!", {appearance: "info"})
             } 
             else 
             {
@@ -109,9 +108,8 @@ const PatientProfile = (props) => {
 
                 setReading( { ...res.data.data})
             }
-            
-                     })
-                .catch((err) => {
+            })
+            .catch((err) => {
                     addToast("Details Not Found!!", {appearance: "error"})
                     setRedirect(true)
                     // console.log(err.response);
@@ -121,8 +119,6 @@ const PatientProfile = (props) => {
 
 
     useEffect(() => {
-
-        console.log("units")
 
         getDetails()
         getReading()
