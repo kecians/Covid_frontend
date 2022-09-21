@@ -128,7 +128,9 @@ export default function Searchbar(props) {
         justifyContent: "space-between",
         minHeight: "100px",
         alignItems: "center",
-        borderBottom :  "1px solid " + theme.palette.border.primary
+        borderBottom :  "1px solid " + theme.palette.border.primary,
+        zIndex : "2"
+
 
       }}
 
@@ -164,6 +166,8 @@ export default function Searchbar(props) {
           alignItems: "center",
           justifyContent: "center",
           gap: "10px",
+          zIndex : "3"
+
         }}
       >
         <img

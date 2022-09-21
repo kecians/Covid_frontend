@@ -46,6 +46,8 @@ function App() {
 
   return (
     <BrowserRouter>
+          <ThemeContext.Provider value = {colorContext} >
+            <ThemeProvider theme = {theme} >
         <ToastProvider
           autoDismiss
           autoDismissTimeout={6000}
@@ -53,8 +55,6 @@ function App() {
         >
           <Loader />
           <Toastify />
-        <ThemeContext.Provider value = {colorContext} >
-        <ThemeProvider theme = {theme} >
           <Switch>
             <LockRoute exact path="/" component={Home} />  
             <LockRoute exact path="/login" component={Home} />  
@@ -67,9 +67,9 @@ function App() {
             {/* <LockRoute exact path="/patient/profile/" component={Publicpatientprofile} /> */}
             <Route path="*" component={Page404}/>
           </Switch>
+      </ToastProvider>
         </ThemeProvider>
         </ThemeContext.Provider>
-      </ToastProvider>
       </BrowserRouter>
   );
 }

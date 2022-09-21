@@ -18,7 +18,6 @@
 import * as React from "react";
 import { useTheme } from '@mui/styles';
 import Grid from "@mui/material/Grid";
-import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -42,6 +41,14 @@ import cookie from 'react-cookies'
 import { useContext } from "react";
 import { ThemeContext } from "../../Components/RUCApi/ThemeContext";
 import CoolBg from "../../Components/RUCApi/CoolBg";
+import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
+import {store} from '../../Redux/store.js'
+import { logout, loading } from "../../Redux/actions.js/auth.actions";
+import { useHistory } from 'react-router-dom';
+
+
+
 
 function a11yProps(index) {
   return {
@@ -54,18 +61,27 @@ function a11yProps(index) {
 
 
 
-export default function Dashboard() {
+function Dashboard() {
 
   const theme = useTheme();
 
   const [value, setValue] = React.useState("dashboard");
   const { mode, toggleTheme} = useContext( ThemeContext )
+  const navigate = useHistory()
 
 
   const handleChange = (event, newValue) => {
 
     if(newValue === "mode"){
       toggleTheme()
+      }
+    else
+      if(newValue === "logout"){
+
+      store.dispatch(loading());
+      setTimeout(() => {
+      store.dispatch(logout(navigate));
+      }, 1000);   
     }
     else
     setValue(newValue);
@@ -77,7 +93,7 @@ export default function Dashboard() {
   return (
    
       <Grid container spacing={0} 
-      
+
         sx={{
           height: "auto",
           maxWidth: "100vw",
@@ -112,14 +128,14 @@ export default function Dashboard() {
             <Tab value={"patients"} sx = {styles.tab} iconPosition="top" icon= {<CgProfile  size = "2rem" />} label = "Patients" {...a11yProps("patients")} />
             <Tab value={"add patient"} sx = {styles.tab}  iconPosition="top" icon= {<FaClipboardList  size = "2rem" />} label = "Add Patients" {...a11yProps("add patient")} />
             {/* <Tab value={"report"} sx = {styles.tab} iconPosition="top" icon= {   <TbHeartRateMonitor  size = "2rem" />}  label = "Report"{...a11yProps("report")} /> */}
-            <Tab sx = {styles.tab} iconPosition="top"  icon= {   <Logout  size = "2rem" />}  label = "Logout"{...a11yProps("logout")} />
+            <Tab value={"logout"} sx = {styles.tab} iconPosition="top"  icon= {   <CgLogOut  size = "2rem" />}  label = "Logout"{...a11yProps("logout")} />
             <Tab value={"mode"} sx = {styles.tab} iconPosition="top"  icon= { mode === "light" ? <DarkModeIcon /> : <Brightness7Icon/> }   label = { mode === "light" ? "dark" : "light"} {...a11yProps("mode")} />
           
           </Tabs>
         </Grid>
         <Grid item xs={10.9} 
              sx = {{
-                height : "auto !important"
+                height : "auto !important",
              }}
             >
           <TabPanel value={value} index={"dashboard"} >
@@ -137,3 +153,16 @@ export default function Dashboard() {
     
   );
 }
+
+
+
+Dashboard.propTypes = {
+  logout: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+isAuthenticated: state.authReducer.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { logout, loading })(Dashboard);

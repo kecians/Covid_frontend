@@ -7,6 +7,7 @@ import { Button } from 'react-bootstrap'
 import {Redirect} from 'react-router-dom'
 import { CgLogOut } from 'react-icons/cg';
 import { useHistory } from 'react-router-dom';
+
 export function Logout(props) {
   
   const navigate = useHistory()

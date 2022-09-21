@@ -21,7 +21,8 @@ const DashboardHeader = () => {
         minHeight : "100px",
         alignItems : "center",
         borderBottom :  "1px solid " + theme.palette.border.primary,
-        padding : "10px 20px"
+        padding : "10px 20px",
+        zIndex : "2"
          
       }}
     >
@@ -33,7 +34,9 @@ const DashboardHeader = () => {
           display : "flex",
           alignItems : "center",
           justifyContent : "center",
-          gap : "10px"
+          gap : "10px",
+        zIndex : "2"
+
         }}
       >
         { cookie.load("token")  ? ( 

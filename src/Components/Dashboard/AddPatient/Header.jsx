@@ -21,7 +21,9 @@ const AdmitHeader = ({children}) => {
         minHeight : "100px",
         alignItems : "center",
         borderBottom :  "1px solid " + theme.palette.border.primary,
-        padding : "10px 20px"
+        padding : "10px 20px",
+        zIndex : "3"
+
          
       }}
     >
@@ -33,7 +35,9 @@ const AdmitHeader = ({children}) => {
           display : "flex",
           alignItems : "center",
           justifyContent : "center",
-          gap : "10px"
+          gap : "10px",
+        zIndex : "2"
+
         }}
       >
         <img src= "https://happyhospital.in/wp-content/uploads/2016/08/single-doctor.jpg" width = "50px" height = "50px" style = {{ borderRadius : "100%", objectFit : "cover" }} />

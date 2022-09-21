@@ -46,6 +46,7 @@ export const Form = styled((props) => <Box component="form" {...props} />)(
       borderRadius: "20px",
       border: "1px solid" + theme.palette.border.primary,
     },
+  
   })
 );
 
@@ -67,10 +68,11 @@ export const NativeInput = styled((props) => (
   background: theme.palette.v2.primary,
   width: "200px",
   borderRadius: "20px",
-
   "& .MuiInputBase-input ": {
     fontSize: theme.size.input.fs,
-    padding : "12px"
+    padding : "12px",
+  color : theme.palette.text.secondary,
+
 },
   "& legend ": {
     fontSize: "inherit",
@@ -83,6 +85,9 @@ export const NativeInput = styled((props) => (
   "& .MuiInputBase-root ": {
     borderRadius: "inherit",
   },
+  '& .MuiInputAdornment-root ' : {
+    color : theme.palette.text.primary
+  }
 }));
 
 export const NativeForm = (props) => {
