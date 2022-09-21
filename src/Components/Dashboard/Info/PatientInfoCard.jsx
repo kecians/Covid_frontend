@@ -18,6 +18,7 @@ import {
 import { PatientConditionIndicator } from "../../RUCApi/PatientsUtils";
 import Skeleton from "@mui/material/Skeleton";
 import { useTheme } from '@mui/styles';
+import { Stack } from "@mui/material";
 
 const PatientInfoCard = (props) => {
   const { info = false } = props;
@@ -99,11 +100,11 @@ const PatientInfoCard = (props) => {
       </SecondaryText>
     </NativeCard>
   ) : (
-    <Box sx={{ pt: 0.5 }}>
+    <Stack sx={{ pt: 0.5 }} >
       <Skeleton variant="rectangular" width={"210px"} height={"118px"} />
       <Skeleton width="180px" height={"20px"}  />
       <Skeleton width="100px" height={"20px"}  />
-    </Box>
+    </Stack>
   );
 };
 
