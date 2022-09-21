@@ -73,7 +73,6 @@ const PatientInfoCard = (props) => {
           display: "inlineflex",
           flexWrap: "wrap",
           justifyContent: "space-between",
-          gap: "10px",
           height : "80px",
           fontSize : theme.size.text.p1
         }}
@@ -83,7 +82,7 @@ const PatientInfoCard = (props) => {
           Object.keys(info.patient_health_status).map((val) => (
             <Box align = "center">
               <SecondaryText sx = {{ color : theme.palette.text.dark, fontSize : theme.size.text.p2}} >{val}</SecondaryText>
-              <PrimaryHeading  mt={1} sx = {{ color : theme.palette.text.ternary, fontSize : theme.size.heading.h3 }} >
+              <PrimaryHeading  mt={1} sx = {{ color : theme.palette.text.ternary, fontSize : theme.size.text.p1 }} >
                 {info.patient_health_status[val]}
               </PrimaryHeading>
             </Box>

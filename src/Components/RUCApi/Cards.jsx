@@ -117,7 +117,6 @@ export const CovidCaseCard = (props) => {
         overflow : "hidden"
       }}
       ref = {ref}
-
     >
     {  visible_data.length ? 
     <ResponsiveLine
