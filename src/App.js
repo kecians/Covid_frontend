@@ -1,6 +1,4 @@
 // import dependencies
-
-
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useMemo, useState } from 'react';
@@ -25,6 +23,7 @@ import cookie from 'react-cookies'
 import { ThemeContext } from './Components/RUCApi/ThemeContext.jsx';
 import { useCallback } from 'react';
 
+import { CssBaseline  } from "@mui/material";
  
 
 function App() {
@@ -48,6 +47,7 @@ function App() {
     <BrowserRouter>
           <ThemeContext.Provider value = {colorContext} >
             <ThemeProvider theme = {theme} >
+              <CssBaseline/>
         <ToastProvider
           autoDismiss
           autoDismissTimeout={6000}
