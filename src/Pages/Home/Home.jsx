@@ -1,19 +1,3 @@
-// import React from 'react'
-
-// import Footer from "../../Components/Footer/Footer";
-// import Nursehome from "../../Components/Nursehome/Nursehome";
-// export default function Info() {
-//     return (
-//         <>
-//         <div className="container-fluid bg-silver">
-//             <Nursehome />
-//         </div>
-//         <div className="container-fluid p-0 m-0">
-//             <Footer />
-//         </div>
-//         </>
-//     )
-// }
 
 import * as React from "react";
 import { useTheme } from "@mui/styles";
@@ -73,20 +57,21 @@ export default function Home() {
       sx={{
         height: "auto",
         maxWidth: "100vw",
+
         backgroundColor: theme.palette.v2.light,
-        position : "relative",
-        '& .coolBg' : {
-          position : "fixed",
-          top : "0px",
-          right : "-25px",
-          ' & path' : {
-            fillOpacity : "0.03"
+        position: "relative",
+        '& .coolBg': {
+          position: "fixed",
+          top: "0px",
+          right: "-25px",
+          ' & path': {
+            fillOpacity: "0.03"
           }
         },
 
       }}
     >
-      <CoolBg  />
+      <CoolBg />
 
       <Grid item xs={1.1} style={styles.gridItem1}>
         <Tabs
@@ -137,7 +122,7 @@ export default function Home() {
         xs={10.9}
         sx={{
           height: "auto !important",
-        
+
         }}
       >
 
